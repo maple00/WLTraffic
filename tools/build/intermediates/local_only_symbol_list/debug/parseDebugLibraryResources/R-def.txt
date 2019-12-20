@@ -1,0 +1,96 @@
+R_DEF: Internal format may change without notice
+local
+anim anim_slide_in_left
+anim anim_slide_in_right
+anim anim_slide_out_left
+anim anim_slide_out_right
+anim dialog_bottom_in
+anim dialog_bottom_out
+anim dialog_ios_in
+anim dialog_ios_out
+anim dialog_left_in
+anim dialog_left_out
+anim dialog_right_in
+anim dialog_right_out
+anim dialog_scale_in
+anim dialog_scale_out
+anim dialog_top_in
+anim dialog_top_out
+anim item_animation_fall_down
+anim item_animation_from_bottom
+anim item_animation_from_right
+anim layout_animation_fall_down
+anim layout_animation_from_bottom
+anim layout_animation_from_right
+attr? barColor
+attr? barSpinCycleTime
+attr? barWidth
+attr? bar_leftColor
+attr? bar_leftHint
+attr? bar_leftIcon
+attr? bar_leftSize
+attr? bar_leftText
+attr? bar_lineColor
+attr? bar_lineMargin
+attr? bar_lineSize
+attr? bar_lineVisible
+attr? bar_rightColor
+attr? bar_rightHint
+attr? bar_rightIcon
+attr? bar_rightSize
+attr? bar_rightText
+attr? circleRadius
+attr? fillRadius
+attr? inputRegex
+attr? linearProgress
+attr? lv_canLoop
+attr? lv_centerTextColor
+attr? lv_drawItemCount
+attr? lv_initPosition
+attr? lv_lineColor
+attr? lv_textSize
+attr? lv_topBottomTextColor
+attr? pb_maxProgress
+attr? pb_progress
+attr? pb_reachedColor
+attr? pb_reachedHeight
+attr? pb_textColor
+attr? pb_textOffset
+attr? pb_textSize
+attr? pb_unreachedColor
+attr? pb_unreachedHeight
+attr? progressIndeterminate
+attr? regexType
+attr? rimColor
+attr? rimWidth
+attr? scaleRatio
+attr? sizeRatio
+attr? spinSpeed
+id chinese
+id count
+id english
+id iv_hint_icon
+id iv_hint_text
+id mobile
+id name
+id nonnull
+integer anim_duration_long
+integer anim_duration_medium
+layout widget_hint_layout
+string app_name
+style BaseDialogStyle
+style BottomAnimStyle
+style IOSAnimStyle
+style LeftAnimStyle
+style RightAnimStyle
+style ScaleAnimStyle
+style TopAnimStyle
+styleable CustomViewStub android:layout
+styleable LoopView lv_lineColor lv_topBottomTextColor lv_centerTextColor lv_textSize lv_canLoop lv_initPosition lv_drawItemCount
+styleable NumberProgressBar pb_progress pb_maxProgress pb_textSize pb_textColor pb_textOffset pb_unreachedColor pb_reachedColor pb_reachedHeight pb_unreachedHeight
+styleable ProgressView progressIndeterminate barColor rimColor rimWidth spinSpeed barSpinCycleTime circleRadius fillRadius barWidth linearProgress
+styleable RatioFrameLayout sizeRatio
+styleable RegexEditText inputRegex regexType
+styleable ScaleImageView scaleRatio
+styleable SettingBar bar_leftText bar_leftHint bar_leftIcon bar_leftColor bar_leftSize bar_rightText bar_rightHint bar_rightIcon bar_rightColor bar_rightSize bar_lineVisible bar_lineColor bar_lineSize bar_lineMargin
+styleable SwitchButton android:checked android:enabled

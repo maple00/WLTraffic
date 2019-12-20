@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">武隆交通局</string>
+
+    <!-- 通用的-->
+    <string name="common_code_send">发送验证码</string>
+    <string name="common_loading">加载中&#8230;</string>
+
+    <!-- Http-->
+    <string name="frame_name">AndroidOHP</string>
+    <string name="package_name">081E222B201T82W083Z224I244Q221N222E204C244</string>
+
+    <!-- 提示-->
+    <string name="hint_layout_no_data">亲，暂无数据</string>
+    <string name="hint_layout_error_request">亲，请求出错了</string>
+    <string name="hint_layout_error_network">亲，没有网络了</string>
+
+    <!-- 本地异常捕捉-->
+    <string name="crash_error_hint">发生意外错误\n抱歉，给您带来不便</string>
+    <string name="crash_error_restart">重新启动</string>
+    <string name="crash_copy_log">复制日志</string>
+    <string name="crash_error_log">错误日志</string>
+    <string name="crash_error_info">错误信息</string>
+    <string name="crash_error_details">错误详情</string>
+    <string name="crash_close">关闭</string>
+
+    <!--  App 内的String-->
+    <string name="index_home">首页</string>
+    <string name="index_msg">消息</string>
+    <string name="index_mine">我的</string>
+
+
+
+</resources>
