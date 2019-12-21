@@ -14,6 +14,8 @@
     <color name="textColor">#333333</color>
     <!-- 字体颜色-->
     <color name="colorWord">#666666</color>
+    <!-- 标签颜色-->
+    <color name="colorLabel">#999999</color>
 
     <!-- 白色 -->
     <color name="white">#FFFFFFFF</color>

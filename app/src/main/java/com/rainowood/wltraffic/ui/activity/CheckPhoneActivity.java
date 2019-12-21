@@ -37,6 +37,8 @@ public final class CheckPhoneActivity extends BaseActivity implements OnClickLis
     @ViewById(R.id.tv_check_phone_title)
     private TextView checkPhoneTitle;
 
+    String key;
+
     @Override
     protected void initView() {
         mTitle.setVisibility(View.GONE);
@@ -62,7 +64,7 @@ public final class CheckPhoneActivity extends BaseActivity implements OnClickLis
         /*
         判断是发送验证码手机号还是修改手机号
          */
-        String key = getIntent().getStringExtra("key");
+        key = getIntent().getStringExtra("key");
         if ("changeTel".equals(key)){
             checkPhoneTitle.setText("修改手机号");
             checkPhone.setHint("请输入新的手机号");
@@ -89,11 +91,16 @@ public final class CheckPhoneActivity extends BaseActivity implements OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:
-                openActivity(LoginActivity.class);
+                // 判断从哪个页面过来的
+                if ("changeTel".equals(key)){       // 从个人中心过来
+                    finish();
+                }
+                if (!"changeTel".equals(key)){      // 从登录页面过来
+                    openActivity(LoginActivity.class);
+                }
                 break;
             case R.id.btn_get_code:
                 // 请求验证码接口
-
                 Contants.PhoneCheckVerify = checkPhone.getText().toString().trim();
                 openActivity(CodeVerifyActivity.class);
                 break;

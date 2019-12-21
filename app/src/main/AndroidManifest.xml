@@ -63,6 +63,18 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 项目详情页面 ProjectDetailActivity-->
+        <activity
+            android:name=".ui.activity.ProjectDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 消息详情页面 MessageDetailActivity-->
+        <activity
+            android:name=".ui.activity.MessageDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <!-- 异常捕捉页面 CrashActivity-->
         <activity
             android:name=".ui.activity.CrashActivity"

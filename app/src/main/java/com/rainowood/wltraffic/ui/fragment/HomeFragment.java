@@ -9,7 +9,8 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseFragment;
-import com.rainowood.wltraffic.domain.HomeListBean;
+import com.rainowood.wltraffic.domain.ProjectInfoBean;
+import com.rainowood.wltraffic.ui.activity.ProjectDetailActivity;
 import com.rainowood.wltraffic.ui.adapter.HomeBeforeItemAdapter;
 import com.rainowood.wltraffic.ui.adapter.HomeListViewAdapter;
 import com.rainowood.wltraffic.ui.dialog.WaitDialog;
@@ -44,7 +45,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     // 首页列表
     private ListView mListView;
     // 首页数据.
-    private List<HomeListBean> mList;
+    private List<ProjectInfoBean> mList;
     private View titleOne;
     private View titleTwo;
     private TextView tvHomeTitleOne;
@@ -78,12 +79,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
             @Override
             public void ItemOnClick(int position) {
-                toast("点击了：" + mList.get(position));
+                // toast("点击了：" + mList.get(position));
+                // 打开详情
+                startActivity(ProjectDetailActivity.class);
             }
         });
-
-        // 初始化前期数据
-
     }
 
     @Override
@@ -109,7 +109,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
                     @Override
                     public void ItemOnClick(int position) {
-                        toast("点击了：" + mList.get(position).getTitle());
+                        // toast("点击了：" + mList.get(position).getTitle());
+                        // 打开详情
+                        startActivity(ProjectDetailActivity.class);
                     }
                 });
 
@@ -129,7 +131,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 beforeItemAdapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
                     @Override
                     public void ItemOnClick(int position) {
-                        toast("点击了：" + mList.get(position).getLabel());
+                        // toast("点击了：" + mList.get(position).getLabel());
+                        // 打开详情
+                        startActivity(ProjectDetailActivity.class);
                     }
                 });
 
@@ -156,7 +160,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         // 初始化列表数据       -- 此数据需要从后台获取
         mList = new ArrayList<>();
         for (int i = 0; i < mListTitles.length; i++) {
-            HomeListBean homeList = new HomeListBean();
+            ProjectInfoBean homeList = new ProjectInfoBean();
             homeList.setTitle(mListTitles[i]);
             homeList.setLabel(mLabels[i]);
             mList.add(homeList);
@@ -166,7 +170,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private void initBeforeData() {
         mList = new ArrayList<>();
         for (int i = 0; i < beforeItemTitles.length; i++) {
-            HomeListBean homeList = new HomeListBean();
+            ProjectInfoBean homeList = new ProjectInfoBean();
             homeList.setTitle(beforeItemTitles[i]);
             homeList.setLabel(beforeLabels[i]);
             mList.add(homeList);

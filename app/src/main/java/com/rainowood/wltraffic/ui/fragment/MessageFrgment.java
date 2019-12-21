@@ -9,7 +9,8 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseFragment;
-import com.rainowood.wltraffic.domain.HomeListBean;
+import com.rainowood.wltraffic.domain.ProjectInfoBean;
+import com.rainowood.wltraffic.ui.activity.MessageDetailActivity;
 import com.rainowood.wltraffic.ui.adapter.HomeBeforeItemAdapter;
 import com.rainowood.wltraffic.ui.dialog.WaitDialog;
 import com.rainwood.tools.dialog.BaseDialog;
@@ -36,7 +37,7 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
     String[] mLabels = {"2019.12.18 15:30:25", "2019.12.18 15:30:25", "2019.12.18 15:30:25", "2019.12.18 15:30:25"};
 
     // 消息数据
-    private List<HomeListBean> mList;
+    private List<ProjectInfoBean> mList;
     // 消息列表
     private ListView mListView;
     private View titleOne;
@@ -46,7 +47,6 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initView(View view) {
-
         // 初始化项目
         LinearLayoutCompat homeTitleOne = view.findViewById(R.id.ll_home_title_one);
         homeTitleOne.setOnClickListener(this);
@@ -69,7 +69,9 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
         adapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
             @Override
             public void ItemOnClick(int position) {
-                toast("点击了：" + mList.get(position));
+                // toast("点击了：" + mList.get(position));
+                // 展示详情
+                startActivity(MessageDetailActivity.class);
             }
         });
 
@@ -80,7 +82,7 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
         // 初始化列表数据       -- 此数据需要从后台获取
         mList = new ArrayList<>();
         for (int i = 0; i < mTitles.length; i++) {
-            HomeListBean homeList = new HomeListBean();
+            ProjectInfoBean homeList = new ProjectInfoBean();
             homeList.setTitle(mTitles[i]);
             homeList.setLabel(mLabels[i]);
             mList.add(homeList);
@@ -105,7 +107,9 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
                 adapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
                     @Override
                     public void ItemOnClick(int position) {
-                        toast("点击了：" + mList.get(position).getTitle());
+                        //toast("点击了：" + mList.get(position).getTitle());
+                        // 展示详情
+                        startActivity(MessageDetailActivity.class);
                     }
                 });
 
@@ -125,7 +129,9 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
                 beforeItemAdapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
                     @Override
                     public void ItemOnClick(int position) {
-                        toast("点击了：" + mList.get(position).getLabel());
+                        //toast("点击了：" + mList.get(position).getLabel());
+                        // 展示详情
+                        startActivity(MessageDetailActivity.class);
                     }
                 });
 

@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.domain.HomeListBean;
+import com.rainowood.wltraffic.domain.ProjectInfoBean;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class HomeBeforeItemAdapter extends BaseAdapter {
 
-    private List<HomeListBean> mList;
+    private List<ProjectInfoBean> mList;
     private Context mContext;
 
-    public HomeBeforeItemAdapter(Context mContext, List<HomeListBean> mList) {
+    public HomeBeforeItemAdapter(Context mContext, List<ProjectInfoBean> mList) {
         this.mList = mList;
         this.mContext = mContext;
     }
@@ -34,7 +34,7 @@ public class HomeBeforeItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public HomeListBean getItem(int position) {
+    public ProjectInfoBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -46,7 +46,7 @@ public class HomeBeforeItemAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if (convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_home_before_item, parent, false);
             // 生成一个ViewHolder 对象
             holder = new ViewHolder();
@@ -56,7 +56,7 @@ public class HomeBeforeItemAdapter extends BaseAdapter {
             holder.ll_home_item = convertView.findViewById(R.id.ll_home_before_item);
 
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
@@ -74,7 +74,7 @@ public class HomeBeforeItemAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public interface ItemOnClick{
+    public interface ItemOnClick {
         void ItemOnClick(int position);
     }
 
@@ -84,7 +84,7 @@ public class HomeBeforeItemAdapter extends BaseAdapter {
         this.onClick = onClick;
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         private TextView tv_title, tv_label;
         private LinearLayout ll_home_item;
     }

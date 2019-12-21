@@ -57,10 +57,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         Random random = new Random();
         int color = 0xffffff ; //| random.nextInt(0xffffff);
         StatusBarUtil.setStatusBarColor(getActivity(), color);
-        // 初始视图
-        initView();
         // 初始化数据
         initData();
+        // 初始视图
+        initView();
         // 将activity 入栈
         ActivityStackManager.getInstance().addActivity(this);
     }
