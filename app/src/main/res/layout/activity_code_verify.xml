@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_action" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="30dp"
+        android:text="@string/common_input_code_verify"
+        android:textColor="@color/colorWord"
+        android:textSize="30sp" />
+
+
+    <include layout="@layout/item_code_verify" />
+
+    <View
+        style="@style/HorizontalLineStyle"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp" />
+
+    <!-- 手动触发定时器-->
+   <!-- <com.rainwood.tools.view.CountdownView
+        android:id="@+id/cv_phone_verify_countdown"
+        style="@style/CountdownViewStyle"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>-->
+
+    <!-- 自动触发定时器-->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_phone_verify_countdown"
+        style="@style/CountdownViewStyle"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_confirm"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:text="@string/common_confirm" />
+
+</LinearLayout>
+

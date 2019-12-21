@@ -4,11 +4,16 @@
     <!-- App 样式中引用的颜色 -->
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/black</color>
-    <color name="colorAccent">#5A8DDF</color>
+    <!-- 按钮默认的颜色-->
+    <color name="colorAccent">#25AFFF</color>
     <color name="windowBackground">#F4F4F4</color>
-    <color name="textColor">#333333</color>
     <color name="textColorHint">#757575</color>
-
+    <!-- 字体百分比颜色-->
+    <color name="colorPercentage">#FF7263</color>
+    <!-- 文本字体颜色-->
+    <color name="textColor">#333333</color>
+    <!-- 字体颜色-->
+    <color name="colorWord">#666666</color>
 
     <!-- 白色 -->
     <color name="white">#FFFFFFFF</color>
@@ -43,11 +48,6 @@
     <color name="colorConfirm">#007AFF</color>
     <!-- 对话框取消按钮文本颜色 -->
     <color name="colorCancel">#F44336</color>
-
-    <!-- 字体百分比颜色-->
-    <color name="colorPercentage">#FF7263</color>
-    <!-- 字体颜色-->
-    <color name="colorText">#333333</color>
 
     <!-- 黑色 -->
     <color name="black">#FF000000</color>

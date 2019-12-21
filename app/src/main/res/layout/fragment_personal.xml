@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_logout"
+        android:layout_width="40dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_icon_set_up" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_logout"
+        android:layout_width="94dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/iv_logout"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_icon_out"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="22dp"
+        android:gravity="center"
+        android:text="@string/common_text_logout"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_show_image"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:background="@drawable/ic_icon_company_address"
+        android:layout_marginTop="100dp"
+        android:adjustViewBounds="true"
+        android:layout_centerHorizontal="true"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="17sp"
+        android:textColor="@color/textColor"
+        android:layout_below="@+id/iv_show_image"/>
+
+    <LinearLayout
+        android:id="@+id/ll_name_sex"
+        android:layout_below="@+id/tv_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/ic_icon_leader"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/textColor"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_post"
+        android:layout_below="@+id/ll_name_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/ic_icon_position"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/textColor"
+            android:textSize="13sp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_company_position"
+        android:layout_below="@+id/ll_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/ic_icon_company_address"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_company_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/textColor"
+            android:textSize="13sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_tel"
+        android:layout_below="@+id/ll_company_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/ic_icon_phone"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_user_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/textColor"
+            android:textSize="13sp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_change_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/common_text_change"
+            android:textColor="@color/colorConfirm"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

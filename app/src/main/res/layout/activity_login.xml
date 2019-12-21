@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/common_login"
+        android:textColor="@color/colorWord"
+        android:textSize="30sp"
+        android:layout_marginTop="60dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"/>
+
+    <com.rainwood.tools.view.ClearEditText
+        android:id="@+id/et_login_account"
+        style="@style/EditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/common_input_account"
+        android:inputType="textVisiblePassword"
+        android:singleLine="true"
+        app:regexType="name"/>
+
+    <View style="@style/HorizontalLineStyle" />
+    
+    <com.rainwood.tools.view.PasswordEditText
+        android:id="@+id/et_login_password"
+        style="@style/EditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="@string/common_input_pwd"
+        android:maxLength="20"
+        android:maxLines="1" />
+
+    <View style="@style/HorizontalLineStyle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_login_forget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="15dp"
+        android:text="@string/common_login_forget"
+        android:textColor="@color/colorAccent"
+        tools:ignore="RtlHardcoded" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login_commit"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/common_login" />
+
+
+</LinearLayout>

@@ -31,8 +31,8 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
 
-        <!-- App 首页-->
-        <activity android:name=".ui.activity.HomeActivity"
+        <!-- App 首页 HomeActivity-->
+        <activity android:name=".ui.activity.LoginActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
@@ -44,6 +44,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 登录页面 LoginActivity-->
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 手机验证页面 ForgetPwdCheckPhoneActivity-->
+        <activity
+            android:name=".ui.activity.CheckPhoneActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 输入验证码界面 CodeVerifyActivity-->
+        <activity
+            android:name=".ui.activity.CodeVerifyActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
 
         <!-- 异常捕捉页面 CrashActivity-->
         <activity

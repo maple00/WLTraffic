@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.toast.ToastUtils;
 
+import java.util.Random;
+
 /**
  * @Author: shearson
  * @time: 2019/11/27 11:31
@@ -64,6 +66,11 @@ public abstract class BaseFragment extends Fragment {
 
         initData(mContext);
         initView(rootView);
+
+        // 状态栏主题
+        Random random = new Random();
+        int color = 0xff000000 | random.nextInt(0xffffff);
+        StatusBarUtil.setStatusBarColor(getActivity(), color);
 
         return rootView;
     }

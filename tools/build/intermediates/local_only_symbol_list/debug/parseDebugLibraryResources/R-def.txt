@@ -66,6 +66,9 @@ attr? rimWidth
 attr? scaleRatio
 attr? sizeRatio
 attr? spinSpeed
+drawable ic_input_delete
+drawable ic_input_hide
+drawable ic_input_show
 id chinese
 id count
 id english

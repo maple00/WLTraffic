@@ -1,6 +1,5 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.os.Bundle;
 import android.util.SparseArray;
 import android.widget.RadioGroup;
 
@@ -8,11 +7,12 @@ import androidx.fragment.app.Fragment;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
-import com.rainowood.wltraffic.ui.fragment.BlankFragment;
 import com.rainowood.wltraffic.ui.fragment.HomeFragment;
+import com.rainowood.wltraffic.ui.fragment.MessageFrgment;
+import com.rainowood.wltraffic.ui.fragment.PersonalFragment;
 import com.rainwood.tools.viewinject.ViewById;
 
-public class HomeActivity extends BaseActivity {
+public final class HomeActivity extends BaseActivity {
 
 
     @Override
@@ -28,9 +28,9 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initView() {
         mFragmentSparseArray = new SparseArray<>();
-        mFragmentSparseArray.append(R.id.today_tab,new HomeFragment());
-        mFragmentSparseArray.append(R.id.record_tab, BlankFragment.newInstance("记录"));
-        mFragmentSparseArray.append(R.id.settings_tab, BlankFragment.newInstance("设置"));
+        mFragmentSparseArray.append(R.id.today_tab, new HomeFragment());
+        mFragmentSparseArray.append(R.id.record_tab, new MessageFrgment());
+        mFragmentSparseArray.append(R.id.settings_tab, new PersonalFragment());
         mTabRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

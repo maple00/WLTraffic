@@ -14,8 +14,7 @@
         android:textSize="16sp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="新安小学新建校区10kv配供电工程"
-        android:textColor="@color/colorText"/>
+        android:textColor="@color/textColor"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_label"
@@ -24,7 +23,6 @@
         android:gravity="right"
         android:textSize="12sp"
         android:textColor="@color/colorPercentage"
-        android:text="90%"
         tools:ignore="RtlHardcoded" />
 
 </LinearLayout>

@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -27,6 +28,8 @@ import com.rainowood.wltraffic.other.StatusManager;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.toast.ToastUtils;
 import com.rainwood.tools.viewinject.ViewBind;
+
+import java.util.Random;
 
 /**
  * @Author: shearson
@@ -50,6 +53,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         ViewBind.inject(this);
         // 沉浸式状态栏
         setStatusBar();
+        // 设置状态栏的主题
+        Random random = new Random();
+        int color = 0xffffff ; //| random.nextInt(0xffffff);
+        StatusBarUtil.setStatusBarColor(getActivity(), color);
         // 初始视图
         initView();
         // 初始化数据
@@ -244,6 +251,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showLayout(Drawable drawable, CharSequence hint) {
         mStatusManager.showLayout(getContentView(), drawable, hint);
+    }
+
+    public void showSoftInputFromWindow(EditText editText){
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     /**
