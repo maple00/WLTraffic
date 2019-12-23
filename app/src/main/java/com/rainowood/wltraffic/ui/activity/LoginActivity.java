@@ -69,6 +69,6 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
                 // 验证之后跳转到首页
                 openActivity(HomeActivity.class);
             }
-        }, 2000);
+        }, 1000);
     }
 }

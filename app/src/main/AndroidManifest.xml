@@ -75,6 +75,30 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 计划管理 PlanManagerActivity-->
+        <activity
+            android:name=".ui.activity.PlanManagerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 文档详情展示 DocumentShowDetailActivity-->
+        <activity
+            android:name=".ui.activity.DocumentShowDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 项目建设程序  ItemProcedureActivity-->
+        <activity
+            android:name=".ui.activity.ProjectProcedureActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 项目进度 ProjectProgressActivity-->
+        <activity
+            android:name=".ui.activity.ProjectProgressActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <!-- 异常捕捉页面 CrashActivity-->
         <activity
             android:name=".ui.activity.CrashActivity"

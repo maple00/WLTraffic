@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <include layout="@layout/activity_action" />
 
@@ -69,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:divider="@android:color/transparent"
+                android:listSelector="@android:color/transparent"
                 android:dividerHeight="10dp" />
 
             <com.rainwood.tools.widget.MeasureGridView
@@ -79,13 +81,35 @@
                 android:numColumns="5"
                 android:verticalSpacing="15dp" />
 
-            <!-- 内容-->
+            <!-- 文档内容-->
             <com.rainwood.tools.widget.MeasureListView
-                android:id="@+id/lv_item_content"
+                android:id="@+id/lv_item_word_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:divider="@android:color/transparent" />
+                android:listSelector="@android:color/transparent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="40dp"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"/>
+
+            <!-- 段落列表-->
+            <com.rainwood.tools.widget.MeasureListView
+                android:id="@+id/lv_item_paragraph_content"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:listSelector="@android:color/transparent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="40dp"/>
+
+            <!-- 页面留白-->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

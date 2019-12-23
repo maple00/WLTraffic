@@ -17,6 +17,29 @@
     <!-- 标签颜色-->
     <color name="colorLabel">#999999</color>
 
+    <!-- 绘制颜色-->
+    <color name="colorCircle11">#11D7A0</color>
+    <!-- 点的颜色-->
+    <color name="colorPoint">#D6D6D6</color>
+    <!-- 计划管理 背景-->
+    <color name="colorPlanBG">#E6F1F8</color>
+
+    <!--颜色-->
+    <!-- 蓝色-->
+    <color name="colorBlue1">#24B0FF</color>
+
+    <!-- 灰色-->
+    <color name="colorGray1">#93A4AD</color>
+    <color name="colorGray2">#68757C</color>
+
+
+    <!-- 绿色-->
+    <color name="colorSuccess">#11D7A0</color>
+
+    <!-- 红色-->
+    <color name="colorFail">#FF726B</color>
+
+
     <!-- 白色 -->
     <color name="white">#FFFFFFFF</color>
     <color name="white95">#F2FFFFFF</color>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="中央补助"
+        android:textColor="@color/colorGray1"
+        android:textSize="12sp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1200万"
+        android:textSize="12sp"
+        android:textColor="@color/colorGray2"
+        android:layout_marginStart="20dp"/>
+
+</LinearLayout>
