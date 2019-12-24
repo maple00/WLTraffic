@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Author: a797s
@@ -10,7 +11,17 @@ import java.io.Serializable;
 public class ProjectProgressBean implements Serializable {
 
     private String title;
-    private boolean hasSelected;
+    private int hasSelected;
+
+    private List<SubProjectProgressBean> mList;
+
+    public List<SubProjectProgressBean> getmList() {
+        return mList;
+    }
+
+    public void setmList(List<SubProjectProgressBean> mList) {
+        this.mList = mList;
+    }
 
     public String getTitle() {
         return title;
@@ -20,11 +31,11 @@ public class ProjectProgressBean implements Serializable {
         this.title = title;
     }
 
-    public boolean isHasSelected() {
+    public int getHasSelected() {
         return hasSelected;
     }
 
-    public void setHasSelected(boolean hasSelected) {
+    public void setHasSelected(int hasSelected) {
         this.hasSelected = hasSelected;
     }
 }

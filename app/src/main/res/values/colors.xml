@@ -31,7 +31,7 @@
     <!-- 灰色-->
     <color name="colorGray1">#93A4AD</color>
     <color name="colorGray2">#68757C</color>
-
+    <color name="colorGray3">#DADFE6</color>
 
     <!-- 绿色-->
     <color name="colorSuccess">#11D7A0</color>

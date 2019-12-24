@@ -95,6 +95,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
                     case 3:             // 支付管理
                         break;
                     case 4:             // 质量安全
+                        openActivity(QualitySafetyActivity.class);
                         break;
                     case 5:             // 变更管理
                         break;
