@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.domain.AssessDeductionBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 import com.rainowood.wltraffic.ui.adapter.AssessAttachmentAdapter;
+import com.rainowood.wltraffic.ui.adapter.AssessDeductionAdapter;
 import com.rainowood.wltraffic.utils.DateTimeUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
@@ -95,10 +97,20 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
     private String[] mTitles = {"考核附件考核附件.doc", "考核附件考核附件.doc", "考核附件考核附件.doc", "考核附件考核附件.doc", "考核附件考核附件.doc"};
     private String[] mLabels = {"2019.12.19 13:09:00更新", "2019.12.19 13:09:00更新", "2019.12.19 13:09:00更新", "2019.12.19 13:09:00更新", "2019.12.19 13:09:00更新"};
 
+    // 扣分明细
+    private List<AssessDeductionBean> deductionLists;
+
+    private String[] mTitles1 = {"工程部", "开发部", "研发部", "人事部", "技术部"};
+    private String[] mScore = {"-5", "-10", "-7", "-5", "-5"};
+    private String[] mLabels1 = {"工程进度延期，未能按时完成工程", "遗失公司重要文件", "工程进度延期，未能按时完成工程",
+                    "工程进度延期，未能按时完成工程", "遗失公司重要文件"};
+
+
     @Override
     protected void initData() {
         super.initData();
 
+        // 初始化模拟 考核细则
         mList = new ArrayList<>();
         for (int i = 0; i < mTitles.length; i++) {
             SubItemLabelBean label = new SubItemLabelBean();
@@ -106,6 +118,17 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
             label.setContent(mLabels[i]);
 
             mList.add(label);
+        }
+
+        // 初始化模拟 扣分明细
+        deductionLists = new ArrayList<>();
+        for (int i = 0; i < mTitles1.length; i++) {
+            AssessDeductionBean deduction = new AssessDeductionBean();
+            deduction.setTitle(mTitles1[i]);
+            deduction.setScore(mScore[i]);
+            deduction.setLabel(mLabels1[i]);
+
+            deductionLists.add(deduction);
         }
 
     }
@@ -126,6 +149,7 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
                 // 加载数据
                 lineOne.setVisibility(View.VISIBLE);
                 assessList.setVisibility(View.VISIBLE);
+
                 AssessAttachmentAdapter attachmentAdapter = new AssessAttachmentAdapter(getActivity(), mList);
                 assessList.setAdapter(attachmentAdapter);
 
@@ -139,6 +163,16 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
                 // 获取当前时间
                 year.setText(String.valueOf(getNowTime.getYear()));
                 month.setText(String.valueOf(getNowTime.getMonth()));
+                // 明细数据列表
+                AssessDeductionAdapter deductionAdapter = new AssessDeductionAdapter(this, deductionLists);
+                assessDeduction.setAdapter(deductionAdapter);
+                deductionAdapter.setItemListener(new AssessDeductionAdapter.OnItemListener() {
+                    @Override
+                    public void OnItemClick(int position) {
+                        toast("点击了：" + position);
+                        openActivity(DeductionDetailActivity.class);
+                    }
+                });
 
                 break;
             case R.id.iv_before:            // 上个月
@@ -162,13 +196,10 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-
-
     private static class getNowTime{
         private static int getYear(){
             return DateTimeUtils.getNowYear();
         }
-
         private static int getMonth(){
             return DateTimeUtils.getNowMonth();
         }

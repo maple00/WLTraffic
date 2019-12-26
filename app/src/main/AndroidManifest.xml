@@ -129,6 +129,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 扣分项详情  DeductionDetailActivity-->
+        <activity
+            android:name=".ui.activity.DeductionDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <!-- 异常捕捉页面 CrashActivity-->
         <activity
             android:name=".ui.activity.CrashActivity"

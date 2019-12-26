@@ -98,7 +98,7 @@
 
             <!-- 段落列表-->
             <com.rainwood.tools.widget.MeasureListView
-                android:id="@+id/lv_item_paragraph_content"
+                android:id="@+id/lv_item_paragraph"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:listSelector="@android:color/transparent"

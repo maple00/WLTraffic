@@ -56,7 +56,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
     private MeasureGridView subItemGridView;
     @ViewById(R.id.lv_item_word_content)
     private MeasureListView itemContent;
-    @ViewById(R.id.lv_item_paragraph_content)
+    @ViewById(R.id.lv_item_paragraph)
     private MeasureListView paragraghListView;
 
 
