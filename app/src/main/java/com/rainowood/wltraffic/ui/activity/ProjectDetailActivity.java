@@ -93,6 +93,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
                         openActivity(ProjectProgressActivity.class);
                         break;
                     case 3:             // 支付管理
+                        openActivity(PayManagerActivity.class);
                         break;
                     case 4:             // 质量安全
                         openActivity(QualitySafetyActivity.class);
@@ -104,6 +105,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
                     case 7:             // 招投标
                         break;
                     case 8:             // 考核管理
+                        openActivity(AssessManagerActivity.class);
                         break;
                     default:
                         break;
@@ -226,7 +228,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:
-                finish();
+                openActivity(HomeActivity.class);
                 break;
         }
     }

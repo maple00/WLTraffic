@@ -1,5 +1,7 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -7,12 +9,12 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
-import com.rainowood.wltraffic.domain.ImageBean;
+import com.rainowood.wltraffic.domain.QualitySafeDetailBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 import com.rainowood.wltraffic.domain.SubItemWordBean;
+import com.rainowood.wltraffic.ui.adapter.ImageAdapter;
 import com.rainowood.wltraffic.ui.adapter.ItemDetailWordListAdapter;
 import com.rainowood.wltraffic.ui.adapter.QualitySafeAdapter;
-import com.rainowood.wltraffic.ui.adapter.QualityTestAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
 import com.rainwood.tools.widget.MeasureListView;
@@ -79,7 +81,9 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
         safeAdapter.setContentOnClick(new QualitySafeAdapter.IContentOnClick() {
             @Override
             public void contentClick(int position) {
-                toast("点击了：" + position);
+                //toast("点击了：" + position);
+                //质量安全及整改情况
+                openActivity(RectificationActivity.class);
             }
         });
 
@@ -89,7 +93,7 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
         labelField.setText(label.getTitle());
         mContentField.setText(label.getContent());
 
-        setOnClickAndShowDetail(mContentField, wordContent, querField, null);
+        setOnClickAndShowDetail(mContentField, wordContent, querField, fieldTitle.getText().toString().trim());
 
         ItemDetailWordListAdapter wordAdapter = new ItemDetailWordListAdapter(this, mSubItemWordList);
         mFieldTest.setAdapter(wordAdapter);
@@ -99,12 +103,19 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
         qualityTitle.setText("质量鉴定(检测)意见");
         contentQuality.setText(labelQuality.getContent());
         // 查看全文
-        setOnClickAndShowDetail(contentQuality, qualityLabel, queryQuality, null);
+        setOnClickAndShowDetail(contentQuality, qualityLabel, queryQuality, qualityTitle.getText().toString().trim());
 
-        QualityTestAdapter imageAdapter = new QualityTestAdapter(this, imgList);
+        ImageAdapter imageAdapter = new ImageAdapter(this, imgsList);
         gvImg.setAdapter(imageAdapter);
         imageAdapter.notifyDataSetChanged();
 
+        // 查看大图
+        imageAdapter.setImgClick(new ImageAdapter.ImgOnClickListener() {
+            @Override
+            public void imgClick(int position) {
+                ImageActivity.start(getActivity(), imgsList, position);
+            }
+        });
     }
 
     /*
@@ -122,7 +133,7 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
 
     private SubItemLabelBean labelQuality;
 
-    private List<ImageBean> imgList;
+    private ArrayList<String> imgsList;
     private String[] imgPath = {"https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
             "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png"};
 
@@ -152,14 +163,8 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
         labelQuality = new SubItemLabelBean();
         labelQuality.setContent("长安华都·华韵苑15号楼工程为长安华都小区二期工程中的一幢，正负零下为地下人防工程，建筑面积1807㎡为住宅楼，地上11+1层建筑面积16437㎡住宅楼。结构为：基础独立柱基，带形基础，剪力墙–薄壁框架，全高40.05m，平面布置为平行三个单元，每层12户，顶上11+1为跃层，其余为平层加局部错层，外形设...");
 
-        imgList = new ArrayList<>();
-        for (String s : imgPath) {
-            ImageBean imagePath = new ImageBean();
-            imagePath.setPath(s);
-
-            imgList.add(imagePath);
-        }
-
+        imgsList = new ArrayList<>();
+        imgsList.addAll(Arrays.asList(imgPath));
 
     }
 
@@ -191,13 +196,26 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
                     clickRegion.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            toast("点击了");
-                            /*Intent intent = new Intent(QualitySafetyActivity.this, DocumentShowDetailActivity.class);
-                            ParagraphListBean paragraph = new ParagraphListBean();
-                            paragraph.setTitle(title);
-                            paragraph.setContent(text.getText().toString().trim());
-                            intent.putExtra("document", paragraph);
-                            startActivity(intent);*/
+                            //toast("点击了");
+                            Intent intent = new Intent(QualitySafetyActivity.this, QuailtySafeDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            QualitySafeDetailBean qualitySafeDetail;
+                            if ("外业检测".equals(title)){
+                                qualitySafeDetail = new QualitySafeDetailBean();
+                                qualitySafeDetail.setTitle(labelField.getText().toString().trim());
+                                qualitySafeDetail.setContent(mContentField.getText().toString().trim());
+                                qualitySafeDetail.setmWordList(mSubItemWordList);
+                                bundle.putSerializable("quality", qualitySafeDetail);
+                            }
+
+                            if ("质量鉴定(检测)意见".equals(title)){
+                                qualitySafeDetail = new QualitySafeDetailBean();
+                                qualitySafeDetail.setContent(contentQuality.getText().toString().trim());
+                                qualitySafeDetail.setmImgList(imgsList);
+                                bundle.putSerializable("quality", qualitySafeDetail);
+                            }
+                            intent.putExtras(bundle);
+                            startActivity(intent, bundle);
                         }
                     });
                 } else {

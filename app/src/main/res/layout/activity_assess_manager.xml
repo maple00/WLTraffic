@@ -2,26 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <include layout="@layout/activity_action"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_home_title_one"
+        <LinearLayout
+            android:id="@+id/ll_assess_title_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_home_title_one"
+            <TextView
+                android:id="@+id/tv_assess_title_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:textColor="@color/textColor"
                 android:textSize="15sp" />
 
@@ -32,21 +34,21 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/selector_button" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
         <View
             android:layout_width="40dp"
             android:layout_height="match_parent"/>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_home_title_two"
+        <LinearLayout
+            android:id="@+id/ll_assess_title_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_home_title_two"
+            <TextView
+                android:id="@+id/tv_assess_title_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
@@ -58,22 +60,23 @@
                 android:layout_height="3dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/selector_button" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
+    </LinearLayout>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    <ListView
-        android:id="@+id/lv_home"
+    <!-- 考核细则-->
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_assess_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:divider="@null"
-        android:dividerHeight="20dp"
-        android:fadingEdge="none"
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="true" />
+        android:layout_marginTop="20dp"
+        android:divider="@android:color/transparent"
+        android:listSelector="@android:color/transparent"
+        android:dividerHeight="20dp"/>
+
+    <!-- 扣分明细-->
+    <include layout="@layout/sub_activity_assess"/>
 
 </LinearLayout>

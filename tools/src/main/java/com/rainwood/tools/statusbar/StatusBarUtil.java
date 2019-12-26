@@ -37,6 +37,7 @@ public class StatusBarUtil {
 
     /**
      * 修改状态栏颜色，支持4.4以上版本
+     *
      * @param colorId 颜色
      */
     public static void setStatusBarColor(Activity activity, int colorId) {
@@ -81,6 +82,7 @@ public class StatusBarUtil {
     /**
      * 代码实现android:fitsSystemWindows
      * 手动设置fitsSystemWindows 属性时会自动的预留一个状态栏大小的空间
+     *
      * @param activity
      */
     public static void setRootViewFitsSystemWindows(Activity activity, boolean fitSystemWindows) {

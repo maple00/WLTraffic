@@ -12,6 +12,8 @@ public class SubItemLabelBean implements Serializable {
     private String title;       // 标题
     private String content;     // 内容
 
+    private boolean isVisibility;
+
     public String getTitle() {
         return title;
     }
@@ -26,5 +28,13 @@ public class SubItemLabelBean implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public boolean isVisibility() {
+        return isVisibility;
+    }
+
+    public void setVisibility(boolean visibility) {
+        isVisibility = visibility;
     }
 }

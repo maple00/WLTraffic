@@ -55,7 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setStatusBar();
         // 设置状态栏的主题
         Random random = new Random();
-        int color = 0xffffff ; //| random.nextInt(0xffffff);
+        int color = 0xffffff | random.nextInt(0xffffff);
         StatusBarUtil.setStatusBarColor(getActivity(), color);
         // 初始化数据
         initData();

@@ -105,12 +105,41 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 整改情况  RectificationActivity-->
+        <activity
+            android:name=".ui.activity.RectificationActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 外业检测详情  QuailtySafeDetailActivity-->
+        <activity
+            android:name=".ui.activity.QuailtySafeDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 支付管理  PayManagerActivity-->
+        <activity
+            android:name=".ui.activity.PayManagerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 考核管理  AssessManager-->
+        <activity
+            android:name=".ui.activity.AssessManagerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <!-- 异常捕捉页面 CrashActivity-->
         <activity
             android:name=".ui.activity.CrashActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 图片放大-->
+        <activity
+            android:name=".ui.activity.ImageActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
 
     </application>
 

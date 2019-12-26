@@ -1,6 +1,5 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
