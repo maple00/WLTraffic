@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="@color/textColor"
-            android:text="工程部"
             android:gravity="start"/>
 
         <TextView
@@ -28,7 +27,6 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/textColor"
-            android:text="-5"
             android:gravity="end" />
 
     </LinearLayout>
@@ -42,8 +40,7 @@
         android:layout_marginTop="15dp"
         android:gravity="start"
         android:maxLines="1"
-        android:ellipsize="end"
-        android:text="工程进度延期，未能按时完成工程"/>
+        android:ellipsize="end"/>
 
     <View
         android:layout_marginTop="20dp"

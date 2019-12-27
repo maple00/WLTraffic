@@ -19,7 +19,6 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="安置房改造通知.doc"
             android:textColor="@color/textColor"
             android:textSize="14sp" />
 
@@ -74,7 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="2019.12.19 13:09:00更新"
         android:textColor="@color/colorLabel"
         android:textSize="11sp"
         tools:ignore="SmallSp" />

@@ -1,10 +1,5 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,8 +7,6 @@ import android.widget.TextView;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainwood.tools.viewinject.ViewById;
-
-import java.text.DecimalFormat;
 
 /**
  * @Author: shearson
@@ -60,7 +53,7 @@ public class DeductionDetailActivity extends BaseActivity implements View.OnClic
         // 获取数据
         name.setText(mContents[0]);
         scoreTV.setText("-5");
-        scoreTV.setText(Html.fromHtml(""));
+        //scoreTV.setText(Html.fromHtml(""));
 
         titleContent.setText(mContents[2]);
         labelContent.setText(mContents[3]);
@@ -69,6 +62,10 @@ public class DeductionDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.btn_back:
+                finish();
+                break;
+        }
     }
 }

@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:gravity="center_horizontal"
-        android:text="工程部"
         android:textColor="@color/textColor"
         android:textSize="18sp" />
 
@@ -23,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="-5"
         android:textColor="@color/colorPercentage"
         android:textSize="36sp"
         android:textStyle="bold" />
@@ -41,7 +39,7 @@
         <TextView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="扣分项"
+            android:text="@string/item_deduction_item"
             android:textColor="@color/colorLabel"
             android:textSize="14sp" />
 
@@ -50,7 +48,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="遗失公司重要文件"
             android:textColor="@color/textColor"
             android:textSize="14sp" />
 
@@ -66,7 +63,7 @@
         <TextView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="备注"
+            android:text="@string/item_note"
             android:textColor="@color/colorLabel"
             android:textSize="14sp" />
 
@@ -75,7 +72,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="工程进度延期，未能按时完成工程工程进度延期未能按时完成工程工程进度延期未能按时完成工程工程进度延期。"
             android:textColor="@color/textColor"
             android:textSize="14sp" />
 
@@ -91,7 +87,7 @@
         <TextView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="更新时间"
+            android:text="@string/item_update_time"
             android:textColor="@color/colorLabel"
             android:textSize="14sp" />
 
@@ -100,7 +96,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="2019.12.18  13:15:00"
             android:textColor="@color/textColor"
             android:textSize="14sp" />
 

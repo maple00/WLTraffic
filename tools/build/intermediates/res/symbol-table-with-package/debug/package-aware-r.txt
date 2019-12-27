@@ -185,6 +185,11 @@ attr editTextColor
 attr editTextStyle
 attr elevation
 attr expandActivityOverflowButtonDrawable
+attr fastScrollEnabled
+attr fastScrollHorizontalThumbDrawable
+attr fastScrollHorizontalTrackDrawable
+attr fastScrollVerticalThumbDrawable
+attr fastScrollVerticalTrackDrawable
 attr fillRadius
 attr firstBaselineToTopHeight
 attr font
@@ -216,6 +221,7 @@ attr isLightTheme
 attr itemPadding
 attr lastBaselineToBottomHeight
 attr layout
+attr layoutManager
 attr lineHeight
 attr linearProgress
 attr listChoiceBackgroundIndicator
@@ -280,7 +286,9 @@ attr radioButtonStyle
 attr ratingBarStyle
 attr ratingBarStyleIndicator
 attr ratingBarStyleSmall
+attr recyclerViewStyle
 attr regexType
+attr reverseLayout
 attr rimColor
 attr rimWidth
 attr scaleRatio
@@ -296,12 +304,14 @@ attr showText
 attr showTitle
 attr singleChoiceItemLayout
 attr sizeRatio
+attr spanCount
 attr spinBars
 attr spinSpeed
 attr spinnerDropDownItemStyle
 attr spinnerStyle
 attr splitTrack
 attr srcCompat
+attr stackFromEnd
 attr state_above_anchor
 attr subMenuArrow
 attr submitBackground
@@ -541,6 +551,9 @@ dimen compat_notification_large_icon_max_height
 dimen compat_notification_large_icon_max_width
 dimen disabled_alpha_material_dark
 dimen disabled_alpha_material_light
+dimen fastscroll_default_thickness
+dimen fastscroll_margin
+dimen fastscroll_minimum_range
 dimen highlight_alpha_material_colored
 dimen highlight_alpha_material_dark
 dimen highlight_alpha_material_light
@@ -548,6 +561,9 @@ dimen hint_alpha_material_dark
 dimen hint_alpha_material_light
 dimen hint_pressed_alpha_material_dark
 dimen hint_pressed_alpha_material_light
+dimen item_touch_helper_max_drag_scroll_per_frame
+dimen item_touch_helper_swipe_escape_max_velocity
+dimen item_touch_helper_swipe_escape_velocity
 dimen notification_action_icon_size
 dimen notification_action_text_size
 dimen notification_big_circle_margin
@@ -763,6 +779,7 @@ id icon_group
 id image
 id info
 id italic
+id item_touch_helper_previous_elevation
 id iv_hint_icon
 id iv_hint_text
 id line1
@@ -1309,6 +1326,7 @@ styleable PopupWindowBackgroundState state_above_anchor
 styleable ProgressView barColor barSpinCycleTime barWidth circleRadius fillRadius linearProgress progressIndeterminate rimColor rimWidth spinSpeed
 styleable RatioFrameLayout sizeRatio
 styleable RecycleListView paddingBottomNoButtons paddingTopNoTitle
+styleable RecyclerView android_clipToPadding android_descendantFocusability android_orientation fastScrollEnabled fastScrollHorizontalThumbDrawable fastScrollHorizontalTrackDrawable fastScrollVerticalThumbDrawable fastScrollVerticalTrackDrawable layoutManager reverseLayout spanCount stackFromEnd
 styleable RegexEditText inputRegex regexType
 styleable ScaleImageView scaleRatio
 styleable SearchView android_focusable android_imeOptions android_inputType android_maxWidth closeIcon commitIcon defaultQueryHint goIcon iconifiedByDefault layout queryBackground queryHint searchHintIcon searchIcon submitBackground suggestionRowLayout voiceIcon

@@ -23,7 +23,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
  * @Desc: 状态栏适配
  */
 public class StatusBarUtils {
-
     private Activity mActivity;
     //状态栏颜色
     private int mColor = -1;
@@ -106,8 +105,8 @@ public class StatusBarUtils {
             //要增加内容视图的 paddingTop,否则内容被 ActionBar 遮盖
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 ViewGroup rootView = mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
-                //rootView.setPadding(0, getStatusBarHeight(mActivity) + getActionBarHeight(mActivity), 0, 0);
-                rootView.setPadding(0, 0, 0, 0);
+                rootView.setPadding(0, getStatusBarHeight(mActivity) + getActionBarHeight(mActivity), 0, 0);
+//                rootView.setPadding(0, 0, 0, 0);
             }
         }
     }

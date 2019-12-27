@@ -78,7 +78,7 @@ public final class StatusManager {
      * 显示空提示
      */
     public void showEmpty(View view) {
-        showLayout(view, R.drawable.icon_hint_empty, R.string.hint_layout_no_data);
+        showLayout(view, R.drawable.img_default_page_3x, R.string.hint_layout_no_data);
     }
 
     /**

@@ -99,8 +99,10 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
                         openActivity(QualitySafetyActivity.class);
                         break;
                     case 5:             // 变更管理
+                        openActivity(ChangeActivity.class);
                         break;
                     case 6:             // 农民工工资
+                        openActivity(FarmersSalaryManagerActivity.class);
                         break;
                     case 7:             // 招投标
                         break;

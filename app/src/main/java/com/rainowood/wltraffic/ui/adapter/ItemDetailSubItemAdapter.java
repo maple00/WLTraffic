@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @Author: shearson
  * @Time: 2019/12/21 22:46
- * @Desc: 项目详情中的子项目
+ * @Desc: 项目中的子项目
  */
 public class ItemDetailSubItemAdapter extends BaseAdapter {
 
@@ -69,6 +69,7 @@ public class ItemDetailSubItemAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 clickListener.ItemOnClick(position);
+                notifyDataSetChanged();
             }
         });
 

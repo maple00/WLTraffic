@@ -11,7 +11,6 @@
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="安置房改造通知.doc"
         android:textColor="@color/colorLabel"
         android:textSize="14sp" />
 

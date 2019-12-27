@@ -28,16 +28,22 @@
     <!-- 蓝色-->
     <color name="colorBlue1">#24B0FF</color>
 
+    <!-- 橙色-->
+    <color name="colorOrange1">#FFD1A259</color>
+
     <!-- 灰色-->
     <color name="colorGray1">#93A4AD</color>
     <color name="colorGray2">#68757C</color>
     <color name="colorGray3">#DADFE6</color>
+    <color name="colorGray4">#FFE5E5E5</color>
 
     <!-- 绿色-->
     <color name="colorSuccess">#11D7A0</color>
 
     <!-- 红色-->
     <color name="colorFail">#FF726B</color>
+    <color name="colorRed">#FFFFB58F</color>
+    <color name="colorRed1">#FFFF7263</color>
 
 
     <!-- 白色 -->
@@ -77,6 +83,7 @@
     <!-- 黑色 -->
     <color name="black">#FF000000</color>
     <color name="black95">#F2000000</color>
+    <color name="black94">#FF222222</color>
     <color name="black90">#E6000000</color>
     <color name="black85">#D9000000</color>
     <color name="black80">#CC000000</color>

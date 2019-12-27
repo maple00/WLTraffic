@@ -135,9 +135,69 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 变更管理 ChangeActivity-->
+        <activity
+            android:name=".ui.activity.ChangeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 变更管理详情 ChangeManagerDetailActivity-->
+        <activity
+            android:name=".ui.activity.ChangeManagerDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 农名工工资管理 FarmersSalaryManagerActivity-->
+        <activity
+            android:name=".ui.activity.FarmersSalaryManagerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 农名工保证金的缴的状态 FarmersMarginStatusActivity-->
+        <activity
+            android:name=".ui.activity.FarmersMarginStatusActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 农名工保证金的缴的状态 FarmersNoMarginActivity -->
+        <activity
+            android:name=".ui.activity.FarmersNoMarginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 农名工实名制 RealNameActivity-->
+        <activity
+            android:name=".ui.activity.RealNameActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 实名制详情 RealNameDetailActivity-->
+        <activity
+            android:name=".ui.activity.RealNameDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 专户制 SpecialAccountActivity-->
+        <activity
+            android:name=".ui.activity.SpecialAccountActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 劳资列表 LaborActivity-->
+        <activity
+            android:name=".ui.activity.LaborActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <!-- 异常捕捉页面 CrashActivity-->
         <activity
             android:name=".ui.activity.CrashActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 异常显示页面 EmptyActivity-->
+        <activity
+            android:name=".ui.activity.StatusActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 

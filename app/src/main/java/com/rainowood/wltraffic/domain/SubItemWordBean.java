@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 public class SubItemWordBean implements Serializable {
 
-    private String backEditTitle;   // 后台编辑的标题
-    private String wordTitle;       // 文档本身的标题
+    private String backEditTitle;   // 标题
+    private String wordTitle;       // 内容
 
     public String getBackEditTitle() {
         return backEditTitle;

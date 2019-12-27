@@ -21,7 +21,6 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical"
-        android:text="@string/common_action_title"
         android:maxLines="1"
         android:textSize="18sp"
         app:autoSizeTextType="uniform"
