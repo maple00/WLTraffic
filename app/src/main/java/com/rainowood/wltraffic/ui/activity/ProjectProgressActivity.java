@@ -35,12 +35,15 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
     @ViewById(R.id.lv_content)
     private MeasureListView contentList;
 
+    @ViewById(R.id.tv_title_content)
+    private TextView titleContent;
 
     @Override
     protected void initView() {
         btnBack.setOnClickListener(this);
         pageTitle.setText("进度管理");
 
+        titleContent.setText("丰裕粮油安置房建设工程泉城花都E区安置工程丰裕粮油安置房");
 
         ProjectProgressAdapter progressAdapter = new ProjectProgressAdapter(this, mList);
         contentList.setAdapter(progressAdapter);

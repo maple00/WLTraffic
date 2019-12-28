@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <!-- 专户制-->
-    <include layout="@layout/sub_activity_margin_no_status" />
+    <include layout="@layout/sub_activity_margin_status1" />
 
     <TextView
         android:id="@+id/tv_name"

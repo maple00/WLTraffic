@@ -82,6 +82,7 @@ public class ImageAdapter extends BaseAdapter {
             }
         });
 
+        notifyDataSetChanged();
         return convertView;
     }
 

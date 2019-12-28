@@ -105,6 +105,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
                         openActivity(FarmersSalaryManagerActivity.class);
                         break;
                     case 7:             // 招投标
+                        openActivity(TenderActivity.class);
                         break;
                     case 8:             // 考核管理
                         openActivity(AssessManagerActivity.class);

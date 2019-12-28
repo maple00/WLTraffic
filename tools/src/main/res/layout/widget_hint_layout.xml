@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:paddingTop="60dp"
     android:paddingBottom="150dp"
+    android:background="#FFFFFF"
     tools:context=".widget.HintLayout">
 
     <androidx.appcompat.widget.AppCompatImageView

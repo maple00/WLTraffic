@@ -17,7 +17,7 @@
     <string name="common_cancel">取消</string>
     <string name="common_text_change">修改</string>
     <string name="common_text_logout">退出登录</string>
-
+    <string name="common_view_full">查看全部</string>
 
     <!-- Http-->
     <string name="frame_name">AndroidOHP</string>
@@ -60,8 +60,10 @@
     <string name="plan_manager_constract_content">建设内容</string>
     <string name="plan_manager_investment_scale">投资规模</string>
 
-
     <!-- 农名工工资管理-->
     <string name="salary_manager_no_margin">未缴存</string>
 
+    <!-- 招投标-->
+    <string name="tender_has_complaints">有投诉</string>
+    
 </resources>

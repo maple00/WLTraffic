@@ -253,7 +253,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mStatusManager.showLayout(getContentView(), drawable, hint);
     }
 
-    public void showSoftInputFromWindow(EditText editText){
+    public void showSoftInputFromWindow(EditText editText) {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();

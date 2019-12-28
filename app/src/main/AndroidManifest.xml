@@ -29,7 +29,8 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:targetApi="n">
+        tools:targetApi="n"
+        android:fullBackupContent="@xml/backup_descriptor">
 
         <!-- App 首页 HomeActivity-->
         <activity android:name=".ui.activity.LoginActivity"
@@ -44,6 +45,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 启动页 SplashActivity-->
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
 
         <!-- 登录页面 LoginActivity-->
         <activity
@@ -179,6 +186,12 @@
 
         <!-- 专户制 SpecialAccountActivity-->
         <activity
+            android:name=".ui.activity.SpecialAccountNoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 专户制 SpecialAccountActivity-->
+        <activity
             android:name=".ui.activity.SpecialAccountActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -186,6 +199,36 @@
         <!-- 劳资列表 LaborActivity-->
         <activity
             android:name=".ui.activity.LaborActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 通报 NotifyModuleNoActivity-->
+        <activity
+            android:name=".ui.activity.NotifyModuleNoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 通报页面  NotifyModuleActivity-->
+        <activity
+            android:name=".ui.activity.NotifyModuleActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 整改详情 RectificationDetailActivity-->
+        <activity
+            android:name=".ui.activity.RectificationDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 招投标 TenderActivity-->
+        <activity
+            android:name=".ui.activity.TenderActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 招投标详情页 TenderDetailActivity-->
+        <activity
+            android:name=".ui.activity.TenderDetailAActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 

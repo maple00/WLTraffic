@@ -6,79 +6,85 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.LinearLayoutCompat;
-
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
-import com.rainowood.wltraffic.domain.SpecialAccountBean;
-import com.rainowood.wltraffic.ui.adapter.SpecialAccountAdapter;
+import com.rainowood.wltraffic.ui.adapter.QualitySafeAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @Author: a797s
- * @Date: 2019/12/27 18:19
- * @Desc: 专户制
+ * @Date: 2019/12/28 9:50
+ * @Desc: 通报
  */
-public class SpecialAccountActivity extends BaseActivity implements View.OnClickListener {
+public class NotifyModuleActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_special_no_account;
+        return R.layout.activity_notify;
     }
 
     @ViewById(R.id.iv_back)
-    private ImageView ivBack;
+    private ImageView back;
     @ViewById(R.id.tv_title)
     private TextView pageTitle;
     @ViewById(R.id.tv_status)
     private TextView status;
-
     @ViewById(R.id.tv_word_title)
     private TextView word;
+
+    @ViewById(R.id.lv_notify_content)
+    private MeasureListView notifyContent;
+
     @ViewById(R.id.ll_notify_download)
     private LinearLayout download;
     @ViewById(R.id.ll_preview)
     private LinearLayout preview;
-    @ViewById(R.id.lv_list)
-    private MeasureListView list;
+
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
-        ivBack.setOnClickListener(this);
+        back.setOnClickListener(this);
         download.setOnClickListener(this);
         preview.setOnClickListener(this);
+        pageTitle.setText("通报");
 
-        pageTitle.setText("专户制度");
-        status.setText("已签订三方协议");
-        word.setText("三方协议具体细则.doc");
+        status.setText("已设置维权公示牌");
+        word.setText("维权公示文档附件维权公....doc");
 
-        SpecialAccountAdapter accountAdapter = new SpecialAccountAdapter(this, mList);
-        list.setAdapter(accountAdapter);
+        QualitySafeAdapter safeAdapter = new QualitySafeAdapter(this, mSafeList);
+        notifyContent.setAdapter(safeAdapter);
+
+        safeAdapter.setContentOnClick(new QualitySafeAdapter.IContentOnClick() {
+            @Override
+            public void contentClick(int position) {
+                //toast("点击了：" + position);
+                openActivity(RectificationDetailActivity.class);
+            }
+        });
 
     }
 
     /*
     模拟数据
      */
-    private List<SpecialAccountBean> mList;
+    private List<String> mSafeList;
+    private String[] mContents = {"未整改业务操作中，由于经办人员业务知识欠缺风险意识差，未严格执行规章制度，且个别被...计单位",
+            "整改中业务操作中，由于经办人员业务知识欠缺风险意识差，未严格执行规章制度，且个别被...",
+            "已整改已经整改完毕"};
 
     @Override
     protected void initData() {
         super.initData();
-        mList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            SpecialAccountBean specialAccount = new SpecialAccountBean();
-            specialAccount.setMoney("￥ 560.00");
-            specialAccount.setTime("2019.12.18 17:19:00");
-            specialAccount.setNote("这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注");
-            mList.add(specialAccount);
-        }
+
+        mSafeList = new ArrayList<>();
+        mSafeList.addAll(Arrays.asList(mContents));
     }
 
     @Override

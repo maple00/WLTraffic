@@ -1,5 +1,6 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,6 +36,15 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initView() {
+        // 防止Home之后程序重启
+        if (!this.isTaskRoot()) {
+            Intent mainIntent = getIntent();
+            String action = mainIntent.getAction();
+            if (mainIntent.hasCategory(Intent.CATEGORY_LAUNCHER) && action.equals(Intent.ACTION_MAIN)) {
+                finish();
+                return;
+            }
+        }
         forgetPwd.setOnClickListener(this);
         loginCommit.setOnClickListener(this);
     }
@@ -48,7 +58,6 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
             case R.id.btn_login_commit:
                 String account = this.account.getText().toString().trim();
                 String password = this.password.getText().toString().trim();
-
 
                 showDialog();
                 break;

@@ -27,7 +27,19 @@ public class StatusActivity extends BaseActivity implements View.OnClickListener
     protected void initView() {
         // 页面返回
         findViewById(R.id.btn_back).setOnClickListener(this);
-        pageTitle.setText("农民工工资保证金");
+        String key = getIntent().getStringExtra("key");
+        if ("marginstatus".equals(key)){
+            pageTitle.setText("农民工工资保证金");
+        }
+
+        if ("specialaccount".equals(key)){
+            pageTitle.setText("专户制");
+        }
+
+        if ("notify".equals(key)){
+            pageTitle.setText("通报");
+        }
+
     }
 
     @Override

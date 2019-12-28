@@ -1,5 +1,6 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -57,14 +58,26 @@ public class FarmersSalaryManagerActivity extends BaseActivity implements View.O
                         } else if (num == 2) {          // 未缴
                             openActivity(FarmersNoMarginActivity.class);
                         } else {          // 未设置
-                            openActivity(StatusActivity.class);
+                            Intent intent = new Intent(getActivity(), StatusActivity.class);
+                            intent.putExtra("key", "marginstatus");
+                            startActivity(intent);
                         }
                         break;
                     case 1:    //  实名制
                         openActivity(RealNameActivity.class);
                         break;
                     case 2:    // 专户制
-                        openActivity(SpecialAccountActivity.class);
+                        int num1 = (int) (Math.random() * (3));        // 1到3的随机数
+                        Log.d("sxs---", "random: " + num1);
+                        if (num1 == 1) {          // 已缴
+                            openActivity(SpecialAccountActivity.class);
+                        } else if (num1 == 2) {          // 未缴
+                            openActivity(SpecialAccountNoActivity.class);       // 未缴纳
+                        } else {          // 未设置
+                            Intent intent = new Intent(getActivity(), StatusActivity.class);
+                            intent.putExtra("key", "specialaccount");
+                             startActivity(intent);
+                        }
                         break;
                     case 3:    // 银行代发制
                         break;
@@ -72,6 +85,18 @@ public class FarmersSalaryManagerActivity extends BaseActivity implements View.O
                         openActivity(LaborActivity.class);
                         break;
                     case 5:    // 通报
+                        int num2 = (int) (Math.random() * (3));        // 1到3的随机数
+                        Log.d("sxs---", "random: " + num2);
+                        if (num2 == 1) {          // 已缴
+                            openActivity(NotifyModuleActivity.class);
+                        } else if (num2 == 2) {          // 未缴
+                            openActivity(NotifyModuleNoActivity.class);      // 未缴纳
+                        } else {          // 未设置
+                            Intent intent = new Intent(getActivity(), StatusActivity.class);
+                            intent.putExtra("key", "notify");
+                            startActivity(intent);
+                        }
+
                         break;
                     default:
                         break;

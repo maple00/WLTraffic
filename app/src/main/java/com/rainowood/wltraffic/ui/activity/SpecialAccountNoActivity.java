@@ -1,12 +1,8 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
@@ -23,12 +19,12 @@ import java.util.List;
  * @Date: 2019/12/27 18:19
  * @Desc: 专户制
  */
-public class SpecialAccountActivity extends BaseActivity implements View.OnClickListener {
+public class SpecialAccountNoActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_special_no_account;
+        return R.layout.activity_special_account;
     }
 
     @ViewById(R.id.iv_back)
@@ -38,29 +34,20 @@ public class SpecialAccountActivity extends BaseActivity implements View.OnClick
     @ViewById(R.id.tv_status)
     private TextView status;
 
-    @ViewById(R.id.tv_word_title)
-    private TextView word;
-    @ViewById(R.id.ll_notify_download)
-    private LinearLayout download;
-    @ViewById(R.id.ll_preview)
-    private LinearLayout preview;
+    @ViewById(R.id.tv_name)
+    private TextView name;
     @ViewById(R.id.lv_list)
     private MeasureListView list;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
         ivBack.setOnClickListener(this);
-        download.setOnClickListener(this);
-        preview.setOnClickListener(this);
-
         pageTitle.setText("专户制度");
-        status.setText("已签订三方协议");
-        word.setText("三方协议具体细则.doc");
+        status.setText("未签订三方协议");
+        name.setText("转入专户资金情况");
 
         SpecialAccountAdapter accountAdapter = new SpecialAccountAdapter(this, mList);
         list.setAdapter(accountAdapter);
-
     }
 
     /*
@@ -86,12 +73,6 @@ public class SpecialAccountActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
-                break;
-            case R.id.ll_document:
-                toast("下载");
-                break;
-            case R.id.ll_preview:
-                toast("预览");
                 break;
         }
     }

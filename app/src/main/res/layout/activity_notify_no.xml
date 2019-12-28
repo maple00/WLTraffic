@@ -4,23 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- 专户制-->
     <include layout="@layout/sub_activity_margin_no_status" />
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="15dp"
-        android:textColor="@color/textColor"
-        android:textSize="18sp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,18 +18,15 @@
             android:layout_marginBottom="30dp">
 
             <com.rainwood.tools.widget.MeasureListView
-                android:id="@+id/lv_list"
+                android:id="@+id/lv_notify_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:cacheColorHint="@android:color/transparent"
                 android:divider="@android:color/transparent"
-                android:dividerHeight="20dp"
-                android:listSelector="@android:color/transparent"/>
-
+                android:dividerHeight="30dp"
+                android:listSelector="@android:color/transparent" />
         </LinearLayout>
-
     </ScrollView>
 
 
