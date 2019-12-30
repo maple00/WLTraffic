@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,11 @@ public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerCon
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @NonNull

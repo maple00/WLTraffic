@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +44,11 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
         return mList == null ? 0 : mList.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     @NonNull
     @Override
     public VerticalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,7 +64,7 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
         holder.tv_total_money.setText("￥ " + mList.get(position).getlMoney());
 
         // 加载子项的数据，如果大于两条则显示两条，通过点击展开或收起控制
-        PayManagerContentAdapter contentAdapter = new PayManagerContentAdapter(mContext);
+        final PayManagerContentAdapter contentAdapter = new PayManagerContentAdapter(mContext);
         LinearLayoutManager managerVertical = new LinearLayoutManager(mContext);
         managerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         // 设置item之间的间距
@@ -71,9 +75,9 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
         holder.rlv_content.setLayoutManager(managerVertical);
         holder.rlv_content.setHasFixedSize(true);
         holder.rlv_content.setAdapter(contentAdapter);
-        if (mList.get(position).getmList().size() > 2){
+        if (mList.get(position).getmList().size() > 2) {             // 只有第一次的时候执行
             contentAdapter.setmList(mList.get(position).getmList().subList(0, 2));
-        }else {     // 如果数据不大于两条，这隐藏收起或展开
+        } else {     // 如果数据不大于两条，这隐藏收起或展开
             contentAdapter.setmList(mList.get(position).getmList());
             holder.ll_show_or_hide.setVisibility(View.GONE);
         }
@@ -87,11 +91,17 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
             @Override
             public void onClick(View v) {
                 Log.e("sxss----", "点击了" + mList.get(position).isHasHide());
-
+                if (mList.get(position).isHasHide()) {
+                    contentAdapter.setmList(mList.get(position).getmList());
+                } else {
+                    contentAdapter.setmList(mList.get(position).getmList().subList(0, 2));
+                }
+                mList.get(position).setHasHide(!mList.get(position).isHasHide());
+                notifyDataSetChanged();
             }
         });
-
     }
+
 
     private PayManagerContentAdapter.OnItemClickListener clickListener;
 
@@ -104,6 +114,7 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
         LinearLayout ll_show_or_hide;
         ImageView iv_show_or_hide;
         RecyclerView rlv_content;
+
         VerticalViewHolder(View itemView) {
             super(itemView);
             tv_label = itemView.findViewById(R.id.tv_label);
