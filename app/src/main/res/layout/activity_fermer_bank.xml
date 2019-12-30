@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/sub_activity_margin_status1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_user_funds"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:background="@drawable/shap_radio_blue2white"
+            android:text="@string/salary_manager_user_funds"
+            android:paddingBottom="11dp"
+            android:paddingTop="11dp"
+            android:paddingRight="22dp"
+            android:paddingLeft="22dp"/>
+
+        <TextView
+            android:id="@+id/tv_output_statement"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/colorBlue1"
+            android:background="@drawable/shap_radio_white2blue1"
+            android:text="@string/salary_manager_output_statement"
+            android:paddingBottom="11dp"
+            android:paddingTop="11dp"
+            android:paddingRight="22dp"
+            android:paddingLeft="22dp"/>
+
+        <TextView
+            android:id="@+id/tv_salary_schedule"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/colorBlue1"
+            android:background="@drawable/shap_radio_white2blue2"
+            android:text="@string/salary_manager_salary_schedule"
+            android:paddingBottom="11dp"
+            android:paddingTop="11dp"
+            android:paddingRight="22dp"
+            android:paddingLeft="22dp"/>
+    </LinearLayout>
+
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_user_funds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:listSelector="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:divider="@android:color/transparent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rl_rest_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>

@@ -12,7 +12,7 @@ public class SubPayManagerBean implements Serializable {
 
     private String label;           // 标签
     private String lMoney;          // 标签的总金额,整数部分
-    private boolean hasHide = true;         // 默认收起,
+    private boolean hasHide;         // 默认收起,
     private List<SubItemLabelBean> mList;        // 金额时间标签
 
     public boolean isHasHide() {

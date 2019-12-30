@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/activity_action"/>
+
+    <TextView
+        android:id="@+id/tv_content_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/textColor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="15sp"
+        android:textColor="@color/textColor"
+        android:text="@string/tender_question"
+        android:layout_marginStart="15dp" />
+
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:listSelector="@android:color/transparent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="15sp"
+        android:textColor="@color/textColor"
+        android:text="@string/tender_answer"
+        android:layout_marginStart="15dp" />
+
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:listSelector="@android:color/transparent"/>
+
+    <View android:layout_marginTop="20dp"
+        style="@style/HorizontalLineStyle"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/colorWord"
+        android:text="答复"
+        android:layout_marginStart="13dp" />
+
+</LinearLayout>

@@ -4,15 +4,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.ProjectProgressBean;
 import com.rainowood.wltraffic.domain.SubProjectProgressBean;
 import com.rainowood.wltraffic.ui.adapter.ProjectProgressAdapter;
+import com.rainowood.wltraffic.utils.RecyclerViewSpacesItemDecoration;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,11 +37,11 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
     private Button btnBack;
     @ViewById(R.id.tv_title)
     private TextView pageTitle;
-    @ViewById(R.id.lv_content)
-    private MeasureListView contentList;
-
     @ViewById(R.id.tv_title_content)
     private TextView titleContent;
+
+    @ViewById(R.id.rlv_content)
+    private RecyclerView rclContentList;
 
     @Override
     protected void initView() {
@@ -45,17 +50,26 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
 
         titleContent.setText("丰裕粮油安置房建设工程泉城花都E区安置工程丰裕粮油安置房");
 
-        ProjectProgressAdapter progressAdapter = new ProjectProgressAdapter(this, mList);
-        contentList.setAdapter(progressAdapter);
-        progressAdapter.notifyDataSetChanged();
+        ProjectProgressAdapter adapter = new ProjectProgressAdapter(this);
+        LinearLayoutManager managerVertical = new LinearLayoutManager(this);
+        managerVertical.setOrientation(LinearLayoutManager.VERTICAL);       // 纵向
 
+        // 设置Item之间的间距
+        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
+        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.TOP_DECORATION, 30);//右间距
+        rclContentList.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
+
+        rclContentList.setLayoutManager(managerVertical);
+        rclContentList.setHasFixedSize(true);
+        rclContentList.setAdapter(adapter);
+
+        adapter.setVerticalDataList(mList);
     }
 
     /*
     模拟数据
      */
     private List<ProjectProgressBean> mList;
-    private List<SubProjectProgressBean> mSubList;
     private String[] mTitles = {"立项阶段", "工可阶段", "初步设计阶段", "实施方案阶段", "施工图设计阶段", "招投标阶段", "施工许可阶段", "施工阶段", "验收阶段"};
     // 子项title
     private String[] mSubTitles = {"立项"};
@@ -84,7 +98,7 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
             // 默认都没有选中
             progress.setHasSelected(0);
 
-            mSubList = new ArrayList<>();
+            List<SubProjectProgressBean> mSubList = new ArrayList<>();
             if (i == 0) {   // 立项
                 for (int j = 0; j < mSubTitles.length; j++) {
                     SubProjectProgressBean subProgress = new SubProjectProgressBean();
@@ -109,15 +123,15 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
                 }
             }
 
-            if (i == 2){
+            if (i == 2) {
                 for (int j = 0; j < mSubTitles2.length; j++) {
                     SubProjectProgressBean subProgress = new SubProjectProgressBean();
                     subProgress.setTitle(mSubTitles2[j]);
                     subProgress.setTime(mSubTimes[j]);
                     // 是否完成
-                    if (j > 3){
+                    if (j > 3) {
                         subProgress.setFinished(true);
-                    }else {
+                    } else {
                         subProgress.setFinished(false);
                     }
 
@@ -125,7 +139,7 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
                 }
             }
 
-            if (i == 3){
+            if (i == 3) {
                 for (int j = 0; j < mSubTitles3.length; j++) {
                     SubProjectProgressBean subProgress = new SubProjectProgressBean();
                     subProgress.setTitle(mSubTitles3[j]);
@@ -137,7 +151,7 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
                 }
             }
 
-            if (i == 4){
+            if (i == 4) {
                 for (int j = 0; j < mSubTitles4.length; j++) {
                     SubProjectProgressBean subProgress = new SubProjectProgressBean();
                     subProgress.setTitle(mSubTitles4[j]);
@@ -149,7 +163,7 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
                 }
             }
 
-            if (i == 5){
+            if (i == 5) {
                 for (int j = 0; j < mSubTitles5.length; j++) {
                     SubProjectProgressBean subProgress = new SubProjectProgressBean();
                     subProgress.setTitle(mSubTitles5[j]);
@@ -161,7 +175,7 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
                 }
             }
 
-            if (i == 6){
+            if (i == 6) {
                 for (int j = 0; j < mSubTitles6.length; j++) {
                     SubProjectProgressBean subProgress = new SubProjectProgressBean();
                     subProgress.setTitle(mSubTitles6[j]);
@@ -173,7 +187,7 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
                 }
             }
 
-            if (i == 7){
+            if (i == 7) {
                 for (int j = 0; j < mSubTitles7.length; j++) {
                     SubProjectProgressBean subProgress = new SubProjectProgressBean();
                     subProgress.setTitle(mSubTitles7[j]);
@@ -185,7 +199,7 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
                 }
             }
 
-            if (i == 8){
+            if (i == 8) {
                 for (int j = 0; j < mSubTitles8.length; j++) {
                     SubProjectProgressBean subProgress = new SubProjectProgressBean();
                     subProgress.setTitle(mSubTitles8[j]);
@@ -200,7 +214,6 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
             progress.setmList(mSubList);
             mList.add(progress);
         }
-
     }
 
     @Override

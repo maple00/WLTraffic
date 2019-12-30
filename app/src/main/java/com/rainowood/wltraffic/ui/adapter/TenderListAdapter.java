@@ -9,32 +9,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.domain.SubTenderBean;
 
 import java.util.List;
 
 /**
  * @Author: a797s
- * @Date: 2019/12/28 16:28
- * @Desc:
+ * @Date: 2019/12/30 10:43
+ * @Desc: 招投标中质疑答疑、补漏列表
  */
-public class TenderSubAdapter extends BaseAdapter {
+public class TenderListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<SubTenderBean> mList;
+    private List<String> mList;
 
-    public TenderSubAdapter(Context mContext, List<SubTenderBean> mList) {
+    public TenderListAdapter(Context mContext, List<String> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
 
     @Override
     public int getCount() {
-        return mList == null ? 0 : (mList.size() > 4 ? 4 : mList.size());
+        return mList == null ? 0 : mList.size();
     }
 
     @Override
-    public SubTenderBean getItem(int position) {
+    public String getItem(int position) {
         return mList.get(position);
     }
 
@@ -47,16 +46,16 @@ public class TenderSubAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null){
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_tender_sub_others, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_tender_list, parent, false);
             holder = new ViewHolder();
+            holder.tv_content = convertView.findViewById(R.id.tv_content);
             holder.ll_item = convertView.findViewById(R.id.ll_item);
-            holder.tv_label = convertView.findViewById(R.id.tv_label);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_label.setText(getItem(position).getLabel());
+        holder.tv_content.setText(getItem(position));
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +66,7 @@ public class TenderSubAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public interface OnItemClickListener{
+    public  interface OnItemClickListener{
         void onItemClick(int position);
     }
 
@@ -78,7 +77,7 @@ public class TenderSubAdapter extends BaseAdapter {
     }
 
     private class ViewHolder{
+        private TextView tv_content;
         private LinearLayout ll_item;
-        private TextView tv_label;
     }
 }

@@ -17,19 +17,15 @@
         android:textColor="@color/textColor"
         android:textSize="20sp" />
 
-
-    <com.rainwood.tools.widget.MeasureListView
-        android:id="@+id/lv_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlv_content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:cacheColorHint="@android:color/transparent"
-        android:scrollbars="none"
-        android:layout_marginLeft="15dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="20dp"
-        android:listSelector="@android:color/transparent" />
+        android:overScrollMode="never"
+        android:scrollbars="none"/>
+
 
 </LinearLayout>

@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@drawable/shap_radio_white_5dp">
+    android:background="@drawable/shap_radio_white_5dp"
+    android:layout_marginBottom="20dp">
 
     <!-- 卡片Item-->
     <LinearLayout
@@ -24,6 +25,7 @@
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:paddingStart="5dp"
+            android:text="施工单位"
             android:paddingEnd="10dp"/>
 
         <TextView
@@ -34,6 +36,7 @@
             android:textColor="@color/textColor"
             android:textSize="16sp"
             android:gravity="end"
+            android:text="￥4,852,630.00"
             android:layout_marginEnd="15dp"/>
 
     </LinearLayout>
@@ -42,17 +45,15 @@
         android:layout_marginTop="15dp"
         style="@style/HorizontalLineStyle"/>
 
-    <com.rainwood.tools.widget.MeasureListView
-        android:id="@+id/lv_content"
-        android:layout_marginTop="20dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="30dp"
-        android:listSelector="@android:color/transparent"
-        android:layout_marginRight="15sp"
-        android:layout_marginLeft="15sp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:scrollbars="none"
+        android:overScrollMode="never" />
 
     <LinearLayout
         android:id="@+id/ll_show_or_hide"
@@ -60,6 +61,7 @@
         android:layout_height="30dp"
         android:gravity="center"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal">
 
         <TextView

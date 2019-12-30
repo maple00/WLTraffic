@@ -40,6 +40,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
 
         ImageView logoutIv = view.findViewById(R.id.iv_logout);
         logoutIv.setOnClickListener(this);
+        logoutFalg = true;
         tvLogout = view.findViewById(R.id.tv_logout);
         tvLogout.setOnClickListener(this);
         TextView changeTel = view.findViewById(R.id.tv_change_tel);
@@ -82,14 +83,21 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
         userInfo.setCompanyPosition("重庆市南岸区弹子石国际商务大厦A座22-2");
         userInfo.setTel("13512270415");
 
-
     }
+
+    // 退出登录显示
+    private boolean logoutFalg;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_logout:        // 退出登录
-                tvLogout.setVisibility(View.VISIBLE);
+                if (logoutFalg){
+                    tvLogout.setVisibility(View.VISIBLE);
+                }else {
+                    tvLogout.setVisibility(View.GONE);
+                }
+                logoutFalg = !logoutFalg;
                 break;
             case R.id.tv_logout:
                 tvLogout.setVisibility(View.GONE);
@@ -120,4 +128,11 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
             }
         }, 2000);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tvLogout.setVisibility(View.GONE);
+    }
+
 }

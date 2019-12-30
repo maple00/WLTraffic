@@ -4,105 +4,80 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/25 18:19
- * @Desc: 支付管理内容的适配
+ * @Desc: 支付管理内容 adapter
  */
-public class PayManagerContentAdapter extends BaseAdapter {
+public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerContentAdapter.PayManagerContentViewHolder> {
 
     private Context mContext;
     private List<SubItemLabelBean> mList;
-    private List<SubItemLabelBean> mAllItemList;
-    private List<SubItemLabelBean> mTowItemList;
-    private PayManagerCardAdapter parentAdapter;
 
-    private boolean isShowAll;
-
-    public void setShowAll(boolean showAll) {
-        isShowAll = showAll;
-        if (isShowAll) {
-            mList = mAllItemList;
-        } else {
-            mTowItemList = new ArrayList<>();
-            if (getCount() > 2) {
-                mTowItemList.addAll(mAllItemList.subList(0, 2));
-            } else {
-                mTowItemList.addAll(mAllItemList);
-            }
-            mList = mTowItemList;
-        }
-        parentAdapter.notifyDataSetChanged();
+    PayManagerContentAdapter(Context mContext) {
+        this.mContext = mContext;
     }
 
-    public PayManagerContentAdapter(PayManagerCardAdapter parentAdapter, Context mContext, List<SubItemLabelBean> mList) {
-        this.parentAdapter = parentAdapter;
-        this.mContext = mContext;
-        this.mList = mAllItemList = mList;
+    public void setmList(List<SubItemLabelBean> mList) {
+        this.mList = mList;
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return mList == null ? 0 : mList.size();
     }
 
+    @NonNull
     @Override
-    public SubItemLabelBean getItem(int position) {
-        return mList.get(position);
+    public PayManagerContentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_pay_manager_card_content, parent, false);
+        return new PayManagerContentViewHolder(view);
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public void onBindViewHolder(@NonNull PayManagerContentViewHolder holder, final int position) {
+        holder.tv_money.setText(mList.get(position).getTitle());
+        holder.tv_time.setText(mList.get(position).getContent());
 
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        final ViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_pay_manager_card_content, parent, false);
-            holder = new ViewHolder();
-            holder.tv_money = convertView.findViewById(R.id.tv_money);
-            holder.tv_time = convertView.findViewById(R.id.tv_time);
-            holder.ll_item_content = convertView.findViewById(R.id.ll_item_content);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        holder.tv_money.setText(getItem(position).getTitle());
-        holder.tv_time.setText(getItem(position).getContent());
+        // 设置子项的点击
         holder.ll_item_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                labelListener.onLabelClick(position);
+                clickListener.OnItemClick(position);
             }
         });
-//        holder.ll_item_content.setVisibility(getItem(position).isVisibility() ? View.VISIBLE : View.GONE);
-        return convertView;
     }
 
-    public interface LabelListener {
-        void onLabelClick(int position);
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
     }
 
-    private LabelListener labelListener;
+    private OnItemClickListener clickListener;
 
-    public void setLabelListener(LabelListener labelListener) {
-        this.labelListener = labelListener;
+    public void setClickListener(OnItemClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
-    private class ViewHolder {
-        private TextView tv_money, tv_time;
-        private LinearLayout ll_item_content;
+    class PayManagerContentViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout ll_item_content;       // 点击事件
+        TextView tv_money, tv_time;
+
+        PayManagerContentViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ll_item_content = itemView.findViewById(R.id.ll_item_content);
+            tv_money = itemView.findViewById(R.id.tv_money);
+            tv_time = itemView.findViewById(R.id.tv_time);
+        }
     }
 }

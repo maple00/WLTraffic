@@ -1,7 +1,6 @@
 package com.rainowood.wltraffic.ui.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.domain.ProjectProgressBean;
 import com.rainowood.wltraffic.domain.SubProjectProgressBean;
 
 import java.util.List;
@@ -25,7 +23,7 @@ public class SubProjectProgressAdapter extends BaseAdapter {
     private Context mContext;
     private List<SubProjectProgressBean> mList;
 
-    public SubProjectProgressAdapter(Context mContext, List<SubProjectProgressBean> mList) {
+    SubProjectProgressAdapter(Context mContext, List<SubProjectProgressBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -65,9 +63,9 @@ public class SubProjectProgressAdapter extends BaseAdapter {
         holder.tv_time.setText(getItem(position).getTime());
 
         // 是否完成
-        if (getItem(position).isFinished()){        // 如果完成了，则标记
+        if (getItem(position).isFinished()) {        // 如果完成了，则标记
             holder.iv_finished.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             // 完成标志隐藏
             holder.iv_finished.setVisibility(View.GONE);
             // 设置字体
@@ -76,10 +74,6 @@ public class SubProjectProgressAdapter extends BaseAdapter {
 
         return convertView;
     }
-
-    // 点击标记
-    private static boolean isFlag = false;
-
     private class ViewHolder {
         private TextView tv_title, tv_time;
         private ImageView iv_finished;

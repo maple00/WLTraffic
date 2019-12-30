@@ -1,5 +1,7 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.content.Intent;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -65,10 +67,6 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
     private TextView auditViewAll;
     @ViewById(R.id.tv_audit_word_title)
     private TextView auditWord;
-    @ViewById(R.id.ll_audit_download)
-    private LinearLayoutCompat auditDownload;
-    @ViewById(R.id.ll_audit_preview)
-    private LinearLayoutCompat auditPreview;
     // end
 
     // 专家审核 start
@@ -155,7 +153,10 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
         titleCompany.setText(agentCompany[1]);
         titleMoney.setText(agentCompany[2]);
         type.setText(agentCompany[3]);
-        time.setText(agentCompany[4]);
+        //time.setText(agentCompany[4]);
+        time.setText(Html.fromHtml("<font color=" + getResources().getColor(R.color.colorLabel) + " font-size=\"12dp\">" + "确定时间 &nbsp;" + "</font>"
+                + "<font color=" + getResources().getColor(R.color.colorWord) + " font-size=\"12dp\">" + "2019.12.19" + "</font>"));
+
 
         // 公司审核
         auditTitle.setText(auditCompany[0]);
@@ -178,16 +179,24 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
 
         // 备案
         recordTitle.setText(forRecords[0]);
-        recordTimeA.setText(forRecords[1]);
-        recordTimeB.setText(forRecords[2]);
+        recordTimeA.setText(Html.fromHtml("<font color=" + getResources().getColor(R.color.colorLabel) + " font-size=\"13dp\">" + "政务备案时间： &nbsp;" + "</font>"
+                + "<font color=" + getResources().getColor(R.color.textColor) + " font-size=\"13dp\">" + "2019.12.19" + "</font>"));
+        //recordTimeA.setText(forRecords[1]);
+        recordTimeB.setText(Html.fromHtml("<font color=" + getResources().getColor(R.color.colorLabel) + " font-size=\"13dp\">" + "交通局备案时间：&nbsp;" + "</font>"
+                + "<font color=" + getResources().getColor(R.color.textColor) + " font-size=\"13dp\">" + "2019.12.19" + "</font>"));
+        //recordTimeB.setText(forRecords[2]);
         recordContent.setText(forRecords[3]);
         recordContentLL.setOnClickListener(this);
         initTextView(recordContent, recordAll);
 
         // 挂网
         netTitle.setText(nets[0]);
-        netTimeA.setText(nets[1]);
-        netTimeB.setText(nets[2]);
+        //netTimeA.setText(nets[1]);
+        netTimeA.setText(Html.fromHtml("<font color=" + getResources().getColor(R.color.colorLabel) + " font-size=\"13dp\">" + "挂网时间：&nbsp;" + "</font>"
+                + "<font color=" + getResources().getColor(R.color.textColor) + " font-size=\"13dp\">" + "2019.12.19" + "</font>"));
+        //netTimeB.setText(nets[2]);
+        netTimeB.setText(Html.fromHtml("<font color=" + getResources().getColor(R.color.colorLabel) + " font-size=\"13dp\">" + "预计开标时间：&nbsp;" + "</font>"
+                + "<font color=" + getResources().getColor(R.color.textColor) + " font-size=\"13dp\">" + "2019.12.19" + "</font>"));
 
         // 质疑答疑、补漏
         TenderAdapter tenderAdapter = new TenderAdapter(this, tenderList);
@@ -201,9 +210,20 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
         // 查看全部
         tenderAdapter.setListener(new TenderAdapter.OnClickViewListener() {
             @Override
-            public void onItemClick() {
+            public void onItemClick(int position) {
                 // 查看详情
-                toast("查看全部");
+                switch (position){
+                    case 0:         // 质疑答疑
+                        Intent questionIntent = new Intent(TenderActivity.this, TenderListActivity.class);
+                        questionIntent.putExtra("key", "question");
+                        startActivity(questionIntent);
+                        break;
+                    case 1:         // 补漏
+                        Intent bareIntent = new Intent(TenderActivity.this, TenderListActivity.class);
+                        bareIntent.putExtra("key", "bare");
+                        startActivity(bareIntent);
+                        break;
+                }
             }
         });
 
@@ -212,16 +232,19 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
         bidCompany.setText(bidOpens[1]);
         bidMoney.setText(bidOpens[2]);
         bidType.setText(bidOpens[3]);
-        bidTime.setText(bidOpens[4]);
-
+        //bidTime.setText(bidOpens[4]);
+        bidTime.setText(Html.fromHtml("<font color=" + getResources().getColor(R.color.colorLabel) + " font-size=\"12dp\">" + "开标时间：&nbsp;" + "</font>"
+                + "<font color=" + getResources().getColor(R.color.colorWord) + " font-size=\"12dp\">" + "2019.12.19" + "</font>"));
         // 公示
         publicTitle.setText(publicShow[0]);
-        startEndTime.setText(publicShow[1]);
-                    // 随机有投诉
-        int num = (int) (Math.random() * 2);
-        if (num == 1){      // 有投诉
+        //startEndTime.setText(publicShow[1]);
+        startEndTime.setText(Html.fromHtml("<font color=" + getResources().getColor(R.color.colorLabel) + " font-size=\"14dp\">" + "起止时间：&nbsp;" + "</font>"
+                + "<font color=" + getResources().getColor(R.color.textColor) + " font-size=\"14dp\">" + "2019.12.19" + "</font>"));
+        // 随机有投诉
+        int num = (int) (Math.random() * 3);
+        if (num == 1) {      // 有投诉
             hasComplaints.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             hasComplaints.setVisibility(View.GONE);
         }
 
@@ -242,17 +265,6 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
                 if (lineCount > 5) { // 隐藏
                     textView.setMaxLines(2);
                     textView.setEllipsize(TextUtils.TruncateAt.END);
-                    // 记录收起的状态 company_audit
-                    if ("company_audit".contentEquals(textView.getHint())) { // 公司审核
-                        auditFlag = true;
-                    }
-                    if ("expert_audit".contentEquals(textView.getHint())) { // 公司审核
-                        expertFlag = true;
-                    }
-                    if ("record".contentEquals(textView.getHint())){
-                        recordFlag = true;
-                    }
-
                 } else {         // 显示
                     showText.setVisibility(View.GONE);
                 }
@@ -260,7 +272,7 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
         });
     }
 
-    private void setContentShowOrHide(boolean isShow, TextView text) {
+ /*   private void setContentShowOrHide(boolean isShow, TextView text) {
         if (isShow) {     //  展开
             text.setMaxLines(Integer.MAX_VALUE);
             text.setEllipsize(null);
@@ -268,14 +280,7 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
             text.setMaxLines(2);
             text.setEllipsize(TextUtils.TruncateAt.END);
         }
-    }
-
-    /**
-     * 标记
-     */
-    private boolean auditFlag;      // 公司审核
-    private boolean expertFlag;     // 专家审核
-    private boolean recordFlag;     // 备案
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -284,16 +289,17 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.ll_audit_content:         // 公司审核 -- 查看详情
-                setContentShowOrHide(auditFlag, auditContent);
-                auditFlag = !auditFlag;
+                Intent intent = new Intent(this, TenderDetailAuditActivity.class);
+                intent.putExtra("key", "company_audit");
+                startActivity(intent);
                 break;
             case R.id.ll_expert_content:            // 专家审核 -- 查看详情
-                setContentShowOrHide(expertFlag, experContent);
-                expertFlag = !expertFlag;
+                Intent intent1 = new Intent(this, TenderDetailAuditActivity.class);
+                intent1.putExtra("key", "experts_audit");
+                startActivity(intent1);
                 break;
             case R.id.ll_record_content:            // 备案   -- 查看详情
-                setContentShowOrHide(recordFlag, recordContent);
-                recordFlag = !recordFlag;
+                openActivity(TenderRecordActivity.class);
                 break;
         }
     }
@@ -308,7 +314,7 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
         for (int i = 0; i < titles.length; i++) {
             TenderBean tender = new TenderBean();
             tender.setTitle(titles[i]);
-            if (i == 0){            // 质疑答疑
+            if (i == 0) {            // 质疑答疑
                 List<SubTenderBean> subTenderList = new ArrayList<>();
                 for (int j = 0; j < labels1.length; j++) {
                     SubTenderBean subTender = new SubTenderBean();
@@ -317,7 +323,7 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
                 }
                 tender.setmList(subTenderList);
             }
-            if (i == 1){            // 补遗
+            if (i == 1) {            // 补遗
                 List<SubTenderBean> subTenderList = new ArrayList<>();
                 for (int j = 0; j < labels2.length; j++) {
                     SubTenderBean subTender = new SubTenderBean();
@@ -347,15 +353,15 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
     // 质疑答疑、补漏
     private List<TenderBean> tenderList;
     private String[] titles = {"质疑答疑", "补漏"};
-    private String[] labels1 = {"施工动迁任务较重，造成城市环境污染的情况应...","施工动迁任务较重，造成城市环境污染的情况应...",
-                        "施工动迁任务较重，造成城市环境污染的情况应...","施工动迁任务较重，造成城市环境污染的情况应...","施工动迁任务较重，造成城市环境污染的情况应..."};
+    private String[] labels1 = {"施工动迁任务较重，造成城市环境污染的情况应...", "施工动迁任务较重，造成城市环境污染的情况应...",
+            "施工动迁任务较重，造成城市环境污染的情况应...", "施工动迁任务较重，造成城市环境污染的情况应...", "施工动迁任务较重，造成城市环境污染的情况应..."};
     private String[] labels2 = {"评标办法前附表2.2.3条评标偏差率计算公式修...", "投标人须知前附表10.2条中“（一）设计费：本...",
-        "投标人须知前附表10.3条中设计费支付调整为是...", "安装工程及竣工试验一切险的投保方及对投保的..."};
+            "投标人须知前附表10.3条中设计费支付调整为是...", "安装工程及竣工试验一切险的投保方及对投保的..."};
 
     // 开标
     private String[] bidOpens = {"开标", "重庆大城建德建筑工程有限公司", "3650万", "中标金额", "开标时间：2019.12.18"};
     // 公示
     private String[] publicShow = {"公示", "起止时间：2019.12.19-2019.12.30"};
     // 合同签订
-    private String[] contractInfo = {"合同签订", "3650万", "合同金额","2019.12.19"};
+    private String[] contractInfo = {"合同签订", "3650万", "合同金额", "2019.12.19"};
 }

@@ -76,10 +76,11 @@ public class FarmersSalaryManagerActivity extends BaseActivity implements View.O
                         } else {          // 未设置
                             Intent intent = new Intent(getActivity(), StatusActivity.class);
                             intent.putExtra("key", "specialaccount");
-                             startActivity(intent);
+                            startActivity(intent);
                         }
                         break;
                     case 3:    // 银行代发制
+                        openActivity(FarmersBankActivity.class);
                         break;
                     case 4:    // 劳资人员管理
                         openActivity(LaborActivity.class);

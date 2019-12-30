@@ -72,7 +72,7 @@ public class PayManagerCardAdapter extends BaseAdapter {
         holder.tv_total_money.setText("￥ " + getItem(position).getlMoney());
 
         // 如果子项大于2项，默认隐藏
-        PayManagerContentAdapter contentAdapter = new PayManagerContentAdapter(this,mContext, getItem(position).getmList());
+        /*PayManagerContentAdapter contentAdapter = new PayManagerContentAdapter(this,mContext, getItem(position).getmList());
         holder.lv_content.setAdapter(contentAdapter);
         contentAdapter.setLabelListener(listener);
         contentAdapter.setShowAll(!getItem(position).isHasHide());
@@ -85,15 +85,15 @@ public class PayManagerCardAdapter extends BaseAdapter {
                 getItem(position).setHasHide(!getItem(position).isHasHide());
                 notifyDataSetChanged();
             }
-        });
+        });*/
         return convertView;
     }
 
-    private PayManagerContentAdapter.LabelListener listener;
+  /*  private PayManagerContentAdapter.LabelListener listener;
 
     public void setListener(PayManagerContentAdapter.LabelListener listener) {
         this.listener = listener;
-    }
+    }*/
 
     private class ViewHolder {
         private LinearLayout ll_title, ll_show_or_hide;

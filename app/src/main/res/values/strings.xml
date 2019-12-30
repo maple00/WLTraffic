@@ -62,8 +62,13 @@
 
     <!-- 农名工工资管理-->
     <string name="salary_manager_no_margin">未缴存</string>
-
+    <string name="salary_manager_user_funds">转入专户资金</string>
+    <string name="salary_manager_output_statement">每月产值表</string>
+    <string name="salary_manager_salary_schedule">农民工工资表</string>
     <!-- 招投标-->
     <string name="tender_has_complaints">有投诉</string>
+    <string name="tender_question">质疑</string>
+    <string name="tender_answer">答复</string>
+
     
 </resources>

@@ -2,24 +2,24 @@ package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.PayManagerBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 import com.rainowood.wltraffic.domain.SubPayManagerBean;
-import com.rainowood.wltraffic.ui.adapter.PayManagerCardAdapter;
+import com.rainowood.wltraffic.ui.adapter.PayManagerAdapter;
 import com.rainowood.wltraffic.ui.adapter.PayManagerContentAdapter;
-import com.rainwood.tools.statusbar.StatusBarUtils;
+import com.rainowood.wltraffic.utils.RecyclerViewSpacesItemDecoration;
 import com.rainwood.tools.viewinject.ViewById;
-import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,19 +44,21 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
     private TextView tvTotalMoneyInt;       // 总金额，整数部分
     @ViewById(R.id.tv_total_money_float)
     private TextView tvTotalMoneyFloat;     // 总金额，小数部分
-    @ViewById(R.id.lv_lv_card_view)
-    private ListView lvCardList;     // 卡片
+    //@ViewById(R.id.lv_lv_card_view)
+    //private ListView lvCardList;     // 卡片
 
+    @ViewById(R.id.rlc_card_content)
+    private RecyclerView cardContent;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
         // 状态栏渐变
-        StatusBarUtils.with(this)
+       /* StatusBarUtils.with(this)
                 .setIsActionBar(true)
                 .clearActionBarShadow()
                 .setDrawable(getResources().getDrawable(R.drawable.shape_bg_change))
-                .init();
+                .init();*/
 
         tvTraport.setOnClickListener(this);
         tvOU.setOnClickListener(this);
@@ -152,15 +154,8 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         tvTotalMoneyInt.setText(payBean.getTotalMoneyInt());
         tvTotalMoneyFloat.setText(payBean.getTotalMoneyFloat());
 
-        PayManagerCardAdapter cardAdapter = new PayManagerCardAdapter(this, mList);
-        lvCardList.setAdapter(cardAdapter);
+        getData2Show();
 
-        cardAdapter.setListener(new PayManagerContentAdapter.LabelListener() {
-            @Override
-            public void onLabelClick(int position) {
-                toast("点击了：" + position);
-            }
-        });
     }
 
     /**
@@ -174,16 +169,38 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
 
         tvTotalMoneyInt.setText(payBean.getTotalMoneyInt());
         tvTotalMoneyFloat.setText(payBean.getTotalMoneyFloat());
-        PayManagerCardAdapter cardAdapter = new PayManagerCardAdapter(this, mList);
-        lvCardList.setAdapter(cardAdapter);
 
+        getData2Show();
 
-        cardAdapter.setListener(new PayManagerContentAdapter.LabelListener() {
+    }
+
+    /**
+     * 获取数据展示
+     */
+    private void getData2Show() {
+        PayManagerAdapter adapter = new PayManagerAdapter(this);
+        LinearLayoutManager managerVertical = new LinearLayoutManager(this);
+        managerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+        // 设置item之间的间距
+        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
+        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 10);//下间距
+        cardContent.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
+        cardContent.setLayoutManager(managerVertical);
+        cardContent.setHasFixedSize(true);
+        cardContent.setAdapter(adapter);
+        adapter.setmList(mList);
+
+        /**
+         * 子项的点击事件
+         */
+        adapter.setClickListener(new PayManagerContentAdapter.OnItemClickListener() {
             @Override
-            public void onLabelClick(int position) {
+            public void OnItemClick(int position) {
+                // 去详情页
                 toast("点击了：" + position);
             }
         });
+
     }
 
     /**

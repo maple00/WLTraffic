@@ -196,6 +196,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 银行代发制度 FarmersBankActivity -->
+        <activity
+            android:name=".ui.activity.FarmersBankActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <!-- 劳资列表 LaborActivity-->
         <activity
             android:name=".ui.activity.LaborActivity"
@@ -226,9 +232,27 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
-        <!-- 招投标详情页 TenderDetailActivity-->
+        <!-- 招投标审核详情 TenderDetailActivity-->
         <activity
-            android:name=".ui.activity.TenderDetailAActivity"
+            android:name=".ui.activity.TenderDetailAuditActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 招投标备案详情 TenderRecordActivity-->
+        <activity
+            android:name=".ui.activity.TenderRecordActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 质疑答疑、补漏列表 TenderListActivity-->
+        <activity
+            android:name=".ui.activity.TenderListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 质疑答疑、补漏详情 TenderListDetailActivity-->
+        <activity
+            android:name=".ui.activity.TenderListDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 

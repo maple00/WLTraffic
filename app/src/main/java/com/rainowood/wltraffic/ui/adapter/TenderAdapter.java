@@ -44,7 +44,7 @@ public class TenderAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_tender_others, parent, false);
@@ -65,7 +65,7 @@ public class TenderAdapter extends BaseAdapter {
         holder.tv_label.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick();
+                listener.onItemClick(position);
             }
         });
         return convertView;
@@ -78,7 +78,7 @@ public class TenderAdapter extends BaseAdapter {
     }
 
     public interface OnClickViewListener{
-        void onItemClick();
+        void onItemClick(int position);
     }
 
     private OnClickViewListener listener;
