@@ -1,26 +1,29 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.domain.BankRestBean;
 import com.rainowood.wltraffic.domain.FarmerBankBean;
+import com.rainowood.wltraffic.domain.LabelBean;
 import com.rainowood.wltraffic.ui.adapter.FarmerBankAdapter;
-import com.rainowood.wltraffic.ui.adapter.FarmerBankSlideAdapter;
-import com.rainowood.wltraffic.utils.RecyclerViewSpacesItemDecoration;
+import com.rainowood.wltraffic.ui.adapter.HorizontalAdapter;
+import com.rainowood.wltraffic.ui.adapter.VerticalAdapter;
+import com.rainowood.wltraffic.utils.DateTimeUtils;
+import com.rainowood.wltraffic.utils.ListUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -57,10 +60,13 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
 
 
     // 每月产值表  -- 双向滑动
-    @ViewById(R.id.rl_rest_info)
-    private RecyclerView restinfoList;          // 每月产值表、工资表
     @ViewById(R.id.tv_output_statement)
     private TextView outputStat;
+    @ViewById(R.id.rl_rest_time)
+    private RecyclerView restTimeList;
+    @ViewById(R.id.rl_rest_info)
+    private RecyclerView restinfoList;          // 每月产值表、工资表
+
 
     // 农民工工资   -- 双向滑动
     @ViewById(R.id.tv_salary_schedule)
@@ -100,15 +106,8 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
             "这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注"};
 
     // 每月产值表、工资
-    private List<Integer> mTypeList = new ArrayList<>();
-
-    private List<String> mHorizontalList = new ArrayList<>();
-    private List<String> mVerticalList = new ArrayList<>();
-
-    private void initParam() {
-        mTypeList.add(0);   // 横向滑动
-        mTypeList.add(1);   // 纵向滑动
-    }
+    private List<LabelBean> mHorizontalList;       // 横向年份
+    private List<BankRestBean> mVerticalList;        // 纵向数据
 
     @Override
     protected void initData() {
@@ -122,40 +121,7 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
             bank.setContent(fundsContents[i]);
             userFundsList.add(bank);
         }
-
-        // 每月产值表、工资
-        initParam();
-        initHorizontalData();
-        initVerticalData();
-
     }
-
-    private void initHorizontalData() {
-        mHorizontalList.add("横向1");
-        mHorizontalList.add("横向2");
-        mHorizontalList.add("横向3");
-        mHorizontalList.add("横向4");
-        mHorizontalList.add("横向5");
-        mHorizontalList.add("横向6");
-        mHorizontalList.add("横向7");
-        mHorizontalList.add("横向8");
-        mHorizontalList.add("横向9");
-        mHorizontalList.add("横向10");
-    }
-
-    private void initVerticalData() {
-        mVerticalList.add("纵向1");
-        mVerticalList.add("纵向2");
-        mVerticalList.add("纵向3");
-        mVerticalList.add("纵向4");
-        mVerticalList.add("纵向5");
-        mVerticalList.add("纵向6");
-        mVerticalList.add("纵向7");
-        mVerticalList.add("纵向8");
-        mVerticalList.add("纵向9");
-        mVerticalList.add("纵向10");
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -166,26 +132,94 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
             case R.id.tv_user_funds:            // 转入专户资金
                 //toast("转入专户资金");
                 mListUserFunds.setVisibility(View.VISIBLE);
+                restTimeList.setVisibility(View.GONE);
                 restinfoList.setVisibility(View.GONE);
+
                 break;
             case R.id.tv_output_statement:          // 每月产值表
-                //toast("每月产值表");
+                // toast("每月产值表");
                 restinfoList.setVisibility(View.VISIBLE);
+                restTimeList.setVisibility(View.VISIBLE);
                 mListUserFunds.setVisibility(View.GONE);
 
-                FarmerBankSlideAdapter adapter = new FarmerBankSlideAdapter(this, mTypeList);
+                // 横向时间，纵向数据，滑动监听
+                initTimeInfo();
+                initTime();
 
-                restinfoList.setLayoutManager(new LinearLayoutManager(this));
-                restinfoList.setHasFixedSize(false);
-                restinfoList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-                restinfoList.setAdapter(adapter);
-
-                adapter.setmHorizontalList(mHorizontalList);
-                adapter.setmVerticalList(mVerticalList);
+                // data
+                initVDataInfo();
+                initVData();
                 break;
             case R.id.tv_salary_schedule:           // 农民工工资
                 toast("农民工工资");
                 break;
         }
+    }
+
+    private void initVDataInfo() {
+        mVerticalList = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            BankRestBean bankRest = new BankRestBean();
+            double random = Math.random() * 1000000;
+
+            bankRest.setTime(i + 1 + "月");
+            bankRest.setMoney("￥ " + random);
+            mVerticalList.add(bankRest);
+        }
+    }
+
+    private void initVData() {
+        VerticalAdapter adapter = new VerticalAdapter(this);
+        LinearLayoutManager managerVertical = new LinearLayoutManager(this);
+        managerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+        restinfoList.setLayoutManager(managerVertical);
+        restinfoList.setHasFixedSize(true);
+        restinfoList.setAdapter(adapter);
+        adapter.setVerticalDataList(mVerticalList);
+
+    }
+
+
+    private void initTime() {
+        final HorizontalAdapter adapter = new HorizontalAdapter(this);
+        LinearLayoutManager managerHorizontal = new LinearLayoutManager(this);
+        managerHorizontal.setOrientation(LinearLayoutManager.HORIZONTAL);
+        managerHorizontal.setStackFromEnd(true);                    // 定位到最后一项
+
+        restTimeList.setLayoutManager(managerHorizontal);
+        restTimeList.setHasFixedSize(true);
+        restTimeList.setAdapter(adapter);
+
+        adapter.setHorizontalDataList(mHorizontalList);
+
+        adapter.setListener(new HorizontalAdapter.OnItenmClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //toast(mHorizontalList.get(postion));
+                int flag = -1;      // 记录变量
+                for (int i = 0; i < ListUtils.getSize(mHorizontalList); i++) {                // 设置选中
+                    if (position == i){
+                        mHorizontalList.get(i).setHasSelected(false);
+                        flag = position;
+                        break;
+                    }
+                }
+                mHorizontalList.get(flag).setHasSelected(true);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void initTimeInfo() {
+        mHorizontalList = new ArrayList<>();
+        for (int i = DateTimeUtils.getNowYear() - 50; i <= DateTimeUtils.getNowYear(); i++) {           // 默认选中今年
+            LabelBean label = new LabelBean();
+            if (i == DateTimeUtils.getNowYear()){
+                label.setHasSelected(true);
+            }
+            label.setData(String.valueOf(i));
+            mHorizontalList.add(label);
+        }
+
     }
 }
