@@ -77,6 +77,8 @@ id iv_hint_text
 id mobile
 id name
 id nonnull
+id statusbarutil_fake_status_bar_view
+id statusbarutil_translucent_view
 integer anim_duration_long
 integer anim_duration_medium
 layout widget_hint_layout

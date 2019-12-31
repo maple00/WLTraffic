@@ -18,7 +18,8 @@ import java.util.TimeZone;
 @SuppressLint("SimpleDateFormat")
 public class DateTimeUtils {
 
-    private DateTimeUtils() { }
+    private DateTimeUtils() {
+    }
 
     /**
      * 枚举日期格式
@@ -102,6 +103,7 @@ public class DateTimeUtils {
 
     /**
      * 获取当前时间
+     *
      * @return 返回当前时间，格式2017-05-04    10:54:21
      */
     public static String getNowDate(DatePattern pattern) {
@@ -115,6 +117,7 @@ public class DateTimeUtils {
 
     /**
      * 将一个日期字符串转换成Data对象
+     *
      * @param dateString 日期字符串
      * @param pattern    转换格式
      * @return 返回转换后的日期对象
@@ -132,6 +135,7 @@ public class DateTimeUtils {
 
     /**
      * 将date转换成字符串
+     *
      * @param date    日期
      * @param pattern 日期的目标格式
      * @return
@@ -145,6 +149,7 @@ public class DateTimeUtils {
 
     /**
      * 获取指定日期周几
+     *
      * @param date 指定日期
      * @return 返回值为： "周日", "周一", "周二", "周三", "周四", "周五", "周六"
      */
@@ -160,6 +165,7 @@ public class DateTimeUtils {
 
     /**
      * 获取指定日期对应周几的序列
+     *
      * @param date 指定日期
      * @return 周一：1    周二：2    周三：3    周四：4    周五：5    周六：6    周日：7
      */
@@ -176,6 +182,7 @@ public class DateTimeUtils {
 
     /**
      * 返回当前月份
+     *
      * @return
      */
     public static int getNowMonth() {
@@ -185,6 +192,7 @@ public class DateTimeUtils {
 
     /**
      * 获取当前月号
+     *
      * @return
      */
     public static int getNowDay() {
@@ -194,6 +202,7 @@ public class DateTimeUtils {
 
     /**
      * 获取当前年份
+     *
      * @return
      */
     public static int getNowYear() {
@@ -257,6 +266,7 @@ public class DateTimeUtils {
 
     /**
      * 获取当前时间
+     *
      * @return
      */
     public static String getThisTiem() {
@@ -268,6 +278,7 @@ public class DateTimeUtils {
 
     /**
      * 获取时间戳
+     *
      * @return 获取时间戳
      */
     public static String getTimeString() {
@@ -278,6 +289,7 @@ public class DateTimeUtils {
 
     /**
      * 获取时间戳
+     *
      * @return 获取时间戳
      */
     public static String getTimeString2() {
@@ -288,6 +300,7 @@ public class DateTimeUtils {
 
     /**
      * 时间转换为时间戳
+     *
      * @param time:需要转换的时间
      * @return
      */
@@ -305,6 +318,7 @@ public class DateTimeUtils {
 
     /**
      * 时间戳转换为字符串
+     *
      * @param time:时间戳
      * @return
      */
@@ -320,6 +334,7 @@ public class DateTimeUtils {
 
     /**
      * 获取距现在某一小时的时刻
+     *
      * @param hour hour=-1为上一个小时，hour=1为下一个小时
      * @return
      */
@@ -335,6 +350,7 @@ public class DateTimeUtils {
 
     /**
      * 比较时间大小
+     *
      * @param str1：要比较的时间
      * @param str2：要比较的时间
      * @return
@@ -360,6 +376,7 @@ public class DateTimeUtils {
 
     /**
      * 当地时间 ---> UTC时间
+     *
      * @return
      */
     public static String Local2UTC() {
@@ -371,6 +388,7 @@ public class DateTimeUtils {
 
     /**
      * UTC时间 ---> 当地时间
+     *
      * @param utcTime UTC时间
      * @return
      */

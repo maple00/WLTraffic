@@ -158,6 +158,7 @@ attr contentInsetRight
 attr contentInsetStart
 attr contentInsetStartWithNavigation
 attr controlBackground
+attr coordinatorLayoutStyle
 attr customNavigationLayout
 attr defaultQueryHint
 attr dialogCornerRadius
@@ -219,9 +220,16 @@ attr initialActivityCount
 attr inputRegex
 attr isLightTheme
 attr itemPadding
+attr keylines
 attr lastBaselineToBottomHeight
 attr layout
 attr layoutManager
+attr layout_anchor
+attr layout_anchorGravity
+attr layout_behavior
+attr layout_dodgeInsetEdges
+attr layout_insetEdge
+attr layout_keyline
 attr lineHeight
 attr linearProgress
 attr listChoiceBackgroundIndicator
@@ -313,6 +321,7 @@ attr splitTrack
 attr srcCompat
 attr stackFromEnd
 attr state_above_anchor
+attr statusBarBackground
 attr subMenuArrow
 attr submitBackground
 attr subtitle
@@ -754,6 +763,7 @@ id add
 id alertTitle
 id async
 id blocking
+id bottom
 id buttonPanel
 id checkbox
 id checked
@@ -768,6 +778,7 @@ id decor_content_parent
 id default_activity_button
 id dialog_button
 id edit_query
+id end
 id english
 id expand_activities_button
 id expanded_menu
@@ -782,6 +793,7 @@ id italic
 id item_touch_helper_previous_elevation
 id iv_hint_icon
 id iv_hint_text
+id left
 id line1
 id line3
 id listMode
@@ -802,6 +814,7 @@ id parentPanel
 id progress_circular
 id progress_horizontal
 id radio
+id right
 id right_icon
 id right_side
 id screen
@@ -825,6 +838,9 @@ id split_action_bar
 id src_atop
 id src_in
 id src_over
+id start
+id statusbarutil_fake_status_bar_view
+id statusbarutil_translucent_view
 id submenuarrow
 id submit_area
 id tabMode
@@ -844,6 +860,7 @@ id time
 id title
 id titleDividerNoCustom
 id title_template
+id top
 id topPanel
 id unchecked
 id uniform
@@ -1289,6 +1306,7 @@ style Widget_AppCompat_Toolbar
 style Widget_AppCompat_Toolbar_Button_Navigation
 style Widget_Compat_NotificationActionContainer
 style Widget_Compat_NotificationActionText
+style Widget_Support_CoordinatorLayout
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth
@@ -1307,6 +1325,8 @@ styleable AppCompatTheme actionBarDivider actionBarItemBackground actionBarPopup
 styleable ButtonBarLayout allowStacking
 styleable ColorStateListItem alpha android_alpha android_color
 styleable CompoundButton android_button buttonCompat buttonTint buttonTintMode
+styleable CoordinatorLayout keylines statusBarBackground
+styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_anchorGravity layout_behavior layout_dodgeInsetEdges layout_insetEdge layout_keyline
 styleable CustomViewStub android_layout
 styleable DrawerArrowToggle arrowHeadLength arrowShaftLength barLength color drawableSize gapBetweenBars spinBars thickness
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery

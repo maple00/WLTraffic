@@ -49,26 +49,20 @@
     <string name="item_deduction_item">扣分项</string>
     <string name="item_note">备注</string>
     <string name="item_update_time">更新时间</string>
-    
-    <!-- 计划管理-->
     <string name="plan_manager_notify">前期通知书</string>
     <string name="plan_manager_item_name">项目名称</string>
     <string name="plan_manager_start_end">起止地点</string>
     <string name="plan_manager_constract_scale">建设规模</string>
-    <!-- 计划下达-->
     <string name="plan_manager_order">计划下达</string>
     <string name="plan_manager_constract_content">建设内容</string>
     <string name="plan_manager_investment_scale">投资规模</string>
-
-    <!-- 农名工工资管理-->
     <string name="salary_manager_no_margin">未缴存</string>
     <string name="salary_manager_user_funds">转入专户资金</string>
     <string name="salary_manager_output_statement">每月产值表</string>
     <string name="salary_manager_salary_schedule">农民工工资表</string>
-    <!-- 招投标-->
     <string name="tender_has_complaints">有投诉</string>
     <string name="tender_question">质疑</string>
     <string name="tender_answer">答复</string>
+    <string name="pay_detail_values">支付金额</string>
 
-    
 </resources>

@@ -130,6 +130,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 支付详情 PayDetailActivity-->
+        <activity
+            android:name=".ui.activity.PayDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <!-- 考核管理  AssessManager-->
         <activity
             android:name=".ui.activity.AssessManagerActivity"

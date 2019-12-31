@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +25,14 @@ import java.util.List;
 public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerContentAdapter.PayManagerContentViewHolder> {
 
     private Context mContext;
-    private List<SubItemLabelBean> mList;
+    private List<SubItemLabelBean> mList = new ArrayList<>();
+
+    private int num = 2;         // 默认显示item数量为2
+
+    public void setNum(int num) {
+        this.num = num;
+        notifyDataSetChanged();
+    }
 
     PayManagerContentAdapter(Context mContext) {
         this.mContext = mContext;
@@ -36,7 +44,7 @@ public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerCon
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size();
+        return mList == null ? 0 : num;
     }
 
     @Override

@@ -46,7 +46,8 @@
     <color name="colorRed">#FFFFB58F</color>
     <color name="colorRed1">#FFFF7263</color>
 
-
+    <!-- 透明色 -->
+    <color name="transparent">#00000000</color>
     <!-- 白色 -->
     <color name="white">#FFFFFFFF</color>
     <color name="white95">#F2FFFFFF</color>

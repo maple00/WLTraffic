@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
+import com.gyf.immersionbar.ImmersionBar;
+import com.rainowood.wltraffic.R;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.toast.ToastUtils;
 
@@ -28,22 +30,10 @@ import java.util.Random;
  */
 public abstract class BaseFragment extends Fragment {
 
-    //获取TAG的fragment名称
-    protected final String TAG = this.getClass().getSimpleName();
-
-    /**
-     * 全局ViewGroup
-     */
+    /*** 全局ViewGroup*/
     private ViewGroup rootView;
 
-    /**
-     * 状态栏
-     */
-    private View mStatusBarView;
-
-    /**
-     * 上下文对象
-     */
+    /*** 上下文对象*/
     public Context mContext;
 
     @Override
@@ -66,26 +56,29 @@ public abstract class BaseFragment extends Fragment {
 
         initData(mContext);
         initView(rootView);
-
-        // 状态栏主题
-        Random random = new Random();
-        int color = 0xff000000 | random.nextInt(0xffffff);
-        StatusBarUtil.setStatusBarColor(getActivity(), color);
-
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // 预留一个状态栏高度
-        // addStatusBar();
+        // 预留高度
+        //StatusBar();
+        // 状态栏背景颜色
+        Random random = new Random();
+        int color = 0xff000000 | random.nextInt(0xffffff);
+        StatusBarUtil.setStatusBarColor(getActivity(), getResources().getColor(R.color.white));
     }
+
+    /**
+     * 状态栏
+     */
+    private View mStatusBarView;
 
     /**
      * 给 fragment 预留一个状态栏高度
      */
-    private void addStatusBar() {
+    private void StatusBar() {
         if (mStatusBarView == null) {
             mStatusBarView = new View(getContext());
             int screenWidth = getResources().getDisplayMetrics().widthPixels;
@@ -119,6 +112,7 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract void initData(Context mContext);
 
+
     /**
      * 显示吐司
      */
@@ -147,6 +141,7 @@ public abstract class BaseFragment extends Fragment {
      */
     private static final Handler HANDLER = new Handler(Looper.getMainLooper());
     public final Object mHandlerToken = hashCode();
+
     /**
      * 延迟一段时间执行
      */
@@ -156,6 +151,7 @@ public abstract class BaseFragment extends Fragment {
         }
         return postAtTime(r, SystemClock.uptimeMillis() + delayMillis);
     }
+
     /**
      * 在指定的时间执行
      */

@@ -83,7 +83,7 @@
         <attr format="boolean" name="fillRadius"/>
         <attr format="dimension" name="barWidth"/>
         <attr format="boolean" name="linearProgress"/>
-    </declare-styleable></file><file path="D:\MY_DEV\company\WLTraffic\tools\src\main\res\values\integers.xml" qualifiers=""><integer name="anim_duration_medium">300</integer><integer name="anim_duration_long">400</integer></file><file path="D:\MY_DEV\company\WLTraffic\tools\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">tools</string></file><file path="D:\MY_DEV\company\WLTraffic\tools\src\main\res\values\style.xml" qualifiers=""><style name="BaseDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+    </declare-styleable></file><file path="D:\MY_DEV\company\WLTraffic\tools\src\main\res\values\ids.xml" qualifiers=""><item name="statusbarutil_fake_status_bar_view" type="id"/><item name="statusbarutil_translucent_view" type="id"/></file><file path="D:\MY_DEV\company\WLTraffic\tools\src\main\res\values\integers.xml" qualifiers=""><integer name="anim_duration_medium">300</integer><integer name="anim_duration_long">400</integer></file><file path="D:\MY_DEV\company\WLTraffic\tools\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">tools</string></file><file path="D:\MY_DEV\company\WLTraffic\tools\src\main\res\values\style.xml" qualifiers=""><style name="BaseDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         
         <item name="android:windowFrame">@null</item>
         

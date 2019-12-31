@@ -1,6 +1,8 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.rainowood.wltraffic.domain.SubPayManagerBean;
 import com.rainowood.wltraffic.ui.adapter.PayManagerAdapter;
 import com.rainowood.wltraffic.ui.adapter.PayManagerContentAdapter;
 import com.rainowood.wltraffic.utils.RecyclerViewSpacesItemDecoration;
+import com.rainowood.wltraffic.utils.StatusBarUtils;
 import com.rainwood.tools.viewinject.ViewById;
 
 import java.util.ArrayList;
@@ -37,15 +40,13 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
     @ViewById(R.id.iv_back)
     private ImageView ivBack;
     @ViewById(R.id.tv_transport)
-    private TextView tvTraport;     // 交通局
+    private TextView transport;     // 交通局
     @ViewById(R.id.tv_owner_unit)
     private TextView tvOU;          // 业主单位
     @ViewById(R.id.tv_total_money_int)
     private TextView tvTotalMoneyInt;       // 总金额，整数部分
     @ViewById(R.id.tv_total_money_float)
     private TextView tvTotalMoneyFloat;     // 总金额，小数部分
-    //@ViewById(R.id.lv_lv_card_view)
-    //private ListView lvCardList;     // 卡片
 
     @ViewById(R.id.rlc_card_content)
     private RecyclerView cardContent;
@@ -53,24 +54,18 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
-        // 状态栏渐变
-       /* StatusBarUtils.with(this)
-                .setIsActionBar(true)
-                .clearActionBarShadow()
-                .setDrawable(getResources().getDrawable(R.drawable.shape_bg_change))
-                .init();*/
+        //当前案例含ActionBar
 
-        tvTraport.setOnClickListener(this);
+
+        transport.setOnClickListener(this);
         tvOU.setOnClickListener(this);
 
         ivBack.setOnClickListener(this);
-        tvTraport.setText("交通局");
+        transport.setText("交通局");
         tvOU.setText("业主单位");
-
 
         // 默认显示交通局
         showTransportInfo();
-
     }
 
     /*
@@ -96,18 +91,18 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
                 openActivity(ProjectDetailActivity.class);
                 break;
             case R.id.tv_transport:         // 交通局 shap_radio_transport
-                tvTraport.setBackgroundResource(R.drawable.shap_radio_white);
+                transport.setBackgroundResource(R.drawable.shap_radio_white);
                 tvOU.setBackgroundResource(R.drawable.shap_radio_transport);
-                tvTraport.setTextColor(getResources().getColor(R.color.colorBlue1));
+                transport.setTextColor(getResources().getColor(R.color.colorBlue1));
                 tvOU.setTextColor(getResources().getColor(R.color.white));
 
                 showTransportInfo();
                 break;
             case R.id.tv_owner_unit:        // 业主单位
                 //toast("点击了");
-                tvTraport.setBackgroundResource(R.drawable.shap_radio_transport_right);
+                transport.setBackgroundResource(R.drawable.shap_radio_transport_right);
                 tvOU.setBackgroundResource(R.drawable.shap_radio_white_right);
-                tvTraport.setTextColor(getResources().getColor(R.color.white));
+                transport.setTextColor(getResources().getColor(R.color.white));
                 tvOU.setTextColor(getResources().getColor(R.color.colorBlue1));
 
                 showOwerUnitInfo();
@@ -150,12 +145,12 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         初始化交通局数据
          */
         initTransportInfo();
-
         tvTotalMoneyInt.setText(payBean.getTotalMoneyInt());
         tvTotalMoneyFloat.setText(payBean.getTotalMoneyFloat());
-
+        // 交通局
+        transport.setFocusable(true);
+        tvOU.setFocusable(false);
         getData2Show();
-
     }
 
     /**
@@ -166,12 +161,12 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         初始化业主单位数据
          */
         initOwerUnitInfo();
-
         tvTotalMoneyInt.setText(payBean.getTotalMoneyInt());
         tvTotalMoneyFloat.setText(payBean.getTotalMoneyFloat());
-
+        // 业主单位
+        transport.setFocusable(false);
+        tvOU.setFocusable(true);
         getData2Show();
-
     }
 
     /**
@@ -188,6 +183,7 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         cardContent.setLayoutManager(managerVertical);
         cardContent.setHasFixedSize(true);
         cardContent.setAdapter(adapter);
+        cardContent.setNestedScrollingEnabled(false);
         adapter.setmList(mList);
 
         /**
@@ -196,8 +192,19 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         adapter.setClickListener(new PayManagerContentAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
-                // 去详情页
-                toast("点击了：" + position);
+                // 判断焦点在哪
+                transport.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(PayManagerActivity.this, PayDetailActivity.class);
+                        if (transport.isFocusable()){   // 交通局
+                            intent.putExtra("key", "transport");
+                        }else {                 // 业主单位
+                            intent.putExtra("key", "ou");
+                        }
+                        startActivity(intent);
+                    }
+                });
             }
         });
 

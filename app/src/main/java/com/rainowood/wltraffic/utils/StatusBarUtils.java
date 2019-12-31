@@ -1,4 +1,4 @@
-package com.rainwood.tools.statusbar;
+package com.rainowood.wltraffic.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,10 +19,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 /**
  * @Author: a797s
- * @Date: 2019/12/25 17:39
- * @Desc: 状态栏适配
+ * @Date: 2019/12/31 10:31
+ * @Desc: 状态栏沉浸
  */
 public class StatusBarUtils {
+
     private Activity mActivity;
     //状态栏颜色
     private int mColor = -1;
@@ -104,9 +105,9 @@ public class StatusBarUtils {
         if (isActionBar()) {
             //要增加内容视图的 paddingTop,否则内容被 ActionBar 遮盖
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                ViewGroup rootView = mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
-                rootView.setPadding(0, getStatusBarHeight(mActivity) + getActionBarHeight(mActivity), 0, 0);
-//                rootView.setPadding(0, 0, 0, 0);
+                ViewGroup rootView = (ViewGroup) mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
+//                rootView.setPadding(0, getStatusBarHeight(mActivity) + getActionBarHeight(mActivity), 0, 0);
+                rootView.setPadding(0, getStatusBarHeight(mActivity), 0, 0);
             }
         }
     }

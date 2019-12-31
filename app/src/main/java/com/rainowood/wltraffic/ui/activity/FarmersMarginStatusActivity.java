@@ -2,13 +2,19 @@ package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.viewinject.ViewById;
 
 /**
@@ -29,6 +35,8 @@ public class FarmersMarginStatusActivity extends BaseActivity implements View.On
     private TextView pageTitle;
     @ViewById(R.id.ll_bg)
     private RelativeLayout background;
+    @ViewById(R.id.f_title)
+    private FrameLayout title;
 
     // 已缴
     @ViewById(R.id.tv_status)
@@ -43,10 +51,12 @@ public class FarmersMarginStatusActivity extends BaseActivity implements View.On
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
-        //StatusBarUtils.with(this).init();
+        //用来设置整体下移，状态栏沉浸
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+
+
         ivBack.setOnClickListener(this);
         pageTitle.setText("农民工工资保证金");
-
         background.setBackgroundResource(R.drawable.img_background_ok_3x);
         status.setText("已缴存(免缴)");
         wordName.setText("工资保证金具体细则.doc");
@@ -68,4 +78,5 @@ public class FarmersMarginStatusActivity extends BaseActivity implements View.On
                 break;
         }
     }
+
 }

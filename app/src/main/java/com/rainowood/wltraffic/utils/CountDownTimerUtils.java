@@ -7,7 +7,7 @@ import android.widget.TextView;
 /**
  * @Author: a797s
  * @Date: 2019/12/21 14:14
- * @Desc: 定时器
+ * @Desc: 发送验证码定时器
  */
 public class CountDownTimerUtils {
 
