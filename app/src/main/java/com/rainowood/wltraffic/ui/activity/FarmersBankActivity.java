@@ -196,15 +196,14 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onItemClick(int position) {
                 //toast(mHorizontalList.get(postion));
-                int flag = -1;      // 记录变量
                 for (int i = 0; i < ListUtils.getSize(mHorizontalList); i++) {                // 设置选中
-                    if (position == i){
+                    // 全部置为false
+                    if (mHorizontalList.get(i).isHasSelected()){
                         mHorizontalList.get(i).setHasSelected(false);
-                        flag = position;
                         break;
                     }
                 }
-                mHorizontalList.get(flag).setHasSelected(true);
+                mHorizontalList.get(position).setHasSelected(true);
                 adapter.notifyDataSetChanged();
             }
         });
