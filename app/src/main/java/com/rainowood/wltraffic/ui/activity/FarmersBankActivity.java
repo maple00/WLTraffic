@@ -3,6 +3,7 @@ package com.rainowood.wltraffic.ui.activity;
 import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.rainowood.wltraffic.ui.adapter.FarmerBankAdapter;
 import com.rainowood.wltraffic.ui.adapter.HorizontalAdapter;
 import com.rainowood.wltraffic.ui.adapter.VerticalAdapter;
 import com.rainowood.wltraffic.utils.DateTimeUtils;
+import com.rainowood.wltraffic.utils.ImmersionUtil;
 import com.rainowood.wltraffic.utils.ListUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
@@ -42,6 +44,10 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
     private ImageView pageBack;
     @ViewById(R.id.tv_title)
     private TextView pageTitle;
+    @ViewById(R.id.iv_background)
+    private ImageView background;
+    @ViewById(R.id.f_title)
+    private FrameLayout title;
     @ViewById(R.id.tv_status)
     private TextView status;
     @ViewById(R.id.tv_word_title)
@@ -75,6 +81,8 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
+        // 图片沉浸
+        ImmersionUtil.ImageImmers(this, title, background);
         pageBack.setOnClickListener(this);
         pageTitle.setText("银行代发制");
         status.setText("已签订三方协议");
@@ -131,27 +139,54 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_user_funds:            // 转入专户资金
                 //toast("转入专户资金");
+                outputStat.setBackgroundResource(R.drawable.shap_radio_white2blue1);
+                outputStat.setTextColor(getResources().getColor(R.color.colorBlue1));
+                userFunds.setBackgroundResource(R.drawable.shap_radio_blue2white);
+                userFunds.setTextColor(getResources().getColor(R.color.white));
+                salarySchedule.setBackgroundResource(R.drawable.shap_radio_white2blue1);
+                salarySchedule.setTextColor(getResources().getColor(R.color.colorBlue1));
+
                 mListUserFunds.setVisibility(View.VISIBLE);
                 restTimeList.setVisibility(View.GONE);
                 restinfoList.setVisibility(View.GONE);
-
                 break;
             case R.id.tv_output_statement:          // 每月产值表
                 // toast("每月产值表");
+                outputStat.setBackgroundResource(R.drawable.shap_radio_blue2white_midle);
+                outputStat.setTextColor(getResources().getColor(R.color.white));
+                userFunds.setBackgroundResource(R.drawable.shap_radio_white2blue3);
+                userFunds.setTextColor(getResources().getColor(R.color.colorBlue1));
+                salarySchedule.setBackgroundResource(R.drawable.shap_radio_white2blue2);
+                salarySchedule.setTextColor(getResources().getColor(R.color.colorBlue1));
+
                 restinfoList.setVisibility(View.VISIBLE);
                 restTimeList.setVisibility(View.VISIBLE);
                 mListUserFunds.setVisibility(View.GONE);
-
                 // 横向时间，纵向数据，滑动监听
                 initTimeInfo();
                 initTime();
-
                 // data
                 initVDataInfo();
                 initVData();
                 break;
-            case R.id.tv_salary_schedule:           // 农民工工资
-                toast("农民工工资");
+            case R.id.tv_salary_schedule:           // 农民工工资 salarySchedule
+                //toast("农民工工资");
+                salarySchedule.setBackgroundResource(R.drawable.shap_radio_blue2white_right);
+                salarySchedule.setTextColor(getResources().getColor(R.color.white));
+                outputStat.setBackgroundResource(R.drawable.shap_radio_white2blue1);
+                outputStat.setTextColor(getResources().getColor(R.color.colorBlue1));
+                userFunds.setBackgroundResource(R.drawable.shap_radio_white2blue3);
+                userFunds.setTextColor(getResources().getColor(R.color.colorBlue1));
+
+                restinfoList.setVisibility(View.VISIBLE);
+                restTimeList.setVisibility(View.VISIBLE);
+                mListUserFunds.setVisibility(View.GONE);
+                // 横向时间，纵向数据，滑动监听
+                initTimeInfo();
+                initTime();
+                // data
+                initVDataInfo();
+                initVData();
                 break;
         }
     }
@@ -195,7 +230,7 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
         adapter.setListener(new HorizontalAdapter.OnItenmClickListener() {
             @Override
             public void onItemClick(int position) {
-                //toast(mHorizontalList.get(postion));
+                //toast(mHorizontalList.get(position).getData());
                 for (int i = 0; i < ListUtils.getSize(mHorizontalList); i++) {                // 设置选中
                     // 全部置为false
                     if (mHorizontalList.get(i).isHasSelected()){
@@ -205,6 +240,10 @@ public class FarmersBankActivity extends BaseActivity implements View.OnClickLis
                 }
                 mHorizontalList.get(position).setHasSelected(true);
                 adapter.notifyDataSetChanged();
+
+                // 更新数据
+                initVDataInfo();
+                initVData();
             }
         });
     }

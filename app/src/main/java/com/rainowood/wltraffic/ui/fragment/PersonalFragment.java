@@ -2,7 +2,6 @@ package com.rainowood.wltraffic.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,11 +11,9 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseFragment;
+import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.domain.UserInfoBean;
 import com.rainowood.wltraffic.ui.activity.CheckPhoneActivity;
-import com.rainowood.wltraffic.ui.activity.LoginActivity;
-import com.rainowood.wltraffic.ui.dialog.WaitDialog;
-import com.rainwood.tools.dialog.BaseDialog;
 
 /**
  * @Author: a797s
@@ -59,7 +56,15 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
         // 姓名
         TextView userName = view.findViewById(R.id.tv_name);
         userName.setText(userInfo.getUserName());
+        /*
+        性别与负责人根据登录的人员的类型判定
+         */
         // 性别
+        ImageView sex = view.findViewById(R.id.iv_sex);
+        sex.setImageResource(R.drawable.ic_icon_man);
+        // 负责人
+        TextView type = view.findViewById(R.id.tv_type);
+        type.setText("负责人");
         // 职位
         TextView post = view.findViewById(R.id.tv_post);
         post.setText(userInfo.getPost());
@@ -92,9 +97,9 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_logout:        // 退出登录
-                if (logoutFalg){
+                if (logoutFalg) {
                     tvLogout.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tvLogout.setVisibility(View.GONE);
                 }
                 logoutFalg = !logoutFalg;
@@ -104,6 +109,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 showDialog();
                 break;
             case R.id.tv_change_tel:        // 修改电话
+                Contants.CHANGEFLAG = 1;
                 Intent intent = new Intent(this.getActivity(), CheckPhoneActivity.class);
                 intent.putExtra("key", "changeTel");
                 startActivity(intent);
@@ -114,19 +120,8 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-
     private void showDialog() {
-        // 等待对话框
-        final BaseDialog dialog = new WaitDialog.Builder(getActivity())
-                // 文本消息
-                .setMessage("登出中").show();
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-                startActivity(LoginActivity.class);
-            }
-        }, 2000);
+
     }
 
     @Override

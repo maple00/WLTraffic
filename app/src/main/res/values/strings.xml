@@ -6,10 +6,13 @@
     <string name="common_loading">加载中&#8230;</string>
     <string name="common_action_title">标题</string>
     <string name="common_login">登录</string>
+    <string name="common_reset_pwd">重置密码</string>
     <string name="common_check_phone">手机号验证</string>
     <string name="common_input_phone">请输入手机号</string>
     <string name="common_input_account">请输入账号</string>
     <string name="common_input_pwd">请输入密码</string>
+    <string name="common_input_new_pwd">请输入新密码</string>
+    <string name="common_input_new_pwd_again">请再次输入新密码</string>
     <string name="common_login_forget">忘记密码？</string>
     <string name="common_get_check_code">获取验证码</string>
     <string name="common_input_code_verify">输入验证码</string>

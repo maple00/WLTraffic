@@ -75,9 +75,10 @@
 
         <ImageView
             android:id="@+id/iv_show_or_hide"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/ic_icon_after"
+            android:layout_width="9dp"
+            android:layout_height="5dp"
+            android:src="@drawable/ic_icon_down"
+            android:scaleType="centerInside"
             android:layout_marginStart="5dp"/>
 
     </LinearLayout>

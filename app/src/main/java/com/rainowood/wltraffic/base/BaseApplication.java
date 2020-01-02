@@ -18,19 +18,20 @@ import cat.ereza.customactivityoncrash.config.CaocConfig;
  * @time: 2019/11/27 11:31
  * @des: Application 基类
  */
-public class MyApplication extends Application {
+public class BaseApplication extends Application {
 
     /**
-     * 是否调试
+     * BaseApplication对象
      */
-    private boolean isDebug = false;
+    public static BaseApplication app;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
+        app = this;
         // initActivity 初始化Activity 栈管理
         initActivity();
-
         // 初始化三方的框架
         initSDK();
 
@@ -48,21 +49,14 @@ public class MyApplication extends Application {
     /**
      * 创建Application 对象
      */
-    public static MyApplication getInstance(){
+    public static BaseApplication getInstance(){
         return Instance.INSTANCE;
     }
 
     private static class Instance{
-        static MyApplication INSTANCE = new MyApplication();
+        static BaseApplication INSTANCE = new BaseApplication();
     }
 
-    public boolean isDebug() {
-        return isDebug;
-    }
-
-    public boolean isDetermineNetwork() {
-        return true;
-    }
 
     /**
      * 初始化一些三方框架
@@ -121,5 +115,13 @@ public class MyApplication extends Application {
         });
         // 吐司工具类
         ToastUtils.init(this);
+    }
+
+    /**
+     * 判断网络环境
+     */
+
+    public boolean isDetermineNetwork() {
+        return true;
     }
 }

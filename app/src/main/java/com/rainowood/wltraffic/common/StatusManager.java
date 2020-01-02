@@ -1,4 +1,4 @@
-package com.rainowood.wltraffic.other;
+package com.rainowood.wltraffic.common;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.ui.dialog.WaitDialog;
 import com.rainwood.tools.dialog.BaseDialog;
 import com.rainwood.tools.widget.HintLayout;
 
@@ -47,12 +46,6 @@ public final class StatusManager {
     public void showLoading(FragmentActivity activity, CharSequence text) {
         if (activity == null || activity.isFinishing()) {
             return;
-        }
-
-        if (mDialog == null) {
-            mDialog = new WaitDialog.Builder(activity)
-                    .setMessage(text)
-                    .create();
         }
 
         if (!mDialog.isShowing()) {

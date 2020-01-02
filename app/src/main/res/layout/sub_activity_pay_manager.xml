@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="230dp"
-    android:background="@drawable/shape_bg_change"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@drawable/shape_bg_change" />
+
     <FrameLayout
+        android:id="@+id/f_title"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 

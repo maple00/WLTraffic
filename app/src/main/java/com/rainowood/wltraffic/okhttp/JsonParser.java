@@ -1,4 +1,4 @@
-package com.rainowood.wltraffic.json;
+package com.rainowood.wltraffic.okhttp;
 
 import org.json.JSONArray;
 import org.json.JSONException;

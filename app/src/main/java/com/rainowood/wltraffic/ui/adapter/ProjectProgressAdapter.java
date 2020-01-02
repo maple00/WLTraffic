@@ -75,12 +75,12 @@ public class ProjectProgressAdapter extends RecyclerView.Adapter<ProjectProgress
                 int value = mList.get(position).getHasSelected() % 2;
                 if (value == 0) {               // 点击了，默认为false
                     // 更换图标
-                    holder.iv_next_content.setBackgroundResource(R.drawable.ic_icon_after);
+                    holder.iv_next_content.setImageResource(R.drawable.ic_icon_up);
                     mList.get(position).setHasSelected(++value);
                     holder.lv_content.setVisibility(View.VISIBLE);
 
                 } else {
-                    holder.iv_next_content.setBackgroundResource(R.drawable.ic_icon_front);
+                    holder.iv_next_content.setImageResource(R.drawable.ic_icon_down);
                     mList.get(position).setHasSelected(++value);
                     holder.lv_content.setVisibility(View.GONE);
                 }

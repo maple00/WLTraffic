@@ -53,7 +53,6 @@ public class FarmersSalaryManagerActivity extends BaseActivity implements View.O
                         // 模拟状态
                         int num = (int) (Math.random() * (3));        // 1到3的随机数
                         Log.d("sxs---", "random: " + num);
-                        num = 1;
                         if (num == 1) {          // 已缴
                             openActivity(FarmersMarginStatusActivity.class);
                         } else if (num == 2) {          // 未缴

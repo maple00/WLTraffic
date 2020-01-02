@@ -1,6 +1,5 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -64,11 +63,14 @@ public final class CheckPhoneActivity extends BaseActivity implements OnClickLis
         /*
         判断是发送验证码手机号还是修改手机号
          */
+        // 修改手机号
         key = getIntent().getStringExtra("key");
-        if ("changeTel".equals(key)){
+        if ("changeTel".equals(key)) {
             checkPhoneTitle.setText("修改手机号");
             checkPhone.setHint("请输入新的手机号");
         }
+
+
 
     }
 
@@ -92,10 +94,10 @@ public final class CheckPhoneActivity extends BaseActivity implements OnClickLis
         switch (v.getId()) {
             case R.id.btn_back:
                 // 判断从哪个页面过来的
-                if ("changeTel".equals(key)){       // 从个人中心过来
+                if ("changeTel".equals(key)) {       // 从个人中心过来
                     finish();
                 }
-                if (!"changeTel".equals(key)){      // 从登录页面过来
+                if (!"changeTel".equals(key)) {      // 从登录页面过来
                     openActivity(LoginActivity.class);
                 }
                 break;

@@ -82,7 +82,7 @@ public class ProjectProcedureAdapter extends BaseAdapter {
                 holder.iv_success_or_fail.setBackgroundResource(R.drawable.ic_icon_success);
             }else {
                 holder.tv_success_or_fail.setTextColor(mContext.getResources().getColor(R.color.colorFail));
-                holder.iv_success_or_fail.setBackgroundResource(R.drawable.ic_icon_delete);
+                holder.iv_success_or_fail.setBackgroundResource(R.drawable.ic_icon_no);
             }
         }else {         // 前三项
             holder.ll_document.setVisibility(View.VISIBLE);

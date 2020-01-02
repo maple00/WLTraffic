@@ -13,6 +13,7 @@ import com.rainowood.wltraffic.domain.ProjectProgressBean;
 import com.rainowood.wltraffic.domain.SubProjectProgressBean;
 import com.rainowood.wltraffic.ui.adapter.ProjectProgressAdapter;
 import com.rainowood.wltraffic.utils.RecyclerViewSpacesItemDecoration;
+import com.rainwood.tools.common.MeasureUtil;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
@@ -53,16 +54,13 @@ public class ProjectProgressActivity extends BaseActivity implements View.OnClic
         ProjectProgressAdapter adapter = new ProjectProgressAdapter(this);
         LinearLayoutManager managerVertical = new LinearLayoutManager(this);
         managerVertical.setOrientation(LinearLayoutManager.VERTICAL);       // 纵向
-
         // 设置Item之间的间距
         HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
-        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.TOP_DECORATION, 30);//右间距
+        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, MeasureUtil.dip2px(this, 30)); // 下间距
         rclContentList.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
-
         rclContentList.setLayoutManager(managerVertical);
         rclContentList.setHasFixedSize(true);
         rclContentList.setAdapter(adapter);
-
         adapter.setVerticalDataList(mList);
     }
 

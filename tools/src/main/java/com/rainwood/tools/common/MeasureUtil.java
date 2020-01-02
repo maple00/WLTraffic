@@ -7,7 +7,7 @@ import android.content.Context;
  * @time: 2019/11/28 16:03
  * @des: 尺寸 工具类
  */
-public class MeasureUtil {
+public final class MeasureUtil {
 
     /**
      * 将px 转换成dip或者dp， 保证尺寸大小不变

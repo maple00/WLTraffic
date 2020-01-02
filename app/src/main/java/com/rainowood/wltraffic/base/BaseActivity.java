@@ -23,10 +23,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gyf.immersionbar.ImmersionBar;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.helper.ActivityStackManager;
-import com.rainowood.wltraffic.other.StatusManager;
+import com.rainowood.wltraffic.common.StatusManager;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.toast.ToastUtils;
 import com.rainwood.tools.viewinject.ViewBind;
@@ -38,20 +37,23 @@ import com.rainwood.tools.viewinject.ViewBind;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    /**
-     * 状态栏沉浸
-     */
-    private ImmersionBar mImmersionBar;
+    public static String TAG ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);      //禁止横屏
         super.onCreate(savedInstanceState);
+        if (!isTaskRoot()) {
+            Intent intent = getIntent();
+            if (intent != null && Intent.ACTION_MAIN.equals(intent.getAction()) && intent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+                finish();
+                return;
+            }
+        }
         if (getLayoutId() > 0) {
             setContentView(getLayoutId());
         }
         // 状态栏适配
-
         init();
     }
 
@@ -66,6 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         // 将activity 入栈
         ActivityStackManager.getInstance().addActivity(this);
+        TAG = this.getClass().getSimpleName();
     }
 
     /**
@@ -133,21 +136,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             // 如果不支持设置深灰色风格，为了兼容，则设置状态栏颜色半透明
             StatusBarUtil.setStatusBarColor(this, 0x55000000);
         }
-
-        /*
-         * 设置状态栏透明，黑色字体
-         */
-//        StatusBarUtil.setTranslucentStatus(this);
-//        StatusBarUtil.setStatusBarDarkTheme(this, true);
-           /*
-           白色字体
-            */
-//           StatusBarUtil.setStatusBarDarkTheme(this, false);
-        /*
-        设置白色字体，其他背景
-         */
-//        StatusBarUtil.setStatusBarDarkTheme(this, false);
-//        StatusBarUtil.setStatusBarColor(this, Color.parseColor("#58C087"));
     }
 
     /**

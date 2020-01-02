@@ -6,7 +6,7 @@
 
     <include layout="@layout/sub_activity_pay_manager" />
 
-    <View
+    <Space
         android:id="@+id/s_placeholder"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/s_placeholder"
+        android:layout_marginTop="?attr/actionBarSize"
         android:scrollbars="none">
 
         <LinearLayout
@@ -61,17 +62,6 @@
                     android:textColor="@color/white"
                     android:textSize="20sp" />
             </LinearLayout>
-
-            <!--<ListView
-                android:id="@+id/lv_lv_card_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="30dp"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="10dp" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rlc_card_content"

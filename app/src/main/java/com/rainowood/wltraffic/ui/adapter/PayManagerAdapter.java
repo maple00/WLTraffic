@@ -90,11 +90,11 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
                 if (mList.get(position).isHasHide()) {
                     contentAdapter.setNum(mList.get(position).getmList().size());
                     holder.tv_show_or_hide.setText("收起");
-                    holder.iv_show_or_hide.setBackgroundResource(R.drawable.ic_icon_front);
+                    holder.iv_show_or_hide.setImageResource(R.drawable.ic_icon_up);
                 } else {
                     contentAdapter.setNum(2);
                     holder.tv_show_or_hide.setText("展开");
-                    holder.iv_show_or_hide.setBackgroundResource(R.drawable.ic_icon_after);
+                    holder.iv_show_or_hide.setImageResource(R.drawable.ic_icon_down);
                 }
                 mList.get(position).setHasHide(!mList.get(position).isHasHide());
             }

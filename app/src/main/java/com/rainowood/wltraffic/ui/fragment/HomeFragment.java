@@ -13,8 +13,6 @@ import com.rainowood.wltraffic.domain.ProjectInfoBean;
 import com.rainowood.wltraffic.ui.activity.ProjectDetailActivity;
 import com.rainowood.wltraffic.ui.adapter.HomeBeforeItemAdapter;
 import com.rainowood.wltraffic.ui.adapter.HomeListViewAdapter;
-import com.rainowood.wltraffic.ui.dialog.WaitDialog;
-import com.rainwood.tools.dialog.BaseDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,16 +141,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
     private void showDialog() {
-        // 等待对话框
-        final BaseDialog dialog = new WaitDialog.Builder(getActivity())
-                // 文本消息
-                .setMessage("加载中").show();
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-            }
-        }, 2000);
+
     }
 
     // 对接接口后全都写到@Overried中

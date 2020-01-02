@@ -2,6 +2,7 @@ package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.SpecialAccountBean;
 import com.rainowood.wltraffic.ui.adapter.SpecialAccountAdapter;
+import com.rainowood.wltraffic.utils.ImmersionUtil;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
@@ -35,6 +37,10 @@ public class SpecialAccountActivity extends BaseActivity implements View.OnClick
     private ImageView ivBack;
     @ViewById(R.id.tv_title)
     private TextView pageTitle;
+    @ViewById(R.id.iv_background)
+    private ImageView background;
+    @ViewById(R.id.f_title)
+    private FrameLayout title;
     @ViewById(R.id.tv_status)
     private TextView status;
 
@@ -50,10 +56,12 @@ public class SpecialAccountActivity extends BaseActivity implements View.OnClick
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
+        // 图片沉浸
+        ImmersionUtil.ImageImmers(this, title, background);
+
         ivBack.setOnClickListener(this);
         download.setOnClickListener(this);
         preview.setOnClickListener(this);
-
         pageTitle.setText("专户制度");
         status.setText("已签订三方协议");
         word.setText("三方协议具体细则.doc");

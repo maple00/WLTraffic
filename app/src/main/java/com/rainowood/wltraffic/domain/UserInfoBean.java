@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class UserInfoBean implements Serializable {
 
+    private String type;            // 用户类型
     private String userName;        // 姓名
     private String userSex;         // 性别
     private String post;            // 职位
@@ -16,6 +17,14 @@ public class UserInfoBean implements Serializable {
     private String tel;             // 电话
     private String logoAddress;     // logo地址
     private String company;         // 公司
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getUserName() {
         return userName;

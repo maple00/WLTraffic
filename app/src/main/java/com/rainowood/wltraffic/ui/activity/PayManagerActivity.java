@@ -2,8 +2,8 @@ package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +17,8 @@ import com.rainowood.wltraffic.domain.SubItemLabelBean;
 import com.rainowood.wltraffic.domain.SubPayManagerBean;
 import com.rainowood.wltraffic.ui.adapter.PayManagerAdapter;
 import com.rainowood.wltraffic.ui.adapter.PayManagerContentAdapter;
+import com.rainowood.wltraffic.utils.ImmersionUtil;
 import com.rainowood.wltraffic.utils.RecyclerViewSpacesItemDecoration;
-import com.rainowood.wltraffic.utils.StatusBarUtils;
 import com.rainwood.tools.viewinject.ViewById;
 
 import java.util.ArrayList;
@@ -39,6 +39,10 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
 
     @ViewById(R.id.iv_back)
     private ImageView ivBack;
+    @ViewById(R.id.iv_background)
+    private ImageView background;
+    @ViewById(R.id.f_title)
+    private FrameLayout title;
     @ViewById(R.id.tv_transport)
     private TextView transport;     // 交通局
     @ViewById(R.id.tv_owner_unit)
@@ -54,12 +58,11 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
-        //当前案例含ActionBar
-
+        // 状态栏沉浸
+        ImmersionUtil.ImageImmers(this, title, background);
 
         transport.setOnClickListener(this);
         tvOU.setOnClickListener(this);
-
         ivBack.setOnClickListener(this);
         transport.setText("交通局");
         tvOU.setText("业主单位");

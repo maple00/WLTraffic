@@ -26,12 +26,12 @@ public final class HomeActivity extends BaseActivity {
     // Fragment 组
     private SparseArray<Fragment> mFragmentSparseArray;
     // RadioButton
-    @ViewById(R.id.home_tab)
+/*    @ViewById(R.id.home_tab)
     private RadioButton tabHome;
     @ViewById(R.id.message_tab)
     private RadioButton tabMessage;
     @ViewById(R.id.personal_tab)
-    private RadioButton personalTab;
+    private RadioButton personalTab;*/
 
     @Override
     protected void initView() {

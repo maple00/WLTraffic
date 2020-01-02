@@ -6,9 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentActivity;
 
-import com.rainwood.tools.dialog.MyDialogFragment;
+import com.rainwood.tools.dialog.BaseDialog;
 import com.rainwood.tools.toast.ToastUtils;
-import com.rainwood.tools.viewinject.ViewBind;
 
 /**
  * @Author: shearson
@@ -18,7 +17,7 @@ import com.rainwood.tools.viewinject.ViewBind;
 public class BaseDialogFragment {
 
     public static class Builder<B extends BaseDialogFragment.Builder>
-            extends MyDialogFragment.Builder<B> {
+            extends BaseDialog.Builder<B> {
 
         public Builder(FragmentActivity activity) {
             super(activity);
@@ -26,8 +25,7 @@ public class BaseDialogFragment {
 
         @Override
         public B setContentView(@NonNull View view) {
-            // 使用 ButterKnife 注解
-            ViewBind.inject(this.getActivity());
+            // 使用 View 注解
             return super.setContentView(view);
         }
 

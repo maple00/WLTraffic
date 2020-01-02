@@ -28,7 +28,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginStart="5dp"
-                android:background="@drawable/ic_icon_front" />
+                android:background="@drawable/ic_icon_no_finish" />
         </LinearLayout>
 
 
@@ -37,7 +37,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
-            android:background="@drawable/ic_icon_front" />
+            android:src="@drawable/ic_icon_down"
+            android:scaleType="centerInside"/>
     </LinearLayout>
 
 

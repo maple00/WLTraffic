@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.common.Contants;
+import com.rainowood.wltraffic.ui.fragment.PersonalFragment;
 import com.rainowood.wltraffic.utils.CountDownTimerUtils;
 import com.rainwood.tools.viewinject.ViewById;
 
@@ -43,12 +45,15 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
     private EditText editText5;
     @ViewById(R.id.ed_code6)
     private EditText editText6;
+    @ViewById(R.id.btn_confirm)
+    private Button confirm;
 
 
     @Override
     protected void initView() {
         mTitle.setVisibility(View.GONE);
         btnBack.setOnClickListener(this);
+        confirm.setOnClickListener(this);
         // 软键盘自动弹起
         showSoftInputFromWindow(editText1);
         // 初始化监听EditText
@@ -64,7 +69,6 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -74,6 +78,9 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
                 }
             }
         });
+
+        // 将验证码赋值到剪切板
+
     }
 
     @Override
@@ -88,6 +95,15 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
                 CountDownTimerUtils.countDownTimer.start();
                 // 请求验证码接口接口
 
+                break;
+            case R.id.btn_confirm:                              // 需要判断是修改手机号还是修改密码
+                if (0 == Contants.CHANGEFLAG){          // 修改密码
+                    openActivity(ResetPwdActivity.class);
+                }
+
+                if (1 == Contants.CHANGEFLAG){          // 修改手机号
+
+                }
                 break;
         }
     }
@@ -115,7 +131,7 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (temp.length() == 1 && j >= 0 && j < mArray.length - 1) {
+                    if (temp.length() == 1 && j < mArray.length - 1) {
                         mArray[j + 1].setFocusable(true);
                         mArray[j + 1].setFocusableInTouchMode(true);
                         mArray[j + 1].requestFocus();

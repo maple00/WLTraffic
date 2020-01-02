@@ -2,6 +2,7 @@ package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.utils.ImmersionUtil;
 import com.rainwood.tools.viewinject.ViewById;
 
 /**
@@ -27,8 +29,10 @@ public class FarmersNoMarginActivity extends BaseActivity implements View.OnClic
     private ImageView ivBack;
     @ViewById(R.id.tv_title)
     private TextView pageTitle;
-    @ViewById(R.id.ll_bg)
-    private RelativeLayout background;
+    @ViewById(R.id.f_title)
+    private FrameLayout title;
+    @ViewById(R.id.iv_background)
+    private ImageView background;
 
     @ViewById(R.id.tv_no_margin)
     private TextView noMarginTv;
@@ -39,7 +43,9 @@ public class FarmersNoMarginActivity extends BaseActivity implements View.OnClic
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
-        //StatusBarUtils.with(this).init();
+        // 图片状态栏沉浸
+        ImmersionUtil.ImageImmers(this, title, background);
+
         ivBack.setOnClickListener(this);
         pageTitle.setText("农民工工资保证金");
 

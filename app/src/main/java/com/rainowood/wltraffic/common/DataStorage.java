@@ -3,7 +3,7 @@ package com.rainowood.wltraffic.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.rainowood.wltraffic.json.JsonParser;
+import com.rainowood.wltraffic.okhttp.JsonParser;
 
 import java.util.List;
 import java.util.Map;

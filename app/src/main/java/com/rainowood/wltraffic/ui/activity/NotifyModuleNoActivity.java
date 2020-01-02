@@ -1,12 +1,14 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.ui.adapter.QualitySafeAdapter;
+import com.rainowood.wltraffic.utils.ImmersionUtil;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
@@ -31,6 +33,10 @@ public class NotifyModuleNoActivity extends BaseActivity implements View.OnClick
     private ImageView back;
     @ViewById(R.id.tv_title)
     private TextView pageTitle;
+    @ViewById(R.id.f_title)
+    private FrameLayout title;
+    @ViewById(R.id.iv_background)
+    private ImageView background;
     @ViewById(R.id.tv_status)
     private TextView status;
 
@@ -40,9 +46,11 @@ public class NotifyModuleNoActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initView() {
+        // 图片状态栏沉浸
+        ImmersionUtil.ImageImmers(this, title, background);
+
         back.setOnClickListener(this);
         pageTitle.setText("通报");
-
         status.setText("未设置维权公示牌");
 
         QualitySafeAdapter safeAdapter = new QualitySafeAdapter(this, mSafeList);
