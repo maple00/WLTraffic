@@ -4,7 +4,7 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.rainowood.wltraffic.helper.ActivityStackManager;
+import com.rainowood.wltraffic.common.ActivityStackManager;
 import com.rainowood.wltraffic.ui.activity.CrashActivity;
 import com.rainowood.wltraffic.ui.activity.HomeActivity;
 import com.rainwood.tools.toast.ToastInterceptor;

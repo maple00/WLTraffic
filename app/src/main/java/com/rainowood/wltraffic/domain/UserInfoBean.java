@@ -9,14 +9,24 @@ import java.io.Serializable;
  */
 public class UserInfoBean implements Serializable {
 
-    private String type;            // 用户类型
-    private String userName;        // 姓名
-    private String userSex;         // 性别
-    private String post;            // 职位
-    private String companyPosition; // 公司地址
-    private String tel;             // 电话
-    private String logoAddress;     // logo地址
-    private String company;         // 公司
+    private String adid;                // 用户ID
+    private String type;                // 用户类型
+    private String adName;              // 姓名
+    private String sex;                 // 性别
+    private String departmentName;       // 职位
+    private String address;             // 公司地址
+    private String adtel;               // 电话
+    private String touxiang;             // logo地址
+    private String companyName;         // 公司
+
+
+    public String getAdid() {
+        return adid;
+    }
+
+    public void setAdid(String adid) {
+        this.adid = adid;
+    }
 
     public String getType() {
         return type;
@@ -26,59 +36,74 @@ public class UserInfoBean implements Serializable {
         this.type = type;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getAdName() {
+        return adName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setAdName(String adName) {
+        this.adName = adName;
     }
 
-    public String getUserSex() {
-        return userSex;
+    public String getSex() {
+        return sex;
     }
 
-    public void setUserSex(String userSex) {
-        this.userSex = userSex;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getPost() {
-        return post;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setPost(String post) {
-        this.post = post;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
-    public String getCompanyPosition() {
-        return companyPosition;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCompanyPosition(String companyPosition) {
-        this.companyPosition = companyPosition;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getTel() {
-        return tel;
+    public String getAdtel() {
+        return adtel;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setAdtel(String adtel) {
+        this.adtel = adtel;
     }
 
-    public String getLogoAddress() {
-        return logoAddress;
+    public String getTouxiang() {
+        return touxiang;
     }
 
-    public void setLogoAddress(String logoAddress) {
-        this.logoAddress = logoAddress;
+    public void setTouxiang(String touxiang) {
+        this.touxiang = touxiang;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfoBean{" +
+                "adid='" + adid + '\'' +
+                ", type='" + type + '\'' +
+                ", adName='" + adName + '\'' +
+                ", sex='" + sex + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", address='" + address + '\'' +
+                ", adtel='" + adtel + '\'' +
+                ", touxiang='" + touxiang + '\'' +
+                ", companyName='" + companyName + '\'' +
+                '}';
     }
 }

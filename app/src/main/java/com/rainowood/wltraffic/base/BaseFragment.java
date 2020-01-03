@@ -1,5 +1,6 @@
 package com.rainowood.wltraffic.base;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,8 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import com.rainowood.wltraffic.R;
+import com.rainowood.wltraffic.ui.fragment.HomeFragment;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.toast.ToastUtils;
 
@@ -52,7 +56,6 @@ public abstract class BaseFragment extends Fragment {
         if (parent != null) {
             parent.removeAllViews();
         }
-
         initData(mContext);
         initView(rootView);
         return rootView;
@@ -111,7 +114,6 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract void initData(Context mContext);
 
-
     /**
      * 显示吐司
      */
@@ -130,7 +132,6 @@ public abstract class BaseFragment extends Fragment {
     /**
      * startActivity 方法优化
      */
-
     public void startActivity(Class<? extends Activity> cls) {
         startActivity(new Intent(mContext, cls));
     }
@@ -159,42 +160,10 @@ public abstract class BaseFragment extends Fragment {
         return HANDLER.postAtTime(r, mHandlerToken, uptimeMillis);
     }
 
-
-    /**
-     * 保证同一按钮在1秒内只响应一次点击事件
-     */
-    public abstract class OnSingleClickListener implements View.OnClickListener {
-        //两次点击按钮的最小间隔，目前为1000
-        private static final int MIN_CLICK_DELAY_TIME = 1000;
-        private long lastClickTime;
-
-        public abstract void onSingleClick(View view);
-
-        @Override
-        public void onClick(View v) {
-            long curClickTime = System.currentTimeMillis();
-            if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
-                lastClickTime = curClickTime;
-                onSingleClick(v);
-            }
-        }
-    }
-
-    /**
-     * 同一按钮在短时间内可重复响应点击事件
-     */
-    public abstract class OnMultiClickListener implements View.OnClickListener {
-        public abstract void onMultiClick(View view);
-
-        @Override
-        public void onClick(View v) {
-            onMultiClick(v);
-        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
+
 }
 

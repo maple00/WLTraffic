@@ -9,40 +9,50 @@ import java.io.Serializable;
  */
 public class ProjectInfoBean implements Serializable {
 
-    private String title;       // 项目名称
-    private String label;       // 项目标签
-
-    private String time;        //时间
+    private String id;            // id
+    private String itemName;        // 项目名称
+    private String proportion;      // 项目进度
+    private String stage;           // 项目阶段
 
     @Override
     public String toString() {
-        return "HomeListBean{" +
-                "title='" + title + '\'' +
-                ", label='" + label + '\'' +
+        return "ProjectInfoBean{" +
+                "id='" + id + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", proportion='" + proportion + '\'' +
+                ", stage='" + stage + '\'' +
                 '}';
     }
 
-    public String getTime() {
-        return time;
+    public String getId() {
+        return id;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public String getLabel() {
-        return label;
+    public String getProportion() {
+        return proportion;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setProportion(String proportion) {
+        this.proportion = proportion;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
     }
 }

@@ -2,6 +2,9 @@ package com.rainowood.wltraffic.okhttp;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+
+import com.rainowood.wltraffic.utils.DateTimeUtils;
 
 /**
  * Created by Relin
@@ -32,6 +35,7 @@ public class HttpHandler extends Handler {
             case WHAT_ON_SUCCEED:
                 if (listener != null && httpResult != null && httpResult.body() != null) {
                     listener.onHttpSucceed(httpResult);
+                    Log.e("sxs-api-interface", DateTimeUtils.getNowDate(DateTimeUtils.DatePattern.ALL_TIME));
                 }
                 break;
         }

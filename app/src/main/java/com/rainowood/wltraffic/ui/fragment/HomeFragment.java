@@ -1,6 +1,8 @@
 package com.rainowood.wltraffic.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,50 +12,44 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseFragment;
 import com.rainowood.wltraffic.domain.ProjectInfoBean;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.activity.ProjectDetailActivity;
 import com.rainowood.wltraffic.ui.adapter.HomeBeforeItemAdapter;
 import com.rainowood.wltraffic.ui.adapter.HomeListViewAdapter;
+import com.rainowood.wltraffic.utils.DialogUtils;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/17 15:13
  * @Desc: 首页
  */
-public class HomeFragment extends BaseFragment implements View.OnClickListener {
+public class HomeFragment extends BaseFragment implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int initLayout() {
         return R.layout.fragment_home;
     }
 
-    // 模拟数据  -- 在建项目
-    private String[] mListTitles = {"白马至白果坪至天尺坪升级公路改造工程", "新安小学新建校区10kv供电工程", "国家地下水监测工程(水利部分)第二标段工程",
-            "白马至白果坪至天尺坪升级公路改造工程发武隆仙女山", "新安小学新建校区10kv供电工程"};
-    private String[] mLabels = {"80%", "90%", "90%", "90%", "80%"};
-
-    // 前期项目
-    private String[] beforeItemTitles = {"白马至白果坪至天尺坪公路升级改造工程", "丰裕粮油安置房建设工程泉城花都E区安置工程丰裕粮油安置房建设工程泉城花都E区安置工程...",
-            "丰裕粮油安置房建设工程泉城花都E区安置", "丰裕粮油安置房建设工程泉城花都E区安置"};
-    private String[] beforeLabels = {"施工图设计阶段-财政评审", "实施方案阶段-用地手续", "初步设计阶段-项目概算审核", "初步设计阶段-项目概算审核"};
-
-
     // 首页列表
     private ListView mListView;
     // 首页数据.
-    private List<ProjectInfoBean> mList;
+    private List<ProjectInfoBean> leftList;
+    private List<ProjectInfoBean> rightList;
     private View titleOne;
     private View titleTwo;
     private TextView tvHomeTitleOne;
     private TextView tvHomeTitleTwo;
 
+    private DialogUtils dialog;
+
     @Override
     protected void initView(View view) {
-        // 从接口获取数据之后再初始化列表，
-
-
         // 初始化项目
         LinearLayoutCompat homeTitleOne = view.findViewById(R.id.ll_home_title_one);
         homeTitleOne.setOnClickListener(this);
@@ -69,24 +65,35 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         tvHomeTitleOne.setText("在建项目");
         tvHomeTitleTwo.setText("前期项目");
 
-        // 初始化在建项目数据
-        initData();
+        // 默认显示在建项目
+        //showDialog();
         mListView = view.findViewById(R.id.lv_home);
-        HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, mList);
-        mListView.setAdapter(adapter);
-        adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
+        postDelayed(new Runnable() {
             @Override
-            public void ItemOnClick(int position) {
-                // toast("点击了：" + mList.get(position));
-                // 打开详情
-                startActivity(ProjectDetailActivity.class);
+            public void run() {
+                HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, leftList);
+                mListView.setAdapter(adapter);
+                adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
+                    @Override
+                    public void ItemOnClick(int position) {
+                        // toast("点击了：" + mList.get(position));
+                        // 打开详情
+                        Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                        intent.putExtra("id", leftList.get(position).getId());
+                        intent.putExtra("stage", leftList.get(position).getStage());
+                        startActivity(intent);
+                    }
+                });
             }
-        });
+        }, 500);
+
     }
 
     @Override
     protected void initData(Context mContext) {
-
+        dialog = new DialogUtils(getActivity(), "加载中");
+        // 获取接口数据
+        RequestPost.getHomeDate(this);
     }
 
     @Override
@@ -101,15 +108,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 // 加载中
                 showDialog();
                 // 请求数据
-                initData();
-                HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, mList);
+                HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, leftList);
                 mListView.setAdapter(adapter);
                 adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
                     @Override
                     public void ItemOnClick(int position) {
-                        // toast("点击了：" + mList.get(position).getTitle());
-                        // 打开详情
-                        startActivity(ProjectDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", leftList.get(position).getId());
+                        Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                        intent.putExtra("stage", leftList.get(position).getStage());
+                        startActivity(intent, bundle);
                     }
                 });
 
@@ -123,46 +131,62 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 // 加载中
                 showDialog();
                 // 请求数据
-                initBeforeData();
-                HomeBeforeItemAdapter beforeItemAdapter = new HomeBeforeItemAdapter(mContext, mList);
+                HomeBeforeItemAdapter beforeItemAdapter = new HomeBeforeItemAdapter(mContext, rightList);
                 mListView.setAdapter(beforeItemAdapter);
                 beforeItemAdapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
                     @Override
                     public void ItemOnClick(int position) {
-                        // toast("点击了：" + mList.get(position).getLabel());
-                        // 打开详情
-                        startActivity(ProjectDetailActivity.class);
+                        // 打开详情, 带参访问详情
+                        Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", rightList.get(position).getId());
+                        bundle.putString("stage", leftList.get(position).getStage());
+                        startActivity(intent, bundle);
                     }
                 });
 
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
-
 
     private void showDialog() {
+        dialog.showDialog();
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismissDialog();
+            }
+        }, 100);
+    }
+
+    @Override
+    public void onHttpFailure(HttpResponse result) {
 
     }
 
-    // 对接接口后全都写到@Overried中
-    private void initData() {
-        // 初始化列表数据       -- 此数据需要从后台获取
-        mList = new ArrayList<>();
-        for (int i = 0; i < mListTitles.length; i++) {
-            ProjectInfoBean homeList = new ProjectInfoBean();
-            homeList.setTitle(mListTitles[i]);
-            homeList.setLabel(mLabels[i]);
-            mList.add(homeList);
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> bodys = JsonParser.parseJSONObject(result.body());
+        if ("1".equals(bodys.get("code"))) {
+            Map<String, String> data = JsonParser.parseJSONObject(bodys.get("data"));
+            // 在建项目
+            leftList = JsonParser.parseJSONArray(ProjectInfoBean.class, data.get("left"));
+            // 前期项目
+            rightList = JsonParser.parseJSONArray(ProjectInfoBean.class, data.get("right"));
+            dialog.dismissDialog();
+        } else {
+            dialog.dismissDialog();
+            toast(bodys.get("warn"));
         }
     }
 
-    private void initBeforeData() {
-        mList = new ArrayList<>();
-        for (int i = 0; i < beforeItemTitles.length; i++) {
-            ProjectInfoBean homeList = new ProjectInfoBean();
-            homeList.setTitle(beforeItemTitles[i]);
-            homeList.setLabel(beforeLabels[i]);
-            mList.add(homeList);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (dialog != null) {
+            dialog.dismissDialog();
         }
     }
 }

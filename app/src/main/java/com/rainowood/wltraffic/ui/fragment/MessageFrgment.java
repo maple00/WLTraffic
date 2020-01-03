@@ -81,8 +81,8 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
         mList = new ArrayList<>();
         for (int i = 0; i < mTitles.length; i++) {
             ProjectInfoBean homeList = new ProjectInfoBean();
-            homeList.setTitle(mTitles[i]);
-            homeList.setLabel(mLabels[i]);
+            homeList.setItemName(mTitles[i]);
+            homeList.setStage(mLabels[i]);
             mList.add(homeList);
         }
     }

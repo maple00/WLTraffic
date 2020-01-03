@@ -1,4 +1,4 @@
-package com.rainowood.wltraffic.helper;
+package com.rainowood.wltraffic.common;
 
 import android.app.Activity;
 import android.app.Application;

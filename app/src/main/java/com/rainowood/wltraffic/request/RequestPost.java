@@ -1,11 +1,8 @@
 package com.rainowood.wltraffic.request;
 
-import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 
 import com.rainowood.wltraffic.common.Contants;
-import com.rainowood.wltraffic.okhttp.HttpResponse;
 import com.rainowood.wltraffic.okhttp.OkHttp;
 import com.rainowood.wltraffic.okhttp.OnHttpListener;
 import com.rainowood.wltraffic.okhttp.RequestParams;
@@ -17,23 +14,40 @@ import com.rainowood.wltraffic.okhttp.RequestParams;
  */
 public final class RequestPost {
 
-    private static final String TAG = RequestPost.class.getSimpleName();
-
     /**
      * 登录
      */
-    public static void Login(RequestParams params) {
-        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=login", params, new OnHttpListener() {
-            @Override
-            public void onHttpFailure(HttpResponse result) {
-                Log.e(TAG, "request: " + result.toString());
-            }
+    public static void Login(String account, String password, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("userName", account);
+        params.add("password", password);
+//      params.add(RequestParams.REQUEST_CONTENT_TYPE, RequestParams.REQUEST_CONTENT_JSON);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=login", params, listener);
+    }
 
-            @Override
-            public void onHttpSucceed(HttpResponse result) {
-                String body = result.body();
-                Log.e(TAG, ": " + body);
-            }
-        });
+    /**
+     * 手机号请求验证码
+     */
+    public static void getVerfy(String tel, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("tel", tel);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=getCaptcha", params, listener);
+    }
+
+    /**
+     * 请求首页数据
+     */
+    public static void getHomeDate(OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=item", params, listener);
+    }
+
+    /**
+     * 请求项目详情数据
+     */
+    public static void getItemDetailData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=itemMx", params, listener);
     }
 }

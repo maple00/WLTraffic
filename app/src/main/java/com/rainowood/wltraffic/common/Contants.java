@@ -27,6 +27,14 @@ public final class Contants {
      */
     public static int CHANGEFLAG = -1;
 
+    /**
+     * 用户类型 type
+     * 0 : 平台用户
+     * 1 ：甲方用户
+     * 2：代建用户
+     */
+    public static int USER_TYPE = -1;
+
     // 文件类型相关
     /** 文本 */
     public static final String TXT = "txt";
@@ -46,8 +54,4 @@ public final class Contants {
     public static final String HTTP_MSG_RESPONSE_FAILED = "The request data failed and the response code is not 200,code = ";
 
 
-    /**
-     * 用户
-     */
-    public static UserInfoBean userInfo;
 }

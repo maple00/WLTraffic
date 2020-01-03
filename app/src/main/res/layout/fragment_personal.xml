@@ -80,7 +80,8 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:src="@drawable/ic_icon_man"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_type"
@@ -92,7 +93,8 @@
             android:textSize="11sp"
             android:padding="2dp"
             android:background="@drawable/shap_radio_orange_transport"
-            tools:ignore="SmallSp" />
+            tools:ignore="SmallSp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

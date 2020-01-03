@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @Author: a797s
  * @Date: 2019/12/20 15:27
- * @Desc: 首页列表adapter
+ * @Desc: 在线项目
  */
 public class HomeListViewAdapter extends BaseAdapter {
 
@@ -61,8 +61,8 @@ public class HomeListViewAdapter extends BaseAdapter {
         }
 
         // 赋值
-        holder.tv_title.setText(mList.get(position).getTitle());
-        holder.tv_label.setText(mList.get(position).getLabel());
+        holder.tv_title.setText(mList.get(position).getItemName());
+        holder.tv_label.setText(mList.get(position).getProportion());
         // item 的点击事件
         holder.ll_home_item.setOnClickListener(new View.OnClickListener() {
             @Override

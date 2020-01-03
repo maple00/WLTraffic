@@ -1,7 +1,6 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.util.SparseArray;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
@@ -25,21 +24,14 @@ public final class HomeActivity extends BaseActivity {
     private RadioGroup mTabRadioGroup;
     // Fragment 组
     private SparseArray<Fragment> mFragmentSparseArray;
-    // RadioButton
-/*    @ViewById(R.id.home_tab)
-    private RadioButton tabHome;
-    @ViewById(R.id.message_tab)
-    private RadioButton tabMessage;
-    @ViewById(R.id.personal_tab)
-    private RadioButton personalTab;*/
 
     @Override
     protected void initView() {
-
         mFragmentSparseArray = new SparseArray<>();
         mFragmentSparseArray.append(R.id.home_tab, new HomeFragment());
         mFragmentSparseArray.append(R.id.message_tab, new MessageFrgment());
         mFragmentSparseArray.append(R.id.personal_tab, new PersonalFragment());
+
         mTabRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

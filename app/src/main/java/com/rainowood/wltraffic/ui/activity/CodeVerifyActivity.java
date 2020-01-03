@@ -1,5 +1,6 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -78,9 +79,6 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
                 }
             }
         });
-
-        // 将验证码赋值到剪切板
-
     }
 
     @Override
@@ -102,7 +100,8 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
                 }
 
                 if (1 == Contants.CHANGEFLAG){          // 修改手机号
-
+                    Intent intent = new Intent(this, PersonalFragment.class);
+                    startActivity(intent);
                 }
                 break;
         }

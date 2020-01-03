@@ -24,8 +24,9 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.helper.ActivityStackManager;
+import com.rainowood.wltraffic.common.ActivityStackManager;
 import com.rainowood.wltraffic.common.StatusManager;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.toast.ToastUtils;
 import com.rainwood.tools.viewinject.ViewBind;
@@ -68,8 +69,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         // 将activity 入栈
         ActivityStackManager.getInstance().addActivity(this);
+        // Flag
         TAG = this.getClass().getSimpleName();
     }
+
 
     /**
      * 布局ID
@@ -304,7 +307,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {         // 回到Home页
             if (rebackFlag < 0) {
-                toast("再摁一次退出到桌面");
+                toast("再按一次退出到桌面");
                 rebackFlag++;
                 return false;
             } else {

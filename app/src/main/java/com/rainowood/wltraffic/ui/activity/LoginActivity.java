@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.util.Log;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,9 +12,9 @@ import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.domain.UserInfoBean;
 import com.rainowood.wltraffic.okhttp.HttpResponse;
 import com.rainowood.wltraffic.okhttp.JsonParser;
-import com.rainowood.wltraffic.okhttp.OkHttp;
 import com.rainowood.wltraffic.okhttp.OnHttpListener;
-import com.rainowood.wltraffic.okhttp.RequestParams;
+import com.rainowood.wltraffic.request.RequestPost;
+import com.rainowood.wltraffic.ui.fragment.PersonalFragment;
 import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.view.ClearEditText;
 import com.rainwood.tools.view.PasswordEditText;
@@ -21,14 +22,12 @@ import com.rainwood.tools.viewinject.ViewById;
 
 import java.util.Map;
 
-import static com.rainowood.wltraffic.common.Contants.userInfo;
-
 /**
  * @Author: a797s
  * @Date: 2019/12/21 10:51
  * @Desc: 登录
  */
-public final class LoginActivity extends BaseActivity implements View.OnClickListener {
+public final class LoginActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {
@@ -51,6 +50,8 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
         forgetPwd.setOnClickListener(this);
         loginCommit.setOnClickListener(this);
         dialog = new DialogUtils(this, "登录中");
+        account.setText("lixiang");
+        password.setText("123456");
     }
 
     @Override
@@ -61,72 +62,62 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
                 openActivity(CheckPhoneActivity.class);
                 break;
             case R.id.btn_login_commit:                 // 登录
+                if (TextUtils.isEmpty(account.getText())) {
+                    toast("账号不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(password.getText())) {
+                    toast("密码不能为空");
+                    return;
+                }
+                dialog = new DialogUtils(this, "登录中");
+                dialog.showDialog();
                 String account = this.account.getText().toString().trim();
                 String password = this.password.getText().toString().trim();
-                RequestParams params = new RequestParams();
-                params.add("userName", account);
-                params.add("password", password);
-                dialog.showDialog();
-                Login(params);
+                RequestPost.Login(account, password, this);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
 
-    /**
-     * 登录
-     */
-    public void Login(RequestParams params) {
-        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=login", params, new OnHttpListener() {
-            @Override
-            public void onHttpFailure(HttpResponse result) {
-                dialog.dismissDialog();
-                Log.d(TAG, result.toString());
-            }
-
-            @Override
-            public void onHttpSucceed(HttpResponse result) {
-                String body = result.body();
-                Log.e(TAG, body);
-                Map<String, String> map = JsonParser.parseJSONObject(body);
-                String code = null;
-                if (map != null) {
-                    code = map.get("code");
-                }
-                if ("1".equals(code)) {
-                    Map<String, String> data = JsonParser.parseJSONObject(map.get("data"));
-                    String type = data.get("type");         // 用户类型
-                    String name = data.get("adName");       // 姓名
-                    String sex = data.get("sex");           // 性别
-                    String post = data.get("departmentName");     // 职位
-                    String tel = data.get("adtel");
-                    // 赋值
-                    userInfo = new UserInfoBean();
-                    userInfo.setType(type);
-                    userInfo.setUserName(name);
-                    userInfo.setUserSex(sex);
-                    userInfo.setPost(post);
-                    userInfo.setTel(tel);
-                    postDelayed(new Runnable() {        // 延时加载
-                        @Override
-                        public void run() {
-                            openActivity(HomeActivity.class);
-                        }
-                    }, 1000);
-                } else {
-                    dialog.dismissDialog();
-                    toast(map.get("warn"));
-                }
-            }
-        });
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (dialog != null){
+        if (dialog != null) {
             dialog.dismissDialog();
+        }
+    }
+
+    @Override
+    public void onHttpFailure(HttpResponse result) {
+
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if (body != null) {
+            if ("1".equals(body.get("code"))) {
+                if (result.url().contains("library/mData.php?type=login")) {
+                    final UserInfoBean userInfo = JsonParser.parseJSONObject(UserInfoBean.class, body.get("data"));
+                    postDelayed(new Runnable() {            // 传递数据到个人中心
+                        @Override
+                        public void run() {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("userInfo", userInfo);
+                            // 这一句，就是从aty传到fragment的
+                            PersonalFragment.newInstance(bundle);
+
+                            openActivity(HomeActivity.class);
+                            dialog.dismissDialog();
+                        }
+                    }, 1000);
+                }
+            } else {
+                dialog.dismissDialog();
+                toast(body.get("warn"));
+            }
         }
     }
 }

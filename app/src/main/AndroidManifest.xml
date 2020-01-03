@@ -286,6 +286,13 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- service  start-->
+        <!-- Api接口自动更新服务-->
+        <service android:name=".service.ApiAutoUpdateService"
+            android:exported="true"
+            android:enabled="true" />
+        <!-- service  start-->
+
     </application>
 
 </manifest>
