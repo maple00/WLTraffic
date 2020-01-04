@@ -1,4 +1,4 @@
-package com.shearson.wltraffic;
+package com.rainwood.wltraffic;
 
 import android.content.Context;
 

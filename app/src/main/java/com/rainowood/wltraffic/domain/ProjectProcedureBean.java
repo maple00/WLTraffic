@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Author: a797s
@@ -9,41 +10,50 @@ import java.io.Serializable;
  */
 public class ProjectProcedureBean implements Serializable {
 
-    private String title;
-    private String time;
-    private String docName;
+    private String processName;           // 名称
+    private String timeSeven;            // 时间
+    private List<AttachBean> fileSevenFile;         // 附件
+    private String stateSeven;        // 是否合格
 
-    private String standard;
-
-    public String getStandard() {
-        return standard;
+    @Override
+    public String toString() {
+        return "ProjectProcedureBean{" +
+                "processName='" + processName + '\'' +
+                ", timeSeven='" + timeSeven + '\'' +
+                ", fileSevenFile=" + fileSevenFile +
+                ", stateSeven='" + stateSeven + '\'' +
+                '}';
     }
 
-    public void setStandard(String standard) {
-        this.standard = standard;
+    public String getProcessName() {
+        return processName;
     }
 
-    public String getTitle() {
-        return title;
+    public void setProcessName(String processName) {
+        this.processName = processName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getTimeSeven() {
+        return timeSeven;
     }
 
-    public String getTime() {
-        return time;
+    public void setTimeSeven(String timeSeven) {
+        this.timeSeven = timeSeven;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public List<AttachBean> getFileSevenFile() {
+        return fileSevenFile;
     }
 
-    public String getDocName() {
-        return docName;
+    public void setFileSevenFile(List<AttachBean> fileSevenFile) {
+        this.fileSevenFile = fileSevenFile;
     }
 
-    public void setDocName(String docName) {
-        this.docName = docName;
+    public String getStateSeven() {
+        return stateSeven;
+    }
+
+    public void setStateSeven(String stateSeven) {
+        this.stateSeven = stateSeven;
     }
 }

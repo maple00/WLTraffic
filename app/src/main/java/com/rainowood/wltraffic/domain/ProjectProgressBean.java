@@ -10,25 +10,26 @@ import java.util.List;
  */
 public class ProjectProgressBean implements Serializable {
 
-    private String title;
+    private String name;           // 标题
     private int hasSelected;
 
-    private List<SubProjectProgressBean> mList;
+    private List<SubProjectProgressBean> child;     // 子项
 
-    public List<SubProjectProgressBean> getmList() {
-        return mList;
+    @Override
+    public String toString() {
+        return "ProjectProgressBean{" +
+                "name='" + name + '\'' +
+                ", hasSelected=" + hasSelected +
+                ", child=" + child +
+                '}';
     }
 
-    public void setmList(List<SubProjectProgressBean> mList) {
-        this.mList = mList;
+    public List<SubProjectProgressBean> getChild() {
+        return child;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setChild(List<SubProjectProgressBean> child) {
+        this.child = child;
     }
 
     public int getHasSelected() {
@@ -37,5 +38,13 @@ public class ProjectProgressBean implements Serializable {
 
     public void setHasSelected(int hasSelected) {
         this.hasSelected = hasSelected;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

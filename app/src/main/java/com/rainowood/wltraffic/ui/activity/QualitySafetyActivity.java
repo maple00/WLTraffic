@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.domain.AttachBean;
 import com.rainowood.wltraffic.domain.QualitySafeDetailBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
-import com.rainowood.wltraffic.domain.SubItemWordBean;
 import com.rainowood.wltraffic.ui.adapter.ImageAdapter;
-import com.rainowood.wltraffic.ui.adapter.ItemDetailWordListAdapter;
+import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainowood.wltraffic.ui.adapter.QualitySafeAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
@@ -95,7 +95,7 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
 
         setOnClickAndShowDetail(mContentField, wordContent, querField, fieldTitle.getText().toString().trim());
 
-        ItemDetailWordListAdapter wordAdapter = new ItemDetailWordListAdapter(this, mSubItemWordList);
+        ItemAttachListAdapter wordAdapter = new ItemAttachListAdapter(this, mSubItemWordList);
         mFieldTest.setAdapter(wordAdapter);
         wordAdapter.notifyDataSetChanged();
 
@@ -127,7 +127,7 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
             "已整改已经整改完毕"};
     private SubItemLabelBean label;
 
-    private List<SubItemWordBean> mSubItemWordList;
+    private List<AttachBean> mSubItemWordList;
     private String[] mBackTitles = {"外业检测报告", "武隆交委计[2016]15号2016.07.20", "外业检测报告"};
     private String[] mPreTitles = {"安置房改造通知.doc", "安置房改造通知.doc", "安置房改造通知.doc"};
 
@@ -151,9 +151,8 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
         // 文档列表
         mSubItemWordList = new ArrayList<>();
         for (int j = 0; j < mBackTitles.length; j++) {
-            SubItemWordBean mSubItemWord = new SubItemWordBean();
-            mSubItemWord.setBackEditTitle(mBackTitles[j]);
-            mSubItemWord.setWordTitle(mPreTitles[j]);
+            AttachBean mSubItemWord = new AttachBean();
+            mSubItemWord.setName(mBackTitles[j]);
 
             mSubItemWordList.add(mSubItemWord);
         }
@@ -200,7 +199,7 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
                             Intent intent = new Intent(QualitySafetyActivity.this, QuailtySafeDetailActivity.class);
                             Bundle bundle = new Bundle();
                             QualitySafeDetailBean qualitySafeDetail;
-                            if ("外业检测".equals(title)){
+                            if ("外业检测".equals(title)) {
                                 qualitySafeDetail = new QualitySafeDetailBean();
                                 qualitySafeDetail.setTitle(labelField.getText().toString().trim());
                                 qualitySafeDetail.setContent(mContentField.getText().toString().trim());
@@ -208,7 +207,7 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
                                 bundle.putSerializable("quality", qualitySafeDetail);
                             }
 
-                            if ("质量鉴定(检测)意见".equals(title)){
+                            if ("质量鉴定(检测)意见".equals(title)) {
                                 qualitySafeDetail = new QualitySafeDetailBean();
                                 qualitySafeDetail.setContent(contentQuality.getText().toString().trim());
                                 qualitySafeDetail.setmImgList(imgsList);

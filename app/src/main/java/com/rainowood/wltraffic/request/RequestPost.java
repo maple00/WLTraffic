@@ -50,4 +50,54 @@ public final class RequestPost {
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=itemMx", params, listener);
     }
+
+    /**
+     * 项目详情--计划管理
+     */
+    public static void getItemPlanManagerData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=planManage", params, listener);
+    }
+
+    /**
+     * 项目建设程序
+     */
+    public static void getItemConstructionData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=procedure", params, listener);
+    }
+
+    /**
+     * 项目进度管理
+     */
+    public static void getItemProgressData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=itemProcess", params, listener);
+    }
+
+    /**
+     * 支付管理
+     */
+    public static void getItemPayManagerData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=terracePay", params, listener);
+    }
+
+    /**
+     * 质量安全
+     */
+
+
+    /**
+     * 变更管理
+     */
+    public static void getItemChangeManagerData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=changeManager", params, listener);
+    }
 }

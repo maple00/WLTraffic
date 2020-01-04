@@ -95,9 +95,6 @@ public class SpecialAccountActivity extends BaseActivity implements View.OnClick
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.ll_document:
-                toast("下载");
-                break;
             case R.id.ll_preview:
                 toast("预览");
                 break;

@@ -45,11 +45,11 @@ public class SubVerticalAdapter extends RecyclerView.Adapter<SubVerticalAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull VerticalViewHolder holder, int position) {
-        holder.tv_title.setText(mList.get(position).getTitle());
+        holder.tv_title.setText(mList.get(position).getName());
         holder.tv_time.setText(mList.get(position).getTime());
 
         // 是否完成
-        if (mList.get(position).isFinished()){        // 如果完成了，则标记
+        if (mList.get(position).isImgState()){        // 如果完成了，则标记
             holder.iv_finished.setVisibility(View.VISIBLE);
         }else {
             // 完成标志隐藏

@@ -28,7 +28,7 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <!--<androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/ll_document"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,6 +88,17 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+-->
+
+    <!-- 附件-->
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_attachment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:dividerHeight="20dp"
+        android:divider="@android:color/transparent"
+        android:listSelector="@android:color/transparent"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/ll_is_standard"

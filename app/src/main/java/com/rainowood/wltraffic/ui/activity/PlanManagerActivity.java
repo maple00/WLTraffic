@@ -1,32 +1,45 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.common.Contants;
+import com.rainowood.wltraffic.domain.AttachBean;
 import com.rainowood.wltraffic.domain.ParagraphListBean;
 import com.rainowood.wltraffic.domain.PlanManagerBean;
-import com.rainowood.wltraffic.domain.SubItemWordBean;
 import com.rainowood.wltraffic.domain.SubPlanManagerBean;
-import com.rainowood.wltraffic.ui.adapter.ItemDetailWordListAdapter;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
+import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainowood.wltraffic.ui.adapter.SubItemPlanManagerAdapter;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
 import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/23 13:08
  * @Desc: 计划管理
  */
-public class PlanManagerActivity extends BaseActivity implements View.OnClickListener {
+public class PlanManagerActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {
@@ -82,97 +95,48 @@ public class PlanManagerActivity extends BaseActivity implements View.OnClickLis
     @ViewById(R.id.tv_simulation_srive_invesment)
     private TextView simulationSriveInvesment;
 
+    private DialogUtils dialog;
+
     @Override
     protected void initView() {
-
         btnBack.setOnClickListener(this);
         tvTitle.setText("计划管理");
-        // 前期通知书
-        itemName.setText(planManager.getItemName());
-        startAddress.setText(planManager.getStartAdr());
-        endAddress.setText(planManager.getEndAdr());
-        constructionScale.setText(planManager.getConstructionScale());
-        // 文档展示
-        setOnClickAndShowDetail(constructionScale, llConstructionScale, tvQueryNnotify, "建设规模");
-
-        // 计划下达
-        ItemDetailWordListAdapter wordAdapter = new ItemDetailWordListAdapter(this, mSubItemWordList);
-        wordContent.setAdapter(wordAdapter);
-        wordAdapter.notifyDataSetChanged();
-
-        constructionContent.setText(planManager.getConstructionContent());
-        // 文档展示
-        setOnClickAndShowDetail(constructionContent, ConstructionScaleContent, queryRelease, "建设内容");
-        investmentScale.setText(planManager.getInvestmentScale());
-        // 文档展示
-        setOnClickAndShowDetail(investmentScale, llInvestmentScale, queryRelease2, "投资规模");
-
-        // 资金来源
-        totalInvesment.setText(planManager.getTotalInvestment());
-        jiananInvestment.setText(planManager.getJianAnInvestment());
-        gapInvestment.setText(planManager.getGapInvestment());
-        striveInvesment.setText(planManager.getStriveInvesment());
-        simulationSriveInvesment.setText(planManager.getSimulationSriveInvesment());
-
-        SubItemPlanManagerAdapter capitalAdapter = new SubItemPlanManagerAdapter(this, capitalList);
-        itemCapitalGv.setAdapter(capitalAdapter);
-        itemCapitalGv.setNumColumns(2);
-        capitalAdapter.notifyDataSetChanged();
-
     }
 
-    /*
-    模拟数据
-     */
+    // 计划管理内容
     private PlanManagerBean planManager;
-
-    private List<SubItemWordBean> mSubItemWordList;
-    private String[] mBackTitles = {"武隆交委计[2016]15号2016.07.20", "武隆交委计[2016]15号2016.07.20", "武隆交委计[2016]15号2016.07.20"};
-    private String[] mPreTitles = {"安置房改造通知.doc", "安置房改造通知.doc", "安置房改造通知.doc"};
-
+    // 附件
+    private List<AttachBean> mSubItemWordList;
     // 资金来源
     private List<SubPlanManagerBean> capitalList;
     private String[] capitalTitles = {"中央补助", "市级补助", "债券", "银行贷款", "部门投入", "自筹", "其他"};
-    private String[] capitalValues = {"1200万", "1200万", "150万", "150万", "240万", "240万", "240万"};
 
     @Override
     protected void initData() {
         super.initData();
+        // 加载中
+        waitDialog();
+        dialog.showDialog();
 
-        capitalList = new ArrayList<>();
-        for (int i = 0; i < capitalTitles.length; i++) {
-            SubPlanManagerBean capital = new SubPlanManagerBean();
-            capital.setTitle(capitalTitles[i]);
-            capital.setValue(capitalValues[i]);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestPost.getItemPlanManagerData(Contants.ITEM_ID, PlanManagerActivity.this);
+            }
+        }).start();
+    }
 
-            capitalList.add(capital);
-        }
+    private void waitDialog() {
+        dialog = new DialogUtils(this, "加载中");
+    }
 
-        // 前期通知书
-        planManager = new PlanManagerBean();
-        planManager.setItemName("丰裕粮油安置房建设工程泉城花都E区安置工程丰裕粮油安置房");
-        planManager.setStartAdr("起：" + "白果坪");
-        planManager.setEndAdr("止：" + "白马丁");
-        planManager.setConstructionScale("预计367.5亩，投资规模达到15亿以上，将打造成为西南地区乃全国最大的现代影视拍摄基地。预计367.5亩，投资规模达到15亿以上，将打造成为西南地区乃全国最大的现代影视拍摄基地。预计367.5亩，投资规模达到15亿以上，将打造成为西南地区乃全国最大的现代影视拍摄基地，投资规模达到15亿以上，将打造成...");
-        // 任务下达
-        planManager.setConstructionContent("预计367.5亩，投资规模达到15亿以上，将打造成为西南地区乃全国最大的现代影视拍摄基地。预计367.5亩，投资规模达到15亿以上，将打造成为西南地区乃全国最大的现代影视拍摄基地。预计367.5亩，投资规模达到15亿以上，将打造成为西南地区乃全国最大的现代影视拍摄基地，投资规模达到15亿以上，将打造成...");
-        planManager.setInvestmentScale("预计367.5亩，投资规模达到15亿以上，将打造成为西南地区乃全国最大的现代影视拍摄基地。预计367.5亩，");
-        // 资金来源
-        planManager.setTotalInvestment("15000");
-        planManager.setJianAnInvestment("15000");
-        planManager.setGapInvestment("15000");
-        planManager.setStriveInvesment("￥" + "1463.50" + "万");
-        planManager.setSimulationSriveInvesment("拟争取投资：￥" + "2000.00" + "万");
-
-
-        mSubItemWordList = new ArrayList<>();
-        for (int j = 0; j < mBackTitles.length; j++) {
-            SubItemWordBean mSubItemWord = new SubItemWordBean();
-            mSubItemWord.setBackEditTitle(mBackTitles[j]);
-            mSubItemWord.setWordTitle(mPreTitles[j]);
-
-            mSubItemWordList.add(mSubItemWord);
-        }
+    private void dismissDialog() {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismissDialog();
+            }
+        }, 500);
     }
 
     @Override
@@ -214,4 +178,124 @@ public class PlanManagerActivity extends BaseActivity implements View.OnClickLis
             }
         });
     }
+
+    @Override
+    public void onHttpFailure(HttpResponse result) {
+
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if ("1".equals(body.get("code"))) {
+            Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
+
+            String itemName = data.get("itemName");         // 项目名称
+            String ranges = data.get("ranges");             // 起始地址
+            String rangesEnd = data.get("rangesEnd");       // 终止地址
+            String buildSize = data.get("buildSize");       // 建设规模
+            String itemMatter = data.get("itemMatter");     // 建设内容
+            String investScalc = data.get("investScalc");   // 投资规模
+            String allInvest = data.get("allInvest");       // 总投资
+            String jiananInvest = data.get("jiananInvest"); // 建安投资
+            String lack = data.get("lack");                 // 缺口
+            String getMoney = data.get("getMoney");         // 已争取到的投资
+            String willFight = data.get("willFight");       // 拟争取到的投资
+            // 前期通知书
+            planManager = new PlanManagerBean();
+            planManager.setItemName(itemName);
+            planManager.setStartAdr("起：" + ranges);
+            planManager.setEndAdr("止：" + rangesEnd);
+            planManager.setConstructionScale(buildSize);
+            // 任务下达
+            planManager.setConstructionContent(itemMatter);
+            planManager.setInvestmentScale(investScalc);
+            // 资金来源
+            planManager.setTotalInvestment(allInvest);
+            planManager.setJianAnInvestment(jiananInvest);
+            planManager.setGapInvestment(lack);
+            planManager.setStriveInvesment("￥" + getMoney + "万");
+            planManager.setSimulationSriveInvesment("拟争取投资：￥" + willFight + "万");
+
+            // 补贴
+            String centralSubsidy = data.get("centralSubsidy");             // 中央补助
+            String citySubsidy = data.get("citySubsidy");                   // 市级补助
+            String bond = data.get("bond");                                 // 债券
+            String loans = data.get("loans");                               // 银行贷款
+            String sectionIn = data.get("sectionIn");                       // 部门投入
+            String selfFinance = data.get("selfFinance");                   // 自筹
+            String other = data.get("other");                               // 其他款
+            List<String> capitalValuesList = new ArrayList<>();
+            capitalValuesList.add(centralSubsidy);
+            capitalValuesList.add(citySubsidy);
+            capitalValuesList.add(bond);
+            capitalValuesList.add(loans);
+            capitalValuesList.add(sectionIn);
+            capitalValuesList.add(selfFinance);
+            capitalValuesList.add(other);
+            capitalList = new ArrayList<>();
+            for (int i = 0; i < capitalTitles.length; i++) {
+                SubPlanManagerBean capital = new SubPlanManagerBean();
+                capital.setTitle(capitalTitles[i]);
+                capital.setValue(capitalValuesList.get(i));
+                capitalList.add(capital);
+            }
+
+            // 附件
+            mSubItemWordList = JsonParser.parseJSONArray(AttachBean.class, data.get("planNoFile"));
+            dismissDialog();
+            Message msg = new Message();
+            msg.what = 0x1404;
+            mHandler.sendMessage(msg);
+        } else {
+            dismissDialog();
+            toast(body.get("warn"));
+        }
+    }
+
+    /**
+     * UI刷新
+     */
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 0x1404:
+                    // 前期通知书
+                    itemName.setText(planManager.getItemName());
+                    startAddress.setText(planManager.getStartAdr());
+                    endAddress.setText(planManager.getEndAdr());
+                    constructionScale.setText(planManager.getConstructionScale());
+                    // 文档展示
+                    setOnClickAndShowDetail(constructionScale, llConstructionScale, tvQueryNnotify, "建设规模");
+
+                    // 计划下达---附件
+                    Log.e("sxs", "pathBean: " + mSubItemWordList.toString());
+                    ItemAttachListAdapter wordAdapter = new ItemAttachListAdapter(PlanManagerActivity.this, mSubItemWordList);
+                    wordContent.setAdapter(wordAdapter);
+                    wordAdapter.notifyDataSetChanged();
+
+                    constructionContent.setText(planManager.getConstructionContent());
+                    // 文档展示
+                    setOnClickAndShowDetail(constructionContent, ConstructionScaleContent, queryRelease, "建设内容");
+                    investmentScale.setText(planManager.getInvestmentScale());
+                    // 文档展示
+                    setOnClickAndShowDetail(investmentScale, llInvestmentScale, queryRelease2, "投资规模");
+
+                    // 资金来源
+                    totalInvesment.setText(planManager.getTotalInvestment());
+                    jiananInvestment.setText(planManager.getJianAnInvestment());
+                    gapInvestment.setText(planManager.getGapInvestment());
+                    striveInvesment.setText(planManager.getStriveInvesment());
+                    simulationSriveInvesment.setText(planManager.getSimulationSriveInvesment());
+
+                    SubItemPlanManagerAdapter capitalAdapter = new SubItemPlanManagerAdapter(PlanManagerActivity.this, capitalList);
+                    itemCapitalGv.setAdapter(capitalAdapter);
+                    itemCapitalGv.setNumColumns(2);
+                    capitalAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
 }

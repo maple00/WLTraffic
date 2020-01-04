@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
+import com.rainowood.wltraffic.domain.SubChangeBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 
 import java.util.List;
@@ -21,9 +22,9 @@ import java.util.List;
 public class ChangeManagerAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<SubItemLabelBean> mList;
+    private List<SubChangeBean> mList;
 
-    public ChangeManagerAdapter(Context mContext, List<SubItemLabelBean> mList) {
+    public ChangeManagerAdapter(Context mContext, List<SubChangeBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -34,7 +35,7 @@ public class ChangeManagerAdapter extends BaseAdapter {
     }
 
     @Override
-    public SubItemLabelBean getItem(int position) {
+    public SubChangeBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -58,8 +59,8 @@ public class ChangeManagerAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_content.setText(getItem(position).getTitle());
-        holder.tv_change_money.setText(getItem(position).getContent());
+        holder.tv_content.setText(getItem(position).getChangeMatter());     //变更内容
+        holder.tv_change_money.setText(getItem(position).getChangeMoney());     // 变更金额
         holder.ll_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

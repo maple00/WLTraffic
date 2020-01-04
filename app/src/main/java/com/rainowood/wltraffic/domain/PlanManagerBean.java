@@ -21,7 +21,7 @@ public class PlanManagerBean implements Serializable {
     /*
     计划下达
      */
-    private List<SubItemWordBean>  planWordList;        // 计划文档书
+    private List<AttachBean>  planWordList;        // 计划文档书
     private String constructionContent;     // 建设内容
     private String investmentScale;         // 投资规模
 
@@ -33,14 +33,6 @@ public class PlanManagerBean implements Serializable {
     private String gapInvestment;           // 缺口投资
     private String striveInvesment;         // 已争取的投资
     private String simulationSriveInvesment;    // 拟争取投资
-    // 注释掉
-    private String centralSubsidy;          // 中央补助
-    private String municipalSubsidy;        // 市级补助
-    private String bond;                    // 债券
-    private String bankLoans;               // 银行贷款
-    private String sectorInvestment;        // 部门投入
-    private String raiseIndependently;      // 自筹
-    private String others;                  // 其他
 
 
     public String getItemName() {
@@ -75,11 +67,11 @@ public class PlanManagerBean implements Serializable {
         this.constructionScale = constructionScale;
     }
 
-    public List<SubItemWordBean> getPlanWordList() {
+    public List<AttachBean> getPlanWordList() {
         return planWordList;
     }
 
-    public void setPlanWordList(List<SubItemWordBean> planWordList) {
+    public void setPlanWordList(List<AttachBean> planWordList) {
         this.planWordList = planWordList;
     }
 
@@ -137,61 +129,5 @@ public class PlanManagerBean implements Serializable {
 
     public void setSimulationSriveInvesment(String simulationSriveInvesment) {
         this.simulationSriveInvesment = simulationSriveInvesment;
-    }
-
-    public String getCentralSubsidy() {
-        return centralSubsidy;
-    }
-
-    public void setCentralSubsidy(String centralSubsidy) {
-        this.centralSubsidy = centralSubsidy;
-    }
-
-    public String getMunicipalSubsidy() {
-        return municipalSubsidy;
-    }
-
-    public void setMunicipalSubsidy(String municipalSubsidy) {
-        this.municipalSubsidy = municipalSubsidy;
-    }
-
-    public String getBond() {
-        return bond;
-    }
-
-    public void setBond(String bond) {
-        this.bond = bond;
-    }
-
-    public String getBankLoans() {
-        return bankLoans;
-    }
-
-    public void setBankLoans(String bankLoans) {
-        this.bankLoans = bankLoans;
-    }
-
-    public String getSectorInvestment() {
-        return sectorInvestment;
-    }
-
-    public void setSectorInvestment(String sectorInvestment) {
-        this.sectorInvestment = sectorInvestment;
-    }
-
-    public String getRaiseIndependently() {
-        return raiseIndependently;
-    }
-
-    public void setRaiseIndependently(String raiseIndependently) {
-        this.raiseIndependently = raiseIndependently;
-    }
-
-    public String getOthers() {
-        return others;
-    }
-
-    public void setOthers(String others) {
-        this.others = others;
     }
 }

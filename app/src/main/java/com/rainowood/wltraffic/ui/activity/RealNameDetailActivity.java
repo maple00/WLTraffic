@@ -6,8 +6,8 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
-import com.rainowood.wltraffic.domain.SubItemWordBean;
-import com.rainowood.wltraffic.ui.adapter.ItemDetailWordListAdapter;
+import com.rainowood.wltraffic.domain.AttachBean;
+import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
@@ -47,7 +47,7 @@ public class RealNameDetailActivity extends BaseActivity implements View.OnClick
         updateTime.setText(updateTimeStr);
 
         // 附件
-        ItemDetailWordListAdapter wordListAdapter = new ItemDetailWordListAdapter(this, mList);
+        ItemAttachListAdapter wordListAdapter = new ItemAttachListAdapter(this, mList);
         attachWord.setAdapter(wordListAdapter);
 
     }
@@ -58,7 +58,7 @@ public class RealNameDetailActivity extends BaseActivity implements View.OnClick
     private String wordDes = "备注描述文字内容备注描述文字备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容内容备注描述文字内容备注描述文字内容备注描述文字内容";
     private String updateTimeStr = "2019.12.28 16:50:00更新";
     // 合同附件
-    private List<SubItemWordBean> mList;
+    private List<AttachBean> mList;
     private String[] mTitles = {"合同附件"};
     private String[] mLabels = {"XXXXXXXX附件.doc"};
 
@@ -67,9 +67,8 @@ public class RealNameDetailActivity extends BaseActivity implements View.OnClick
         super.initData();
         mList = new ArrayList<>();
         for (int i = 0; i < mTitles.length; i++) {
-            SubItemWordBean word = new SubItemWordBean();
-            word.setBackEditTitle(mTitles[i]);
-            word.setWordTitle(mLabels[i]);
+            AttachBean word = new AttachBean();
+            word.setName(mTitles[i]);
 
             mList.add(word);
         }

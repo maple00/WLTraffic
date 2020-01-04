@@ -35,7 +35,7 @@ public class HttpHandler extends Handler {
             case WHAT_ON_SUCCEED:
                 if (listener != null && httpResult != null && httpResult.body() != null) {
                     listener.onHttpSucceed(httpResult);
-                    Log.e("sxs-api-interface", DateTimeUtils.getNowDate(DateTimeUtils.DatePattern.ALL_TIME));
+                    Log.d("sxs-api-interface", DateTimeUtils.getNowDate(DateTimeUtils.DatePattern.ALL_TIME));
                 }
                 break;
         }

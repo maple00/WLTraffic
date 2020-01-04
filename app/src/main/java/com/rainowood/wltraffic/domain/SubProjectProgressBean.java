@@ -9,16 +9,25 @@ import java.io.Serializable;
  */
 public class SubProjectProgressBean implements Serializable {
 
-    private String title;               // 进度标题
+    private String name;               // 进度标题
     private String time;                // 进度完成时间
-    private boolean isFinished;         // 是否完成
+    private boolean imgState;         // 是否完成
 
-    public String getTitle() {
-        return title;
+    @Override
+    public String toString() {
+        return "SubProjectProgressBean{" +
+                "name='" + name + '\'' +
+                ", time='" + time + '\'' +
+                ", imgState=" + imgState +
+                '}';
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTime() {
@@ -29,11 +38,11 @@ public class SubProjectProgressBean implements Serializable {
         this.time = time;
     }
 
-    public boolean isFinished() {
-        return isFinished;
+    public boolean isImgState() {
+        return imgState;
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
+    public void setImgState(boolean imgState) {
+        this.imgState = imgState;
     }
 }

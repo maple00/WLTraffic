@@ -2,6 +2,7 @@ package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -12,11 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.domain.PayManagerBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 import com.rainowood.wltraffic.domain.SubPayManagerBean;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.adapter.PayManagerAdapter;
 import com.rainowood.wltraffic.ui.adapter.PayManagerContentAdapter;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainowood.wltraffic.utils.ImmersionUtil;
 import com.rainowood.wltraffic.utils.RecyclerViewSpacesItemDecoration;
 import com.rainwood.tools.viewinject.ViewById;
@@ -24,13 +31,14 @@ import com.rainwood.tools.viewinject.ViewById;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/25 16:03
  * @Desc: 支付管理
  */
-public class PayManagerActivity extends BaseActivity implements View.OnClickListener {
+public class PayManagerActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {
@@ -55,6 +63,8 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
     @ViewById(R.id.rlc_card_content)
     private RecyclerView cardContent;
 
+    private DialogUtils dialog;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
@@ -71,9 +81,36 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         showTransportInfo();
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        // 加载中
+        waitDialog();
+        dialog.showDialog();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestPost.getItemPayManagerData(Contants.ITEM_ID, PayManagerActivity.this);
+            }
+        }).start();
+    }
+
+    private void waitDialog() {
+        dialog = new DialogUtils(this, "加载中");
+    }
+
+    private void dismissDialog() {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismissDialog();
+            }
+        }, 500);
+    }
     /*
-    模拟数据
-     */
+        模拟数据
+         */
     PayManagerBean payBean;
     private List<SubPayManagerBean> mList;
     private SubPayManagerBean subPayManager;
@@ -102,7 +139,6 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
                 showTransportInfo();
                 break;
             case R.id.tv_owner_unit:        // 业主单位
-                //toast("点击了");
                 transport.setBackgroundResource(R.drawable.shap_radio_transport_right);
                 tvOU.setBackgroundResource(R.drawable.shap_radio_white_right);
                 transport.setTextColor(getResources().getColor(R.color.white));
@@ -220,7 +256,6 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         payBean = new PayManagerBean();
         payBean.setTotalMoneyInt("48,723,696");
         payBean.setTotalMoneyFloat("." + "00");
-
         mList = new ArrayList<>();
         for (int i = 0; i < lLabels.length; i++) {
             subPayManager = new SubPayManagerBean();
@@ -240,5 +275,24 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
             mList.add(subPayManager);
         }
 
+    }
+
+    @Override
+    public void onHttpFailure(HttpResponse result) {
+
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if ("1".equals(body.get("code"))){
+            Log.e("sxs", "data: " + body.get("data"));
+
+
+            dismissDialog();
+        }else {
+            dismissDialog();
+            toast(body.get("warn"));
+        }
     }
 }

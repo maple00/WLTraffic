@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 public class PayManagerBean implements Serializable {
 
-    private String totalMoneyInt;      // 累计的总单位
-    private String totalMoneyFloat;      // 累计的总单位
+    private String totalMoneyInt;      // 累计的总单位    --- 整数部分
+    private String totalMoneyFloat;      // 累计的总单位  -- 小数部分
 
     public String getTotalMoneyInt() {
         return totalMoneyInt;

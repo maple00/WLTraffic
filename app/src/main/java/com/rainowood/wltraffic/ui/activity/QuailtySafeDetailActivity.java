@@ -8,7 +8,7 @@ import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.QualitySafeDetailBean;
 import com.rainowood.wltraffic.ui.adapter.ImageAdapter;
-import com.rainowood.wltraffic.ui.adapter.ItemDetailWordListAdapter;
+import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
 import com.rainwood.tools.widget.MeasureListView;
@@ -53,18 +53,18 @@ public class QuailtySafeDetailActivity extends BaseActivity implements View.OnCl
         获取传递过来的数据
          */
         QualitySafeDetailBean key = (QualitySafeDetailBean) getIntent().getExtras().getSerializable("quality");
-        if (key != null){
-            if (key.getTitle() != null){            // 外业检测
+        if (key != null) {
+            if (key.getTitle() != null) {            // 外业检测
                 pageTitle.setText("外业检测");
                 contentTitle.setText(key.getTitle());
                 content.setText(key.getContent());
 
-                ItemDetailWordListAdapter wordListAdapter = new ItemDetailWordListAdapter(this, key.getmWordList());
+                ItemAttachListAdapter wordListAdapter = new ItemAttachListAdapter(this, key.getmWordList());
                 wordList.setAdapter(wordListAdapter);
                 wordListAdapter.notifyDataSetChanged();
 
                 imgList.setVisibility(View.GONE);
-            }else {                     //  质量检测
+            } else {                     //  质量检测
                 pageTitle.setText("质量鉴定(检测)意见");
                 contentTitle.setVisibility(View.GONE);
                 content.setText(key.getContent());
@@ -74,14 +74,14 @@ public class QuailtySafeDetailActivity extends BaseActivity implements View.OnCl
                 imgList.setAdapter(imageAdapter);
                 imageAdapter.notifyDataSetChanged();
             }
-        }else {
+        } else {
             throw new RuntimeException("可能数据传输错误");
         }
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_back){
+        if (v.getId() == R.id.btn_back) {
             finish();
         }
     }

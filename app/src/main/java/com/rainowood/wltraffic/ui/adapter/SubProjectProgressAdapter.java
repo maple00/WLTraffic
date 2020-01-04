@@ -59,11 +59,11 @@ public class SubProjectProgressAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_title.setText(getItem(position).getTitle());
+        holder.tv_title.setText(getItem(position).getName());
         holder.tv_time.setText(getItem(position).getTime());
 
         // 是否完成
-        if (getItem(position).isFinished()) {        // 如果完成了，则标记
+        if (getItem(position).isImgState()) {        // 如果完成了，则标记
             holder.iv_finished.setVisibility(View.VISIBLE);
         } else {
             // 完成标志隐藏

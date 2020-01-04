@@ -14,7 +14,7 @@ public class QualitySafeDetailBean implements Serializable {
     private String content;
 
     // 文档列表
-    private List<SubItemWordBean> mWordList;
+    private List<AttachBean> mWordList;
     // 图片列表
     private List<String> mImgList;
 
@@ -34,11 +34,11 @@ public class QualitySafeDetailBean implements Serializable {
         this.content = content;
     }
 
-    public List<SubItemWordBean> getmWordList() {
+    public List<AttachBean> getmWordList() {
         return mWordList;
     }
 
-    public void setmWordList(List<SubItemWordBean> mWordList) {
+    public void setmWordList(List<AttachBean> mWordList) {
         this.mWordList = mWordList;
     }
 

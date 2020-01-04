@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class ItemDetailWordAdapter extends BaseAdapter {
             holder.tv_order = convertView.findViewById(R.id.tv_order);
             holder.tv_title = convertView.findViewById(R.id.tv_title);
             holder.lv_content = convertView.findViewById(R.id.lv_content);
+            holder.tv_word_title = convertView.findViewById(R.id.tv_word_title);
 
             convertView.setTag(holder);
         } else {
@@ -61,9 +63,9 @@ public class ItemDetailWordAdapter extends BaseAdapter {
 
         holder.tv_order.setText(mList.get(position).getId());
         holder.tv_title.setText(mList.get(position).getTitle());
-
+        holder.tv_word_title.setText(mList.get(position).getWordTitle());
         // 文档列表
-        ItemDetailWordListAdapter adapter = new ItemDetailWordListAdapter(mContext, getItem(position).getmList());
+        ItemAttachListAdapter adapter = new ItemAttachListAdapter(mContext, getItem(position).getmList());
         holder.lv_content.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -71,7 +73,7 @@ public class ItemDetailWordAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        private TextView tv_order, tv_title;
+        private TextView tv_order, tv_title, tv_word_title;
         private ListView lv_content;
     }
 }

@@ -7,6 +7,7 @@
     <dist:module dist:instant="true" />
 
     <!-- 外部存储读写权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 拍照权限 -->
@@ -32,6 +33,7 @@
         tools:targetApi="n"
         android:fullBackupContent="@xml/backup_descriptor">
 
+        <!-- activity start -->
         <!-- App 首页 HomeActivity-->
         <activity android:name=".ui.activity.LoginActivity"
             android:alwaysRetainTaskState="true"
@@ -286,12 +288,20 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- TBS 文件预览 TbsActivity-->
+        <activity
+            android:name=".ui.activity.TbsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- activity end -->
+
         <!-- service  start-->
         <!-- Api接口自动更新服务-->
         <service android:name=".service.ApiAutoUpdateService"
             android:exported="true"
             android:enabled="true" />
-        <!-- service  start-->
+        <!-- service  end-->
 
     </application>
 

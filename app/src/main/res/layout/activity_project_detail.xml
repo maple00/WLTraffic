@@ -73,6 +73,7 @@
                 android:listSelector="@android:color/transparent"
                 android:dividerHeight="10dp" />
 
+            <!-- 子项目-->
             <com.rainwood.tools.widget.MeasureGridView
                 android:id="@+id/gv_sub_item"
                 android:layout_width="match_parent"

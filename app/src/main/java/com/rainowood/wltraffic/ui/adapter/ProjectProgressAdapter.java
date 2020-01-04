@@ -47,14 +47,15 @@ public class ProjectProgressAdapter extends RecyclerView.Adapter<ProjectProgress
 
     @Override
     public void onBindViewHolder(@NonNull final VerticalViewHolder holder, final int position) {
-        holder.tv_item_name.setText(mList.get(position).getTitle());
+        holder.tv_item_name.setText(mList.get(position).getName());
 
         // 判断里面是否有未完成的项目  iv_mark
         int flagCount = 0;      // mark 完成的
-        for (int i = 0; i < ListUtils.getSize(mList.get(position).getmList()); i++) {
-            boolean finished = mList.get(position).getmList().get(i).isFinished();
+        for (int i = 0; i < ListUtils.getSize(mList.get(position).getChild()); i++) {
+            boolean finished = mList.get(position).getChild().get(i).isImgState();
             if (!finished) {
                 flagCount++;
+                break;
             }
         }
         if (flagCount > 0) {
@@ -64,7 +65,7 @@ public class ProjectProgressAdapter extends RecyclerView.Adapter<ProjectProgress
         }
 
         // 查询每个目录下的子目录
-        SubProjectProgressAdapter subProgressAdapter = new SubProjectProgressAdapter(mContext, mList.get(position).getmList());
+        SubProjectProgressAdapter subProgressAdapter = new SubProjectProgressAdapter(mContext, mList.get(position).getChild());
         holder.lv_content.setAdapter(subProgressAdapter);
         subProgressAdapter.notifyDataSetChanged();
 

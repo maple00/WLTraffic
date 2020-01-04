@@ -9,7 +9,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
-import com.rainowood.wltraffic.domain.SubItemWordBean;
+import com.rainowood.wltraffic.domain.AttachBean;
 import com.rainowood.wltraffic.ui.adapter.ImageAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
@@ -87,16 +87,16 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
         pageTitle.setText("质量安全检查及整改情况");
 
         rectificationContent.setText(pageContent);
-        SubItemWordBean itemWord = new SubItemWordBean();
-        itemWord.setWordTitle(wordContent);
-        wordTitle.setText(itemWord.getWordTitle());
+        AttachBean itemWord = new AttachBean();
+        itemWord.setName(wordContent);
+        wordTitle.setText(itemWord.getName());
         download.setOnClickListener(this);
         preView.setOnClickListener(this);
 
         // 已整改
         rectifiedContent.setText(rectifyedContent);
         rectifiedArea.setOnClickListener(this);         // 点击的区域
-        wordTitle1.setText(itemWord.getWordTitle());
+        wordTitle1.setText(itemWord.getName());
         download1.setOnClickListener(this);
         preview1.setOnClickListener(this);
         setOnClickAndShowDetail(wordTitle1, rectifiedArea, queryRectify, null);

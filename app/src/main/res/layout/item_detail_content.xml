@@ -6,11 +6,21 @@
 
     <include layout="@layout/sub_item_detail_content"/>
 
+    <TextView
+        android:id="@+id/tv_word_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"
+        android:text="武隆交委计[2016]15号2016.07.20"/>
+
+    <!-- 附件列表-->
     <com.rainwood.tools.widget.MeasureListView
         android:id="@+id/lv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="40dp"
         android:listSelector="@android:color/transparent" />

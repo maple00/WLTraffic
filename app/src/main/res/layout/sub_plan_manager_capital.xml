@@ -62,7 +62,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="总投资(万元)"
+                android:text="建安投资(万元)"
                 android:textSize="12sp"
                 android:textColor="@color/colorLabel" />
         </LinearLayout>
@@ -90,7 +90,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="总投资(万元)"
+                android:text="缺口(万元)"
                 android:textSize="12sp"
                 android:textColor="@color/colorLabel" />
         </LinearLayout>
@@ -141,7 +141,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginStart="40dp"/>
+            android:layout_marginStart="40dp"
+            android:textSize="12sp"
+            android:textColor="@color/colorGray1"/>
 
         <View style="@style/HorizontalLineStyle"
             android:layout_marginTop="20dp"/>

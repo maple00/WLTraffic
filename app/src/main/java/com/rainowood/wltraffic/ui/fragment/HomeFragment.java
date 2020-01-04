@@ -1,16 +1,21 @@
 package com.rainowood.wltraffic.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseFragment;
+import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.domain.ProjectInfoBean;
 import com.rainowood.wltraffic.okhttp.HttpResponse;
 import com.rainowood.wltraffic.okhttp.JsonParser;
@@ -66,34 +71,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         tvHomeTitleTwo.setText("前期项目");
 
         // 默认显示在建项目
-        //showDialog();
         mListView = view.findViewById(R.id.lv_home);
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, leftList);
-                mListView.setAdapter(adapter);
-                adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
-                    @Override
-                    public void ItemOnClick(int position) {
-                        // toast("点击了：" + mList.get(position));
-                        // 打开详情
-                        Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
-                        intent.putExtra("id", leftList.get(position).getId());
-                        intent.putExtra("stage", leftList.get(position).getStage());
-                        startActivity(intent);
-                    }
-                });
-            }
-        }, 500);
-
     }
 
     @Override
     protected void initData(Context mContext) {
         dialog = new DialogUtils(getActivity(), "加载中");
         // 获取接口数据
-        RequestPost.getHomeDate(this);
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RequestPost.getHomeDate(HomeFragment.this);
+            }
+        }, 100);
     }
 
     @Override
@@ -113,11 +103,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
                     @Override
                     public void ItemOnClick(int position) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("id", leftList.get(position).getId());
                         Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        Contants.ITEM_ID = leftList.get(position).getId();
                         intent.putExtra("stage", leftList.get(position).getStage());
-                        startActivity(intent, bundle);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 });
 
@@ -139,8 +130,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         // 打开详情, 带参访问详情
                         Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString("id", rightList.get(position).getId());
-                        bundle.putString("stage", leftList.get(position).getStage());
+                        Contants.ITEM_ID = rightList.get(position).getId();
+                        bundle.putString("stage", rightList.get(position).getStage());
                         startActivity(intent, bundle);
                     }
                 });
@@ -175,6 +166,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             leftList = JsonParser.parseJSONArray(ProjectInfoBean.class, data.get("left"));
             // 前期项目
             rightList = JsonParser.parseJSONArray(ProjectInfoBean.class, data.get("right"));
+
+            Message msg = new Message();
+            msg.what = 0x958;
+            mHandler.sendMessage(msg);
+
             dialog.dismissDialog();
         } else {
             dialog.dismissDialog();
@@ -189,4 +185,35 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             dialog.dismissDialog();
         }
     }
+
+    /**
+     * 局部刷新UI
+     */
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 0x958:
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, leftList);
+                            mListView.setAdapter(adapter);
+                            adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
+                                @Override
+                                public void ItemOnClick(int position) {
+                                    // 打开详情
+                                    Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                                    Contants.ITEM_ID = leftList.get(position).getId();
+                                    intent.putExtra("stage", leftList.get(position).getStage());
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    }, 50);
+                    break;
+            }
+        }
+    };
 }

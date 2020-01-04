@@ -1,7 +1,5 @@
 package com.rainowood.wltraffic.common;
 
-import com.rainowood.wltraffic.domain.UserInfoBean;
-
 /**
  * @Author: a797s
  * @Date: 2019/12/21 14:03
@@ -35,17 +33,32 @@ public final class Contants {
      */
     public static int USER_TYPE = -1;
 
+    /**
+     * 项目的 id
+     */
+    public static String ITEM_ID = null;
+
     // 文件类型相关
-    /** 文本 */
+    /**
+     * 文本
+     */
     public static final String TXT = "txt";
-    /** 图片 */
+    /**
+     * 图片
+     */
     public static final String PICTURE = "picture";
-    /** 音频 */
+    /**
+     * 音频
+     */
     public static final String VOICE = "voice";
-    /** 视频 */
+    /**
+     * 视频
+     */
     public static final String VIDEO = "video";
     // 常量相关
-    /** 索引 */
+    /**
+     * 索引
+     */
     public static final String INDEX = "index";
 
     /**

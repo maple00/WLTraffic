@@ -1,25 +1,40 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
-import com.rainowood.wltraffic.domain.SubItemLabelBean;
+import com.rainowood.wltraffic.common.Contants;
+import com.rainowood.wltraffic.domain.SubChangeBean;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.adapter.ChangeManagerAdapter;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/27 9:46
  * @Desc: 变更管理
  */
-public class ChangeActivity extends BaseActivity implements View.OnClickListener {
+public class ChangeActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {
@@ -37,55 +52,109 @@ public class ChangeActivity extends BaseActivity implements View.OnClickListener
     @ViewById(R.id.lv_change_list)
     private MeasureListView changeList;
 
+    private DialogUtils dialog;
 
     @Override
     protected void initView() {
         btnBack.setOnClickListener(this);
         pageTitle.setText("变更管理");
 
-        countChangeMoney.setText(changeData[0]);
-        countMoney.setText(changeData[1]);
 
-        ChangeManagerAdapter managerAdapter = new ChangeManagerAdapter(this, mList);
-        changeList.setAdapter(managerAdapter);
-
-        managerAdapter.setClickListener(new ChangeManagerAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
-                // toast("点击了：" + position);
-                openActivity(ChangeManagerDetailActivity.class);
-            }
-        });
     }
 
     /*
     模拟数据
      */
-    private String[] changeData = {"15000", "60"};
-    private List<SubItemLabelBean> mList;
-    private String[] mTitles = {"在实际施工过程中，随着施工设计的深化，优于低下部分地址情况较差引起的桩基工程、的工...", "在实际施工过程中，随着施工设计的深化，优于低下部分地址情况较差引起的桩基工程、的工...", "在实际施工过程中，随着施工设计的深化，优于低下部分地址情况较差引起的桩基工程、的工..."};
-    private String[] mLabels = {"50万元", "50万元", "50万元"};
-
+    private List<String> moneyChange = new ArrayList<>();
+    private List<SubChangeBean> mList;
 
     @Override
     protected void initData() {
         super.initData();
-        mList = new ArrayList<>();
-        for (int i = 0; i < mTitles.length; i++) {
-            SubItemLabelBean label = new SubItemLabelBean();
-            label.setTitle(mTitles[i]);
-            label.setContent(mLabels[i]);
+        waitDialog();
+        dialog.showDialog();
 
-            mList.add(label);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestPost.getItemChangeManagerData(Contants.ITEM_ID, ChangeActivity.this);
+            }
+        }).start();
+    }
+
+    private void waitDialog() {
+        dialog = new DialogUtils(this, "加载中");
+    }
+
+    private void dismissDialog() {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismissDialog();
+            }
+        }, 500);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_back:
                 finish();
                 break;
         }
     }
+
+    @Override
+    public void onHttpFailure(HttpResponse result) {
+
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if ("1".equals(body.get("code"))) {
+            Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
+            String changeMoney = data.get("changeMoney");                       // 累计变更金额
+            String aboutMoney = data.get("aboutMoney");                         // 超概金额
+            moneyChange.add(changeMoney);
+            moneyChange.add(aboutMoney);
+            // 内容列表
+            mList = JsonParser.parseJSONArray(SubChangeBean.class, data.get("changeManager"));
+            dismissDialog();
+            Message msg = new Message();
+            msg.what = 0x1727;
+            mHandler.sendMessage(msg);
+        } else {
+            dismissDialog();
+            toast(body.get("warn"));
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 0x1727:
+                    countChangeMoney.setText(moneyChange.get(0));
+                    countMoney.setText(moneyChange.get(1));
+                    // 内容列表
+                    ChangeManagerAdapter managerAdapter = new ChangeManagerAdapter(ChangeActivity.this, mList);
+                    changeList.setAdapter(managerAdapter);
+
+                    managerAdapter.setClickListener(new ChangeManagerAdapter.OnItemClickListener() {
+                        @Override
+                        public void OnItemClick(int position) {
+                            Intent intent = new Intent(ChangeActivity.this, ChangeManagerDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("content", mList.get(position));
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+                    });
+                    break;
+            }
+        }
+    };
+
 }
