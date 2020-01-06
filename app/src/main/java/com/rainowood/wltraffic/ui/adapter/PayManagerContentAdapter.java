@@ -12,7 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.domain.SubItemLabelBean;
+import com.rainowood.wltraffic.domain.SubPayContentBean;
+import com.rainowood.wltraffic.utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerContentAdapter.PayManagerContentViewHolder> {
 
     private Context mContext;
-    private List<SubItemLabelBean> mList = new ArrayList<>();
+    private List<SubPayContentBean> mList;
 
     private int num = 2;         // 默认显示item数量为2
 
@@ -38,7 +39,7 @@ public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerCon
         this.mContext = mContext;
     }
 
-    public void setmList(List<SubItemLabelBean> mList) {
+    public void setmList(List<SubPayContentBean> mList) {
         this.mList = mList;
     }
 
@@ -61,9 +62,10 @@ public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerCon
 
     @Override
     public void onBindViewHolder(@NonNull PayManagerContentViewHolder holder, final int position) {
-        holder.tv_money.setText(mList.get(position).getTitle());
-        holder.tv_time.setText(mList.get(position).getContent());
-
+        if (position < ListUtils.getSize(mList)){
+            holder.tv_money.setText(mList.get(position).getPayMoney());
+            holder.tv_time.setText(mList.get(position).getPayTime());
+        }
         // 设置子项的点击
         holder.ll_item_content.setOnClickListener(new View.OnClickListener() {
             @Override

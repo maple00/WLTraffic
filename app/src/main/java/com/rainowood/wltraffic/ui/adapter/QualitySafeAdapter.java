@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
+import com.rainowood.wltraffic.domain.QualityBean;
 
 import java.util.List;
 
@@ -23,9 +24,9 @@ import java.util.List;
 public class QualitySafeAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<String> mList;
+    private List<QualityBean> mList;
 
-    public QualitySafeAdapter(Context mContext, List<String> mList) {
+    public QualitySafeAdapter(Context mContext, List<QualityBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -36,7 +37,7 @@ public class QualitySafeAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public QualityBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -54,15 +55,15 @@ public class QualitySafeAdapter extends BaseAdapter {
             holder = new ViewHolder();
 
             holder.ll_content = convertView.findViewById(R.id.ll_content);
+            holder.tv_state = convertView.findViewById(R.id.tv_state);
             holder.tv_content = convertView.findViewById(R.id.tv_content);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
         //
-        String content = getItem(position);
+        /*String content = getItem(position).getCaseDescriptio();
         String beforeStr = content.substring(0, 3);         // 截取之前的字符
         String afterStr = content.substring(3);             // 截取之后的字符
         Spanned html = null;
@@ -80,7 +81,27 @@ public class QualitySafeAdapter extends BaseAdapter {
             html = Html.fromHtml("<font color=\"" + mContext.getResources().getColor(R.color.colorSuccess) + "\" font-size=\"12sp\">"
                     + beforeStr + "\t" + "</font>" + afterStr);
         }
+
+        if ("待处理".equals(beforeStr)) {
+            html = Html.fromHtml("<font color=\"" + mContext.getResources().getColor(R.color.colorRed1) + "\" font-size=\"12sp\">"
+                    + beforeStr + "\t" + "</font>" + afterStr);
+        }
         holder.tv_content.setText(html);
+        */
+
+        String state = mList.get(position).getState();
+        if("待处理".equals(state)){
+            holder.tv_state.setBackgroundResource(R.color.colorCancel);
+        }else if ("未整改".equals(state)){
+            holder.tv_state.setBackgroundResource(R.color.colorPercentage);
+        }else if ("整改中".equals(state)){
+            holder.tv_state.setBackgroundResource(R.color.colorBlue1);
+        }else {
+            holder.tv_state.setBackgroundResource(R.color.colorSuccess);
+        }
+        holder.tv_state.setText(mList.get(position).getState());
+        holder.tv_content.setText(mList.get(position).getCaseDescriptio());
+
         notifyDataSetChanged();
         holder.ll_content.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +125,6 @@ public class QualitySafeAdapter extends BaseAdapter {
 
     private class ViewHolder {
         private LinearLayout ll_content;
-        private TextView tv_content;
+        private TextView tv_content, tv_state;
     }
 }

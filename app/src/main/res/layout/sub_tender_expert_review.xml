@@ -77,64 +77,14 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_audit_export"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:listSelector="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:divider="@android:color/transparent"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_expert_word_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/colorLabel"
-            android:textSize="14sp" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_expert_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:background="@drawable/ic_icon_download" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="@string/project_word_download"
-                android:textColor="@color/colorLabel"
-                android:textSize="13sp" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_expert_preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:gravity="center_vertical">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:background="@drawable/ic_icon_see" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="@string/project_word_preview"
-                android:textColor="@color/colorLabel"
-                android:textSize="13sp" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </LinearLayout>

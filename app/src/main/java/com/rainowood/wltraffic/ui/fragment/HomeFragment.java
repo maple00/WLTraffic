@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -161,6 +162,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onHttpSucceed(HttpResponse result) {
         Map<String, String> bodys = JsonParser.parseJSONObject(result.body());
         if ("1".equals(bodys.get("code"))) {
+            Log.e("sxs", "data: " + bodys.get("data"));
+
             Map<String, String> data = JsonParser.parseJSONObject(bodys.get("data"));
             // 在建项目
             leftList = JsonParser.parseJSONArray(ProjectInfoBean.class, data.get("left"));

@@ -1,12 +1,20 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.domain.AssessDeductionBean;
 import com.rainwood.tools.viewinject.ViewById;
+
+import java.io.Serializable;
 
 /**
  * @Author: shearson
@@ -39,25 +47,17 @@ public class DeductionDetailActivity extends BaseActivity implements View.OnClic
     protected void initView() {
         btnBack.setOnClickListener(this);
         pageTitle.setText("扣分详情");
-
     }
-
-    /*
-    模拟数据
-     */
-    private String[] mContents = {"工程部", "-5", "遗失公司重要文件", "工程进度延期，未能按时完成工程工程进度延期未能按时完成工程工程进度延期未能按时完成工程工程进度延期。", "2019.12.18  13:15:00"};
 
     @Override
     protected void initData() {
         super.initData();
-        // 获取数据
-        name.setText(mContents[0]);
-        scoreTV.setText("-5");
-        //scoreTV.setText(Html.fromHtml(""));
+        AssessDeductionBean content = (AssessDeductionBean) getIntent().getSerializableExtra("content");
 
-        titleContent.setText(mContents[2]);
-        labelContent.setText(mContents[3]);
-        timeContent.setText(mContents[4]);
+        Message msg = new Message();
+        msg.what = 0x1040;
+        msg.obj = content;
+        mHandler.sendMessage(msg);
     }
 
     @Override
@@ -68,4 +68,21 @@ public class DeductionDetailActivity extends BaseActivity implements View.OnClic
                 break;
         }
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 0x1040:
+                    AssessDeductionBean content = (AssessDeductionBean) msg.obj;
+                    name.setText(content.getDepartment());
+                    scoreTV.setText(content.getPoint());
+                    titleContent.setText(content.getPointMx());
+                    labelContent.setText(content.getText());
+                    timeContent.setText(content.getUpdateTime());
+                    break;
+            }
+        }
+    };
 }

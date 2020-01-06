@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
+import com.rainowood.wltraffic.domain.SubQuestionBean;
 
 import java.util.List;
 
@@ -20,9 +21,9 @@ import java.util.List;
 public class TenderListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<String> mList;
+    private List<SubQuestionBean> mList;
 
-    public TenderListAdapter(Context mContext, List<String> mList) {
+    public TenderListAdapter(Context mContext, List<SubQuestionBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -33,7 +34,7 @@ public class TenderListAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public SubQuestionBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -45,17 +46,19 @@ public class TenderListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if (convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_tender_list, parent, false);
             holder = new ViewHolder();
             holder.tv_content = convertView.findViewById(R.id.tv_content);
             holder.ll_item = convertView.findViewById(R.id.ll_item);
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_content.setText(getItem(position));
+        // 问题
+        holder.tv_content.setText(getItem(position).getProblem());
+
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +69,7 @@ public class TenderListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public  interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
@@ -76,7 +79,7 @@ public class TenderListAdapter extends BaseAdapter {
         this.clickListener = clickListener;
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         private TextView tv_content;
         private LinearLayout ll_item;
     }

@@ -8,9 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.domain.TenderBean;
+import com.rainowood.wltraffic.domain.SubQuestionBean;
+import com.rainowood.wltraffic.domain.SubQuestionsAndBareBean;
 import com.rainwood.tools.widget.MeasureListView;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,9 +23,9 @@ import java.util.List;
 public class TenderAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<TenderBean> mList;
+    private List<SubQuestionsAndBareBean> mList;
 
-    public TenderAdapter(Context mContext, List<TenderBean> mList) {
+    public TenderAdapter(Context mContext, List<SubQuestionsAndBareBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -34,7 +36,7 @@ public class TenderAdapter extends BaseAdapter {
     }
 
     @Override
-    public TenderBean getItem(int position) {
+    public SubQuestionsAndBareBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -57,17 +59,34 @@ public class TenderAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_title.setText(getItem(position).getTitle());
-        // 子项
-        TenderSubAdapter subAdapter = new TenderSubAdapter(mContext, getItem(position).getmList());
-        holder.lv_list.setAdapter(subAdapter);
-        subAdapter.setClickListener(itemClickListener);
-        // 查看全部
-        holder.tv_label.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(position);
-            }
-        });
+
+        // 质疑答疑
+        if (position == 0){
+            TenderSubAdapter subAdapter = new TenderSubAdapter(mContext, mList.get(position).getOne());
+            holder.lv_list.setAdapter(subAdapter);
+            subAdapter.setClickListener(itemClickListener);
+            // 查看全部
+            holder.tv_label.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(position);
+                }
+            });
+        }
+        // 补漏
+        else{
+            TenderSubAdapter subAdapter = new TenderSubAdapter(mContext, mList.get(position).getTwo());
+            holder.lv_list.setAdapter(subAdapter);
+            subAdapter.setClickListener(itemClickListener);
+            // 查看全部
+            holder.tv_label.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(position);
+                }
+            });
+        }
+
         return convertView;
     }
 
@@ -77,7 +96,7 @@ public class TenderAdapter extends BaseAdapter {
         this.itemClickListener = itemClickListener;
     }
 
-    public interface OnClickViewListener{
+    public interface OnClickViewListener {
         void onItemClick(int position);
     }
 

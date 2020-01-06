@@ -2,6 +2,7 @@ package com.rainowood.wltraffic.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,25 +59,25 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final VerticalViewHolder holder, final int position) {
-        holder.tv_label.setText(mList.get(position).getLabel());
-        holder.tv_total_money.setText("￥ " + mList.get(position).getlMoney());
+        holder.tv_label.setText(mList.get(position).getTeamName());
+        holder.tv_total_money.setText("￥ " + mList.get(position).getTeamChildMoney());
         // 加载子项的数据，如果大于两条则显示两条，通过点击展开或收起控制
         final PayManagerContentAdapter contentAdapter = new PayManagerContentAdapter(mContext);
         LinearLayoutManager managerVertical = new LinearLayoutManager(mContext);
         managerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         // 设置item之间的间距
         HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
-        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 30);//下间距
+        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 10);//下间距
         holder.rlv_content.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
         holder.rlv_content.setLayoutManager(managerVertical);
         holder.rlv_content.setHasFixedSize(true);       // 重新计算高度
         holder.rlv_content.setAdapter(contentAdapter);
         holder.rlv_content.setNestedScrollingEnabled(false);
-        if (mList.get(position).getmList().size() > 2) {
+        if (mList.get(position).getTeamChildArr().size() > 2) {
             contentAdapter.setNum(2);               // 超过两条，默认显示两条
-            contentAdapter.setmList(mList.get(position).getmList());
+            contentAdapter.setmList(mList.get(position).getTeamChildArr());
         } else {     // 如果数据不大于两条，这隐藏收起或展开
-            contentAdapter.setmList(mList.get(position).getmList());
+            contentAdapter.setmList(mList.get(position).getTeamChildArr());
             holder.ll_show_or_hide.setVisibility(View.GONE);
         }
         contentAdapter.setClickListener(clickListener);     // 详情点击事件
@@ -88,7 +89,7 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
             public void onClick(View v) {
                 // 控制显示item数量
                 if (mList.get(position).isHasHide()) {
-                    contentAdapter.setNum(mList.get(position).getmList().size());
+                    contentAdapter.setNum(mList.get(position).getTeamChildArr().size());
                     holder.tv_show_or_hide.setText("收起");
                     holder.iv_show_or_hide.setImageResource(R.drawable.ic_icon_up);
                 } else {

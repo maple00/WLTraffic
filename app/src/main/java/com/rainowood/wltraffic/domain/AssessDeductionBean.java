@@ -9,31 +9,70 @@ import java.io.Serializable;
  */
 public class AssessDeductionBean implements Serializable {
 
-    private String title;
-    private String score;
-    private String label;
+    private String department;          // 课时部门
+    private String pointMx;             // 扣分项
+    private String point;               // 分数
+    private String text;               // 备注
+    private String updateTime;          // 更新时间
+    private String time;                // 时间
 
-    public String getTitle() {
-        return title;
+    @Override
+    public String toString() {
+        return "AssessDeductionBean{" +
+                "department='" + department + '\'' +
+                ", pointMx='" + pointMx + '\'' +
+                ", point='" + point + '\'' +
+                ", text='" + text + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", time='" + time + '\'' +
+                '}';
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getDepartment() {
+        return department;
     }
 
-    public String getScore() {
-        return score;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
-    public void setScore(String score) {
-        this.score = score;
+    public String getPointMx() {
+        return pointMx;
     }
 
-    public String getLabel() {
-        return label;
+    public void setPointMx(String pointMx) {
+        this.pointMx = pointMx;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

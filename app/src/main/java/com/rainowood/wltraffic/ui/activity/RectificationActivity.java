@@ -10,19 +10,26 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.AttachBean;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.adapter.ImageAdapter;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/25 9:29
- * @Desc: 整改情况
+ * @Desc: 质量安全详情
  */
-public class RectificationActivity extends BaseActivity implements View.OnClickListener {
+public class RectificationActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {
@@ -80,6 +87,8 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
     private LinearLayout unRectifyArea;
     @ViewById(R.id.gv_unrectify_img)
     private MeasureGridView unRectifyImg;
+
+    private DialogUtils dialog;
 
     @Override
     protected void initView() {
@@ -141,6 +150,14 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
     protected void initData() {
         super.initData();
 
+        final String id = getIntent().getStringExtra("id");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestPost.getItemQSDetailData(id, RectificationActivity.this);
+            }
+        }).start();
+
         // 整改中的图片
         imgsList = new ArrayList<>();
         imgsList.addAll(Arrays.asList(rectifyingImgPath));
@@ -149,6 +166,19 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
         unRectifyImgsList = new ArrayList<>();
         unRectifyImgsList.addAll(Arrays.asList(unRectifyImgPath));
 
+    }
+
+    private void waitDialog() {
+        dialog = new DialogUtils(this, "加载中");
+    }
+
+    private void dismissDialog() {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismissDialog();
+            }
+        }, 500);
     }
 
     @Override
@@ -229,4 +259,25 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
             "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
             "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png"};
 
+    @Override
+    public void onHttpFailure(HttpResponse result) {
+
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if ("1".equals(body.get("code"))){
+            Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
+            String caseDescriptio = data.get("caseDescriptio");             // 情况描述
+            List<AttachBean> attachList = JsonParser.parseJSONArray(AttachBean.class, data.get("caseDescriptioFile"));      // 描述附件
+
+
+            dismissDialog();
+
+        }else {
+            dismissDialog();
+            toast(body.get("warn"));
+        }
+    }
 }

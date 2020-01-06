@@ -53,16 +53,16 @@ public class NotifyModuleNoActivity extends BaseActivity implements View.OnClick
         pageTitle.setText("通报");
         status.setText("未设置维权公示牌");
 
-        QualitySafeAdapter safeAdapter = new QualitySafeAdapter(this, mSafeList);
-        notifyContent.setAdapter(safeAdapter);
-
-        safeAdapter.setContentOnClick(new QualitySafeAdapter.IContentOnClick() {
-            @Override
-            public void contentClick(int position) {
-                //toast("点击了：" + position);
-                openActivity(RectificationDetailActivity.class);
-            }
-        });
+//        QualitySafeAdapter safeAdapter = new QualitySafeAdapter(this, mSafeList);
+//        notifyContent.setAdapter(safeAdapter);
+//
+//        safeAdapter.setContentOnClick(new QualitySafeAdapter.IContentOnClick() {
+//            @Override
+//            public void contentClick(int position) {
+//                //toast("点击了：" + position);
+//                openActivity(RectificationDetailActivity.class);
+//            }
+//        });
 
     }
 

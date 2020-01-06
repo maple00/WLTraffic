@@ -9,11 +9,13 @@ import android.widget.TextView;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
+import com.rainowood.wltraffic.domain.SubPayManagerBean;
 import com.rainowood.wltraffic.ui.adapter.AttachmentListAdapter;
 import com.rainowood.wltraffic.ui.adapter.PayDetailAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +48,8 @@ public class PayDetailActivity extends BaseActivity implements View.OnClickListe
     @ViewById(R.id.lv_pay_attach)
     private MeasureListView payAttach;
 
+    private SubPayManagerBean info;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
@@ -55,6 +59,9 @@ public class PayDetailActivity extends BaseActivity implements View.OnClickListe
 
         // 需判断是交通局还是业主单位
         String key = (String) getIntent().getCharSequenceExtra("key");
+        // 数据
+        info = (SubPayManagerBean) getIntent().getSerializableExtra("info");
+        Log.e("sxs", "info: " + info);
         if ("transport".equals(key)) {           // 交通局
             label.setVisibility(View.GONE);
             payAttach.setVisibility(View.GONE);
@@ -92,6 +99,9 @@ public class PayDetailActivity extends BaseActivity implements View.OnClickListe
         for (int i = 0; i < transportLabels.length; i++) {
             SubItemLabelBean label = new SubItemLabelBean();
             label.setTitle(transportLabels[i]);
+            if (i == 0){
+
+            }
             label.setContent(values[i]);
             mList.add(label);
         }

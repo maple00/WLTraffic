@@ -13,7 +13,7 @@ import com.rainowood.wltraffic.domain.SubChangeBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 import com.rainowood.wltraffic.domain.SubItemListContentBean;
 import com.rainowood.wltraffic.ui.adapter.ChangeDetailAdapter;
-import com.rainowood.wltraffic.ui.adapter.ItemDetailWordAdapter;
+import com.rainowood.wltraffic.ui.adapter.ItemTitleAttachAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
@@ -55,7 +55,7 @@ public class ChangeManagerDetailActivity extends BaseActivity implements View.On
         chageList.setAdapter(detailAdapter);
 
         // 文档信息列表
-        ItemDetailWordAdapter wordListAdapter = new ItemDetailWordAdapter(this, wordsList);
+        ItemTitleAttachAdapter wordListAdapter = new ItemTitleAttachAdapter(this, wordsList);
         wordList.setAdapter(wordListAdapter);
 
         // 更新时间
@@ -71,7 +71,6 @@ public class ChangeManagerDetailActivity extends BaseActivity implements View.On
     // 文档列表
     private List<SubItemListContentBean> wordsList;
     private String[] wTitles = {"现场会议纪要", "业主会议纪要", "交通局会议纪要"};
-    private String[] wContents = {"关于项目在实施过程中遇到的....doc", "关于项目在实施过程中遇到的....doc", "关于项目在实施过程中遇到的....doc"};
 
     @Override
     protected void initData() {
@@ -102,13 +101,18 @@ public class ChangeManagerDetailActivity extends BaseActivity implements View.On
         wordsList = new ArrayList<>();
         for (int i = 0; i < wTitles.length; i++) {
             SubItemListContentBean word = new SubItemListContentBean();
-            word.setTitle(wTitles[i]);
+            word.setWordTitle(wTitles[i]);
             List<AttachBean> attachList = new ArrayList<>();
-            AttachBean attachment = new AttachBean();
-            attachment.setName(wContents[i]);
-            attachList.add(attachment);
+            if (i == 0){            // 现场会议纪要
+                attachList = content.getSceneFile();
+            }
+            if (i == 1){            // 业主会议纪要
+                attachList = content.getOwnerFile();
+            }
+            if (i == 2){            // 交通局会议纪要
+                attachList = content.getTerraceFile();
+            }
             word.setmList(attachList);
-//            word.setType(wContents[i]);
             wordsList.add(word);
         }
     }

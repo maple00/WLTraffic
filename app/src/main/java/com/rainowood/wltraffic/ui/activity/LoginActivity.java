@@ -56,12 +56,13 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
         forgetPwd.setOnClickListener(this);
         loginCommit.setOnClickListener(this);
         dialog = new DialogUtils(this, "登录中");
-        account.setText("lixiang");
+        account.setText("lei");
         password.setText("123456");
 
+        /**
+         * 请求必要的权限
+         */
         getMustPermission();
-
-
     }
 
     @Override

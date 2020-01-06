@@ -2,6 +2,9 @@ package com.rainowood.wltraffic.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.domain.SubItemLabelBean;
+import com.rainowood.wltraffic.common.Contants;
+import com.rainowood.wltraffic.domain.AssessBean;
+import com.rainowood.wltraffic.ui.activity.ImageActivity;
+import com.rainowood.wltraffic.ui.activity.TbsActivity;
+import com.rainwood.tools.toast.ToastUtils;
 
 import java.util.List;
 
@@ -23,9 +30,9 @@ import java.util.List;
 public class AssessAttachmentAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<SubItemLabelBean> mList;
+    private List<AssessBean> mList;
 
-    public AssessAttachmentAdapter(Context mContext, List<SubItemLabelBean> mList) {
+    public AssessAttachmentAdapter(Context mContext, List<AssessBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -36,7 +43,7 @@ public class AssessAttachmentAdapter extends BaseAdapter {
     }
 
     @Override
-    public SubItemLabelBean getItem(int position) {
+    public AssessBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -63,20 +70,40 @@ public class AssessAttachmentAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_word_title.setText(getItem(position).getTitle());
-        holder.tv_update_time.setText(getItem(position).getContent());
+        holder.tv_word_title.setText(getItem(position).getName());
+        holder.tv_update_time.setText(getItem(position).getUpdateTime() + " 更新");
 
         holder.ll_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "下载", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(mList.get(position).getType())) {
+                    ToastUtils.show("文件地址错误！请确认");
+                    return;
+                }
+                ToastUtils.show("下载成功！请预览");
+                // Toast.makeText(mContext, "下载", Toast.LENGTH_SHORT).show();
             }
         });
 
         holder.ll_preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "预览", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(mList.get(position).getType())){
+                    ToastUtils.show("文件地址错误！请确认");
+                    return;
+                }
+                // 根据不同的文件类型进行预览
+                if ("png".equals(mList.get(position).getType())
+                        || "jpg".equals(mList.get(position).getType())){        // 加载大图
+                    ImageActivity.start(mContext, Contants.BASE_URI +  mList.get(position).getSrc());
+                }else {     // 加载文档--- 需要打开权限
+                    Intent intent = new Intent(mContext, TbsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("path", Contants.BASE_URI + mList.get(position).getSrc());
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+                //Toast.makeText(mContext, "预览", Toast.LENGTH_SHORT).show();
             }
         });
 

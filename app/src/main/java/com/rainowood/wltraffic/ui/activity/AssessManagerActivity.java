@@ -1,32 +1,45 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.common.Contants;
+import com.rainowood.wltraffic.domain.AssessBean;
 import com.rainowood.wltraffic.domain.AssessDeductionBean;
-import com.rainowood.wltraffic.domain.SubItemLabelBean;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.adapter.AssessAttachmentAdapter;
 import com.rainowood.wltraffic.ui.adapter.AssessDeductionAdapter;
 import com.rainowood.wltraffic.utils.DateTimeUtils;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/26 14:58
  * @Desc: 考核管理
  */
-public class AssessManagerActivity extends BaseActivity implements View.OnClickListener {
+public class AssessManagerActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {
@@ -54,18 +67,10 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
     @ViewById(R.id.lv_assess_list)
     private MeasureListView assessList;
 
-    @ViewById(R.id.ll_year_month)
-    private LinearLayout ll_year_month;
-    @ViewById(R.id.tv_year)
-    private TextView year;
-    @ViewById(R.id.tv_month)
-    private TextView month;
-    @ViewById(R.id.iv_before)
-    private ImageView before;
-    @ViewById(R.id.iv_next)
-    private ImageView next;
     @ViewById(R.id.lv_assess_deduction)
     private ListView assessDeduction;
+
+    private DialogUtils dialog;
 
     @Override
     protected void initView() {
@@ -74,78 +79,52 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
 
         titleOneLL.setOnClickListener(this);
         titleTwoLL.setOnClickListener(this);
-        before.setOnClickListener(this);
-        next.setOnClickListener(this);
-
-        // 考核细则
-        titleOneTV.setText("考核细则");
-        AssessAttachmentAdapter attachmentAdapter = new AssessAttachmentAdapter(getActivity(), mList);
-        assessList.setAdapter(attachmentAdapter);
-
-        // 扣分明细
-        titleTwoTV.setText("扣分明细");
-        lineTwo.setVisibility(View.GONE);
-        ll_year_month.setVisibility(View.GONE);
-
     }
 
-    /*
-    模拟数据
-     */
-    private List<SubItemLabelBean> mList;
+    private void waitDialog() {
+        dialog = new DialogUtils(this, "加载中");
+    }
 
-    private String[] mTitles = {"考核附件考核附件.doc", "考核附件考核附件.doc", "考核附件考核附件.doc", "考核附件考核附件.doc", "考核附件考核附件.doc"};
-    private String[] mLabels = {"2019.12.19 13:09:00更新", "2019.12.19 13:09:00更新", "2019.12.19 13:09:00更新", "2019.12.19 13:09:00更新", "2019.12.19 13:09:00更新"};
+    private void dismissDialog() {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismissDialog();
+            }
+        }, 500);
+    }
 
+    // 考核细则
+    private List<AssessBean> mList;
     // 扣分明细
     private List<AssessDeductionBean> deductionLists;
-
-    private String[] mTitles1 = {"工程部", "开发部", "研发部", "人事部", "技术部"};
-    private String[] mScore = {"-5", "-10", "-7", "-5", "-5"};
-    private String[] mLabels1 = {"工程进度延期，未能按时完成工程", "遗失公司重要文件", "工程进度延期，未能按时完成工程",
-                    "工程进度延期，未能按时完成工程", "遗失公司重要文件"};
-
 
     @Override
     protected void initData() {
         super.initData();
+        // 加载中
+        waitDialog();
+        dialog.showDialog();
 
-        // 初始化模拟 考核细则
-        mList = new ArrayList<>();
-        for (int i = 0; i < mTitles.length; i++) {
-            SubItemLabelBean label = new SubItemLabelBean();
-            label.setTitle(mTitles[i]);
-            label.setContent(mLabels[i]);
-
-            mList.add(label);
-        }
-
-        // 初始化模拟 扣分明细
-        deductionLists = new ArrayList<>();
-        for (int i = 0; i < mTitles1.length; i++) {
-            AssessDeductionBean deduction = new AssessDeductionBean();
-            deduction.setTitle(mTitles1[i]);
-            deduction.setScore(mScore[i]);
-            deduction.setLabel(mLabels1[i]);
-
-            deductionLists.add(deduction);
-        }
-
+        // 请求数据
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestPost.getItemAssessData(Contants.ITEM_ID, AssessManagerActivity.this);
+            }
+        }).start();
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
-        // 获取年月String
-        String tempYearStr = year.getText().toString().trim();
-        String tempMonthStr = month.getText().toString().trim();
         switch (v.getId()) {
             case R.id.btn_back:
                 openActivity(ProjectDetailActivity.class);
+                finish();
                 break;
             case R.id.ll_assess_title_one:          // 考核细则
                 lineTwo.setVisibility(View.GONE);
-                ll_year_month.setVisibility(View.GONE);
                 // 加载数据
                 lineOne.setVisibility(View.VISIBLE);
                 assessList.setVisibility(View.VISIBLE);
@@ -159,23 +138,23 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
                 assessList.setVisibility(View.GONE);
                 // 加载数据
                 lineTwo.setVisibility(View.VISIBLE);
-                ll_year_month.setVisibility(View.VISIBLE);
-                // 获取当前时间
-                year.setText(String.valueOf(getNowTime.getYear()));
-                month.setText(String.valueOf(getNowTime.getMonth()));
                 // 明细数据列表
                 AssessDeductionAdapter deductionAdapter = new AssessDeductionAdapter(this, deductionLists);
                 assessDeduction.setAdapter(deductionAdapter);
                 deductionAdapter.setItemListener(new AssessDeductionAdapter.OnItemListener() {
                     @Override
                     public void OnItemClick(int position) {
-                        toast("点击了：" + position);
-                        openActivity(DeductionDetailActivity.class);
+                        //toast("点击了：" + position);
+                        Intent intent = new Intent(AssessManagerActivity.this, DeductionDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("content", deductionLists.get(position));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 });
 
                 break;
-            case R.id.iv_before:            // 上个月
+          /*  case R.id.iv_before:            // 上个月
                 if ("1".equals(tempMonthStr)){
                     month.setText("12");
                     year.setText(String.valueOf(Integer.parseInt(tempYearStr) - 1));
@@ -192,16 +171,60 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
                     year.setText(String.valueOf(Integer.parseInt(tempYearStr) + 1));
                 }
                 toast("年月：" + year.getText().toString().trim() + "年" + month.getText().toString().trim() + "月");
-                break;
+                break;*/
+            default:
+                throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
 
-    private static class getNowTime{
-        private static int getYear(){
+    private static class getNowTime {
+        private static int getYear() {
             return DateTimeUtils.getNowYear();
         }
-        private static int getMonth(){
+
+        private static int getMonth() {
             return DateTimeUtils.getNowMonth();
         }
     }
+
+    @Override
+    public void onHttpFailure(HttpResponse result) {
+
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if ("1".equals(body.get("code"))) {
+            Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
+            mList = JsonParser.parseJSONArray(AssessBean.class, data.get("left"));
+            deductionLists = JsonParser.parseJSONArray(AssessDeductionBean.class, data.get("right"));
+
+            dismissDialog();
+            Message msg = new Message();
+            msg.what = 0x1022;
+            mHandler.sendMessage(msg);
+        } else {
+            dismissDialog();
+            toast(body.get("warn"));
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 0x1022:
+                    // 考核细则
+                    titleOneTV.setText("考核细则");
+                    AssessAttachmentAdapter attachmentAdapter = new AssessAttachmentAdapter(getActivity(), mList);
+                    assessList.setAdapter(attachmentAdapter);
+                    // 扣分明细
+                    titleTwoTV.setText("扣分明细");
+                    lineTwo.setVisibility(View.GONE);
+                    break;
+            }
+        }
+    };
 }

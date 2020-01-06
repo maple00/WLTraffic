@@ -90,7 +90,20 @@ public final class RequestPost {
     /**
      * 质量安全
      */
+    public static void getItemQSManagerData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=inspectManager", params, listener);
+    }
 
+    /**
+     * 质量安全详情
+     */
+    public static void getItemQSDetailData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=allNewsMx", params, listener);
+    }
 
     /**
      * 变更管理
@@ -99,5 +112,23 @@ public final class RequestPost {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=changeManager", params, listener);
+    }
+
+    /**
+     * 招投标
+     */
+    public static void getItemTenderData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=tendering", params, listener);
+    }
+
+    /**
+     * 考核管理
+     */
+    public static void getItemAssessData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=testRule", params, listener);
     }
 }

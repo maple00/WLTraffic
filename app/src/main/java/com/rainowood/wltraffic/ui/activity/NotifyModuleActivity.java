@@ -66,16 +66,16 @@ public class NotifyModuleActivity extends BaseActivity implements View.OnClickLi
         status.setText("已设置维权公示牌");
         word.setText("维权公示文档附件维权公....doc");
 
-        QualitySafeAdapter safeAdapter = new QualitySafeAdapter(this, mSafeList);
-        notifyContent.setAdapter(safeAdapter);
+       // QualitySafeAdapter safeAdapter = new QualitySafeAdapter(this, mSafeList);
+       // notifyContent.setAdapter(safeAdapter);
 
-        safeAdapter.setContentOnClick(new QualitySafeAdapter.IContentOnClick() {
-            @Override
-            public void contentClick(int position) {
-                //toast("点击了：" + position);
-                openActivity(RectificationDetailActivity.class);
-            }
-        });
+//        safeAdapter.setContentOnClick(new QualitySafeAdapter.IContentOnClick() {
+//            @Override
+//            public void contentClick(int position) {
+//                //toast("点击了：" + position);
+//                openActivity(RectificationDetailActivity.class);
+//            }
+//        });
 
     }
 

@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +59,9 @@ public class AssessDeductionAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_title.setText(getItem(position).getTitle());
-        holder.tv_score.setText(getItem(position).getScore());
-        holder.tv_label.setText(getItem(position).getLabel());
+        holder.tv_title.setText(getItem(position).getDepartment());     // 部门
+        holder.tv_score.setText(getItem(position).getPoint());          // 分数
+        holder.tv_label.setText(getItem(position).getPointMx());          // 扣分项
 
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override

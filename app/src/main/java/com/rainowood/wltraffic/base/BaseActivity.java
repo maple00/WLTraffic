@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.common.ActivityStackManager;
+import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.common.StatusManager;
 import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.statusbar.StatusBarUtil;
@@ -71,6 +73,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         ActivityStackManager.getInstance().addActivity(this);
         // Flag
         TAG = this.getClass().getSimpleName();
+
+        // test
+        Log.e("sxs", "Contant_id: " + Contants.ITEM_ID);
     }
 
 

@@ -51,8 +51,15 @@
             android:text="@string/view_the_full_text"
             android:textColor="@color/colorBlue1"
             android:textSize="14sp" />
-
     </LinearLayout>
 
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_records_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:listSelector="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"/>
 
 </LinearLayout>

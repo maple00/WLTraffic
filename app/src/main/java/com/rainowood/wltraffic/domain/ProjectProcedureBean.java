@@ -25,6 +25,7 @@ public class ProjectProcedureBean implements Serializable {
                 '}';
     }
 
+
     public String getProcessName() {
         return processName;
     }

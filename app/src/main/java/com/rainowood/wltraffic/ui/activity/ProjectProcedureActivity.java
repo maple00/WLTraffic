@@ -44,7 +44,6 @@ public class ProjectProcedureActivity extends BaseActivity implements View.OnCli
     private Button btnBack;
     @ViewById(R.id.tv_title)
     private TextView pageTitle;
-
     @ViewById(R.id.lv_procedure_list)
     private MeasureListView procedureList;
 
@@ -105,7 +104,6 @@ public class ProjectProcedureActivity extends BaseActivity implements View.OnCli
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
         if ("1".equals(body.get("code"))){
             mList = JsonParser.parseJSONArray(ProjectProcedureBean.class,body.get("data"));
-
             Message msg = new Message();
             msg.what = 0x1557;
             mHandler.sendMessage(msg);
@@ -116,8 +114,6 @@ public class ProjectProcedureActivity extends BaseActivity implements View.OnCli
             toast(body.get("warn"));
         }
     }
-
-
     /**
      * 刷新UI
      */

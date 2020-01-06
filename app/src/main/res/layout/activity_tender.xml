@@ -79,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColor"
+                    android:gravity="center_vertical"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -92,7 +93,7 @@
                     <ImageView
                         android:layout_width="13dp"
                         android:layout_height="15dp"
-                        android:background="@drawable/ic_icon_after" />
+                        android:background="@drawable/ic_icon_bidding_tips" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -160,6 +161,14 @@
                     android:textSize="12sp"/>
 
             </LinearLayout>
+
+            <com.rainwood.tools.widget.MeasureListView
+                android:id="@+id/lv_contract_attach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="20dp"
+                android:divider="@android:color/transparent"
+                android:listSelector="@android:color/transparent"/>
 
         </LinearLayout>
 

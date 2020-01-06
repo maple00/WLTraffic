@@ -2,12 +2,15 @@ package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +18,6 @@ import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.domain.PayManagerBean;
-import com.rainowood.wltraffic.domain.SubItemLabelBean;
 import com.rainowood.wltraffic.domain.SubPayManagerBean;
 import com.rainowood.wltraffic.okhttp.HttpResponse;
 import com.rainowood.wltraffic.okhttp.JsonParser;
@@ -26,9 +28,9 @@ import com.rainowood.wltraffic.ui.adapter.PayManagerContentAdapter;
 import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainowood.wltraffic.utils.ImmersionUtil;
 import com.rainowood.wltraffic.utils.RecyclerViewSpacesItemDecoration;
+import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.viewinject.ViewById;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,15 +72,14 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
     protected void initView() {
         // 状态栏沉浸
         ImmersionUtil.ImageImmers(this, title, background);
+        // 状态栏字体白色
+        StatusBarUtil.setStatusBarFontIconDark(this, getResources().getColor(R.color.white), false);
 
         transport.setOnClickListener(this);
         tvOU.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         transport.setText("交通局");
         tvOU.setText("业主单位");
-
-        // 默认显示交通局
-        showTransportInfo();
     }
 
     @Override
@@ -108,27 +109,21 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
             }
         }, 500);
     }
+
     /*
-        模拟数据
-         */
-    PayManagerBean payBean;
-    private List<SubPayManagerBean> mList;
-    private SubPayManagerBean subPayManager;
-    private String[] lTitles = {"250,000.00", "250,000.00", "250,000.00", "250,000.00", "250,000.00", "250,000.00", "250,000.00", "250,000.00"};
-    private String[] lTimes = {"2019.12.18 09:50", "2019.12.18 09:50", "2019.12.18 09:50", "2019.12.18 09:50", "2019.12.18 09:50",
-            "2019.12.18 09:50", "2019.12.18 09:50", "2019.12.18 09:50"};
-
-    private String[] lLabels = {"施工单位", "监理单位", "设计单位"};
-    private String[] lMoneys = {"4,852,630.00", "4,852,630.00", "852,630.00"};
-
-    private String[] lLabels1 = {"交通局"};
-    private String[] lMoneys1 = {"4,852,630.00"};
+    模拟数据
+    */
+    PayManagerBean payLeftBean;                 // title
+    PayManagerBean payRightBean;                 // title
+    private List<SubPayManagerBean> mLeftList;  // 左边支付列表
+    private List<SubPayManagerBean> mRightList;  // 左边支付列表
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
                 openActivity(ProjectDetailActivity.class);
+                finish();
                 break;
             case R.id.tv_transport:         // 交通局 shap_radio_transport
                 transport.setBackgroundResource(R.drawable.shap_radio_white);
@@ -143,38 +138,10 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
                 tvOU.setBackgroundResource(R.drawable.shap_radio_white_right);
                 transport.setTextColor(getResources().getColor(R.color.white));
                 tvOU.setTextColor(getResources().getColor(R.color.colorBlue1));
-
                 showOwerUnitInfo();
                 break;
         }
     }
-
-    private void initTransportInfo() {
-        // 初始化业主单位的数据
-        payBean = new PayManagerBean();
-        payBean.setTotalMoneyInt("48,723,696");
-        payBean.setTotalMoneyFloat("." + "00");
-
-        mList = new ArrayList<>();
-        for (int i = 0; i < lLabels1.length; i++) {
-            subPayManager = new SubPayManagerBean();
-            subPayManager.setLabel(lLabels1[i]);
-            subPayManager.setlMoney(lMoneys1[i]);
-            subPayManager.setHasHide(true);         // 默认隐藏
-            List<SubItemLabelBean> subItemList = new ArrayList<>();
-            for (int j = 0; j < lTitles.length; j++) {
-                SubItemLabelBean subItemLabel = new SubItemLabelBean();
-                subItemLabel.setTitle(lTitles[i]);
-                subItemLabel.setContent(lTimes[i]);
-
-                subItemList.add(subItemLabel);
-            }
-            subPayManager.setmList(subItemList);
-
-            mList.add(subPayManager);
-        }
-    }
-
 
     /**
      * 展示交通局数据
@@ -183,13 +150,12 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         /*
         初始化交通局数据
          */
-        initTransportInfo();
-        tvTotalMoneyInt.setText(payBean.getTotalMoneyInt());
-        tvTotalMoneyFloat.setText(payBean.getTotalMoneyFloat());
+        tvTotalMoneyInt.setText(payLeftBean.getTotalMoneyInt());
+        tvTotalMoneyFloat.setText(payLeftBean.getTotalMoneyFloat());
         // 交通局
         transport.setFocusable(true);
         tvOU.setFocusable(false);
-        getData2Show();
+        getData2Show("transport");
     }
 
     /**
@@ -199,46 +165,50 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         /*
         初始化业主单位数据
          */
-        initOwerUnitInfo();
-        tvTotalMoneyInt.setText(payBean.getTotalMoneyInt());
-        tvTotalMoneyFloat.setText(payBean.getTotalMoneyFloat());
+        tvTotalMoneyInt.setText(payRightBean.getTotalMoneyInt());
+        tvTotalMoneyFloat.setText(payRightBean.getTotalMoneyFloat());
         // 业主单位
         transport.setFocusable(false);
         tvOU.setFocusable(true);
-        getData2Show();
+        getData2Show("ou");
     }
 
     /**
      * 获取数据展示
      */
-    private void getData2Show() {
+    private void getData2Show(final String type) {
         PayManagerAdapter adapter = new PayManagerAdapter(this);
         LinearLayoutManager managerVertical = new LinearLayoutManager(this);
         managerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         // 设置item之间的间距
         HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
         stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 10);//下间距
+
         cardContent.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
         cardContent.setLayoutManager(managerVertical);
         cardContent.setHasFixedSize(true);
         cardContent.setAdapter(adapter);
         cardContent.setNestedScrollingEnabled(false);
-        adapter.setmList(mList);
-
+        if ("transport".equals(type)) {
+            adapter.setmList(mLeftList);
+        }
+        if ("ou".equals(type)) {
+            adapter.setmList(mRightList);
+        }
         /**
          * 子项的点击事件
          */
         adapter.setClickListener(new PayManagerContentAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(int position) {
+            public void OnItemClick(final int position) {
                 // 判断焦点在哪
                 transport.post(new Runnable() {
                     @Override
                     public void run() {
                         Intent intent = new Intent(PayManagerActivity.this, PayDetailActivity.class);
-                        if (transport.isFocusable()){   // 交通局
+                        if (transport.isFocusable()) {   // 交通局
                             intent.putExtra("key", "transport");
-                        }else {                 // 业主单位
+                        } else {                 // 业主单位
                             intent.putExtra("key", "ou");
                         }
                         startActivity(intent);
@@ -246,34 +216,6 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
                 });
             }
         });
-
-    }
-
-    /**
-     * 初始化业主单位数据
-     */
-    private void initOwerUnitInfo() {
-        payBean = new PayManagerBean();
-        payBean.setTotalMoneyInt("48,723,696");
-        payBean.setTotalMoneyFloat("." + "00");
-        mList = new ArrayList<>();
-        for (int i = 0; i < lLabels.length; i++) {
-            subPayManager = new SubPayManagerBean();
-            subPayManager.setLabel(lLabels[i]);
-            subPayManager.setlMoney(lMoneys[i]);
-            subPayManager.setHasHide(true);         // 默认隐藏
-            List<SubItemLabelBean> subItemList = new ArrayList<>();
-            for (int j = 0; j < lTitles.length; j++) {
-                SubItemLabelBean subItemLabel = new SubItemLabelBean();
-                subItemLabel.setTitle(lTitles[i]);
-                subItemLabel.setContent(lTimes[i]);
-
-                subItemList.add(subItemLabel);
-            }
-            subPayManager.setmList(subItemList);
-
-            mList.add(subPayManager);
-        }
 
     }
 
@@ -285,14 +227,42 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onHttpSucceed(HttpResponse result) {
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
-        if ("1".equals(body.get("code"))){
-            Log.e("sxs", "data: " + body.get("data"));
+        if ("1".equals(body.get("code"))) {
+            Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
+            // 交通局
+            float leftMoney = Float.parseFloat(data.get("leftMoney"));
+            payLeftBean = new PayManagerBean();
+            payLeftBean.setTotalMoneyInt((int) leftMoney + "");
+            payLeftBean.setTotalMoneyFloat(String.valueOf(leftMoney % 1));
+            mLeftList = JsonParser.parseJSONArray(SubPayManagerBean.class, data.get("leftArr"));
 
+            // 业主单位
+            float rightMoney = Float.parseFloat(data.get("rightMoney"));
+            payRightBean = new PayManagerBean();
+            payRightBean.setTotalMoneyInt((int) rightMoney + "");
+            payRightBean.setTotalMoneyFloat(String.valueOf(rightMoney % 1));
+            mRightList = JsonParser.parseJSONArray(SubPayManagerBean.class, data.get("rightArr"));
 
             dismissDialog();
-        }else {
+            Message msg = new Message();
+            msg.what = 0x1059;
+            mHandler.sendMessage(msg);
+        } else {
             dismissDialog();
             toast(body.get("warn"));
         }
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 0x1059:
+                    // 默认显示交通局
+                    showTransportInfo();
+                    break;
+            }
+        }
+    };
 }

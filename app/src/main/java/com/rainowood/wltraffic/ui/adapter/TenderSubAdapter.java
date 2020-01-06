@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
+import com.rainowood.wltraffic.domain.SubQuestionBean;
 import com.rainowood.wltraffic.domain.SubTenderBean;
 
 import java.util.List;
@@ -21,9 +22,9 @@ import java.util.List;
 public class TenderSubAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<SubTenderBean> mList;
+    private List<SubQuestionBean> mList;
 
-    public TenderSubAdapter(Context mContext, List<SubTenderBean> mList) {
+    public TenderSubAdapter(Context mContext, List<SubQuestionBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -34,7 +35,7 @@ public class TenderSubAdapter extends BaseAdapter {
     }
 
     @Override
-    public SubTenderBean getItem(int position) {
+    public SubQuestionBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -56,7 +57,7 @@ public class TenderSubAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_label.setText(getItem(position).getLabel());
+        holder.tv_label.setText(getItem(position).getProblem());
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,15 +1,24 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.common.Contants;
+import com.rainowood.wltraffic.domain.SubQuestionBean;
+import com.rainowood.wltraffic.domain.SubQuestionsAndBareBean;
 import com.rainowood.wltraffic.ui.adapter.AttachmentListAdapter;
+import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
+import com.rainwood.tools.toast.ToastUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -43,86 +52,33 @@ public class TenderListDetailActivity extends BaseActivity implements View.OnCli
         btnBack.setOnClickListener(this);
 
         String key = (String) getIntent().getCharSequenceExtra("key");
+        // 数据详情
+        SubQuestionBean question = (SubQuestionBean) getIntent().getSerializableExtra("question");
+
         if ("question".equals(key)){        // 质疑答疑
             pageTitle.setText("质疑答疑详情");
-            title.setText(infos[0]);
-            content.setText(infos[1]);
+            title.setText(question.getProblem());
+            content.setText(question.getText());
             // 质疑
-            AttachmentListAdapter adapterQ = new AttachmentListAdapter(this, Arrays.asList(attachsQ));
-            question.setAdapter(adapterQ);
-            adapterQ.setAttachListener(new AttachmentListAdapter.OnAttachListener() {
-                @Override
-                public void onAttachDownloadClick(int position) {
-                    toast("下载");
-                }
+            ItemAttachListAdapter adapterQ = new ItemAttachListAdapter(this, question.getProblemFile());
+            this.question.setAdapter(adapterQ);
 
-                @Override
-                public void onAttachPreviewClick(int position) {
-                    toast("预览");
-                }
-            });
-
-            AttachmentListAdapter adapterA = new AttachmentListAdapter(this, Arrays.asList(attachsA));
-            answer.setAdapter(adapterQ);
-            adapterA.setAttachListener(new AttachmentListAdapter.OnAttachListener() {
-                @Override
-                public void onAttachDownloadClick(int position) {
-                    toast("下载");
-                }
-
-                @Override
-                public void onAttachPreviewClick(int position) {
-                    toast("预览");
-                }
-            });
+            ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, question.getAnswerFile());
+            answer.setAdapter(adapterA);
         }
 
         if ("bare".equals(key)){            // 补漏列表
             pageTitle.setText("补遗详情");
-
-            title.setText(infos1[0]);
-            content.setText(infos1[1]);
+            title.setText(question.getProblem());
+            content.setText(question.getText());
             // 质疑
-            AttachmentListAdapter adapterQ = new AttachmentListAdapter(this, Arrays.asList(aaa1));
-            question.setAdapter(adapterQ);
-            adapterQ.setAttachListener(new AttachmentListAdapter.OnAttachListener() {
-                @Override
-                public void onAttachDownloadClick(int position) {
-                    toast("下载");
-                }
-
-                @Override
-                public void onAttachPreviewClick(int position) {
-                    toast("预览");
-                }
-            });
-
-            AttachmentListAdapter adapterA = new AttachmentListAdapter(this, Arrays.asList(aaa2));
-            answer.setAdapter(adapterQ);
-            adapterA.setAttachListener(new AttachmentListAdapter.OnAttachListener() {
-                @Override
-                public void onAttachDownloadClick(int position) {
-                    toast("下载");
-                }
-
-                @Override
-                public void onAttachPreviewClick(int position) {
-                    toast("预览");
-                }
-            });
+            ItemAttachListAdapter adapterQ = new ItemAttachListAdapter(this, question.getProblemFile());
+            this.question.setAdapter(adapterQ);
+            // 答复
+            ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, question.getAnswerFile());
+            answer.setAdapter(adapterA);
         }
     }
-
-    /*
-    模拟数据
-     */
-    private String[] infos = {"评标办法前附表2.2.3条评标偏差率计算公式修评标办法前附表", "这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容"};
-    private String[] attachsQ = {"关于施工造成的城市污染的问....doc", "关于施工造成的城市污染的问....doc", "关于施工造成的城市污染的问....doc"};
-    private String[] attachsA = {"施工造成的城市污染的解决方....doc", "施工造成的城市污染的解决方....doc","施工造成的城市污染的解决方....doc"};
-
-    private String[] infos1 = {"评标办法前附表2.2.3条评标偏差率计算公式修评标办法前附表", "这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容这里是备注内容"};
-    private String[] aaa1 = {"关于施工造成的城市污染的问....doc","关于施工造成的城市污染的问....doc", "关于施工造成的城市污染的问....doc"};
-    private String[] aaa2 = {"施工造成的城市污染的解决方....doc", "施工造成的城市污染的解决方....doc","施工造成的城市污染的解决方....doc"};
 
     @Override
     public void onClick(View v) {
