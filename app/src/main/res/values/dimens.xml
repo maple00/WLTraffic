@@ -7,7 +7,5 @@
     <dimen name="button_round_size">5dp</dimen>
 
     <!-- 消息对话框圆角大小 -->
-    <dimen name="dialog_message_round_size">15dp</dimen>
     <!-- 菜单对话框圆角大小 -->
-    <dimen name="dialog_menu_round_size">12dp</dimen>
 </resources>

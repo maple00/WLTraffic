@@ -10,7 +10,6 @@
 
 
     <com.rainwood.tools.widget.ProgressView
-        android:id="@+id/pw_progress"
         android:layout_width="60dp"
         android:layout_height="60dp"
         app:barColor="@android:color/white"

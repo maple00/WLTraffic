@@ -4,7 +4,6 @@
     <!-- 通用的-->
     <string name="common_code_send">发送验证码</string>
     <string name="common_loading">加载中&#8230;</string>
-    <string name="common_action_title">标题</string>
     <string name="common_login">登录</string>
     <string name="common_reset_pwd">重置密码</string>
     <string name="common_check_phone">手机号验证</string>
@@ -17,14 +16,12 @@
     <string name="common_get_check_code">获取验证码</string>
     <string name="common_input_code_verify">输入验证码</string>
     <string name="common_confirm">确定</string>
-    <string name="common_cancel">取消</string>
     <string name="common_text_change">修改</string>
     <string name="common_text_logout">退出登录</string>
     <string name="common_view_full">查看全部</string>
 
     <!-- Http-->
     <string name="frame_name">AndroidOHP</string>
-    <string name="package_name">081E222B201T82W083Z224I244Q221N222E204C244</string>
 
     <!-- 提示-->
     <string name="hint_layout_no_data">亲，暂无数据</string>
@@ -59,7 +56,6 @@
     <string name="plan_manager_order">计划下达</string>
     <string name="plan_manager_constract_content">建设内容</string>
     <string name="plan_manager_investment_scale">投资规模</string>
-    <string name="salary_manager_no_margin">未缴存</string>
     <string name="salary_manager_user_funds">转入专户资金</string>
     <string name="salary_manager_output_statement">每月产值表</string>
     <string name="salary_manager_salary_schedule">农民工工资表</string>
