@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:text="合同附件"
         android:textSize="15sp"
+        android:layout_marginTop="20dp"
         android:textColor="@color/textColor"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"/>

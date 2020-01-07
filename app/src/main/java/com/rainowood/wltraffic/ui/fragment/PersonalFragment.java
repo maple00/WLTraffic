@@ -133,7 +133,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.tv_logout:
                 tvLogout.setVisibility(View.GONE);
-                dialog = new DialogUtils(getActivity(), "登录中");
+                dialog = new DialogUtils(getActivity(), "登出中");
                 dialog.showDialog();
                 postDelayed(new Runnable() {
                     @Override

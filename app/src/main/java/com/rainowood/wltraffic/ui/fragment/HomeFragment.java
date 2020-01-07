@@ -162,8 +162,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onHttpSucceed(HttpResponse result) {
         Map<String, String> bodys = JsonParser.parseJSONObject(result.body());
         if ("1".equals(bodys.get("code"))) {
-            Log.e("sxs", "data: " + bodys.get("data"));
-
             Map<String, String> data = JsonParser.parseJSONObject(bodys.get("data"));
             // 在建项目
             leftList = JsonParser.parseJSONArray(ProjectInfoBean.class, data.get("left"));

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.domain.SubQuestionBean;
-import com.rainowood.wltraffic.domain.SubTenderBean;
 
 import java.util.List;
 

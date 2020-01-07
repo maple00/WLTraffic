@@ -79,11 +79,19 @@
             <View style="@style/HorizontalLineStyle"
                 android:layout_marginTop="20dp"/>
 
+            <TextView
+                android:id="@+id/tv_outer_test_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="15sp"
+                android:textColor="@color/textColor"/>
+
             <com.rainwood.tools.widget.MeasureListView
                 android:id="@+id/lv_field_test"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:listSelector="@android:color/transparent"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="40dp"/>
@@ -127,6 +135,15 @@
                 android:layout_height="wrap_content"
                 android:numColumns="3"
                 android:layout_marginTop="20dp" />
+
+            <com.rainwood.tools.widget.MeasureListView
+                android:id="@+id/lv_quality_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:listSelector="@android:color/transparent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="40dp"/>
 
         </LinearLayout>
 

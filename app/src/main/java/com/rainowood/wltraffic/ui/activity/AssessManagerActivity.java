@@ -125,6 +125,7 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.ll_assess_title_one:          // 考核细则
                 lineTwo.setVisibility(View.GONE);
+                assessDeduction.setVisibility(View.GONE);
                 // 加载数据
                 lineOne.setVisibility(View.VISIBLE);
                 assessList.setVisibility(View.VISIBLE);
@@ -137,6 +138,7 @@ public class AssessManagerActivity extends BaseActivity implements View.OnClickL
                 lineOne.setVisibility(View.GONE);
                 assessList.setVisibility(View.GONE);
                 // 加载数据
+                assessDeduction.setVisibility(View.VISIBLE);
                 lineTwo.setVisibility(View.VISIBLE);
                 // 明细数据列表
                 AssessDeductionAdapter deductionAdapter = new AssessDeductionAdapter(this, deductionLists);

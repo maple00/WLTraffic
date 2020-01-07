@@ -16,7 +16,7 @@ public class QualitySafeDetailBean implements Serializable {
     // 文档列表
     private List<AttachBean> mWordList;
     // 图片列表
-    private List<String> mImgList;
+    private List<AttachBean> mImgList;
 
     public String getTitle() {
         return title;
@@ -42,11 +42,11 @@ public class QualitySafeDetailBean implements Serializable {
         this.mWordList = mWordList;
     }
 
-    public List<String> getmImgList() {
+    public List<AttachBean> getmImgList() {
         return mImgList;
     }
 
-    public void setmImgList(List<String> mImgList) {
+    public void setmImgList(List<AttachBean> mImgList) {
         this.mImgList = mImgList;
     }
 }

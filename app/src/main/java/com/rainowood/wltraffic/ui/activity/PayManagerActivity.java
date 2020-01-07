@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -181,10 +182,9 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
         LinearLayoutManager managerVertical = new LinearLayoutManager(this);
         managerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         // 设置item之间的间距
-        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
-        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 10);//下间距
-
-        cardContent.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
+//        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
+//        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 10);//下间距
+//        cardContent.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
         cardContent.setLayoutManager(managerVertical);
         cardContent.setHasFixedSize(true);
         cardContent.setAdapter(adapter);
@@ -200,17 +200,22 @@ public class PayManagerActivity extends BaseActivity implements View.OnClickList
          */
         adapter.setClickListener(new PayManagerContentAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(final int position) {
+            public void OnItemClick(final int parenPosition, final int position) {
                 // 判断焦点在哪
                 transport.post(new Runnable() {
                     @Override
                     public void run() {
+                        toast("parent: " + parenPosition + ", position: " + position);
                         Intent intent = new Intent(PayManagerActivity.this, PayDetailActivity.class);
+                        Bundle bundle = new Bundle();
                         if (transport.isFocusable()) {   // 交通局
                             intent.putExtra("key", "transport");
+                            bundle.putSerializable("value", mLeftList.get(parenPosition).getTeamChildArr().get(position));
                         } else {                 // 业主单位
                             intent.putExtra("key", "ou");
+                            bundle.putSerializable("value", mRightList.get(parenPosition).getTeamChildArr().get(position));
                         }
+                        intent.putExtras(bundle);
                         startActivity(intent);
                     }
                 });

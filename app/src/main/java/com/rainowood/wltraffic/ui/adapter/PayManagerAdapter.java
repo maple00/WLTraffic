@@ -66,9 +66,9 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
         LinearLayoutManager managerVertical = new LinearLayoutManager(mContext);
         managerVertical.setOrientation(LinearLayoutManager.VERTICAL);
         // 设置item之间的间距
-        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
-        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 10);//下间距
-        holder.rlv_content.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
+//        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
+//        stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 20);//下间距
+//        holder.rlv_content.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
         holder.rlv_content.setLayoutManager(managerVertical);
         holder.rlv_content.setHasFixedSize(true);       // 重新计算高度
         holder.rlv_content.setAdapter(contentAdapter);
@@ -80,7 +80,7 @@ public class PayManagerAdapter extends RecyclerView.Adapter<PayManagerAdapter.Ve
             contentAdapter.setmList(mList.get(position).getTeamChildArr());
             holder.ll_show_or_hide.setVisibility(View.GONE);
         }
-        contentAdapter.setClickListener(clickListener);     // 详情点击事件
+        contentAdapter.setClickListener(position, clickListener);     // 详情点击事件
         /*
         收起或展开逻辑, 默认为收起
          */

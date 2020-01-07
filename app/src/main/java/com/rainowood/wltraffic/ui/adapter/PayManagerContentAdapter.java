@@ -27,7 +27,7 @@ public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerCon
 
     private Context mContext;
     private List<SubPayContentBean> mList;
-
+    private int parentPosition;
     private int num = 2;         // 默认显示item数量为2
 
     public void setNum(int num) {
@@ -70,19 +70,20 @@ public class PayManagerContentAdapter extends RecyclerView.Adapter<PayManagerCon
         holder.ll_item_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.OnItemClick(position);
+                clickListener.OnItemClick(parentPosition, position);
             }
         });
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(int position);
+        void OnItemClick(int parenPosition, int position);
     }
 
     private OnItemClickListener clickListener;
 
-    public void setClickListener(OnItemClickListener clickListener) {
+    public void setClickListener(int parentPosition, OnItemClickListener clickListener) {
         this.clickListener = clickListener;
+        this.parentPosition = parentPosition;
     }
 
     class PayManagerContentViewHolder extends RecyclerView.ViewHolder {

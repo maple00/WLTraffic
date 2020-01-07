@@ -126,6 +126,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!-- 整改情况详情  RectificationDetailActivity-->
+        <activity
+            android:name=".ui.activity.RectificationDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <!-- 外业检测详情  QuailtySafeDetailActivity-->
         <activity
             android:name=".ui.activity.QuailtySafeDetailActivity"
@@ -235,10 +241,6 @@
             android:screenOrientation="portrait" />
 
         <!-- 整改详情 RectificationDetailActivity-->
-        <activity
-            android:name=".ui.activity.RectificationDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
 
         <!-- 招投标 TenderActivity-->
         <activity

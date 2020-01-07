@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -201,22 +202,35 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.btn_back:
+                openActivity(ProjectDetailActivity.class);
                 finish();
                 break;
             case R.id.ll_audit_content:         // 公司审核 -- 查看详情
                 Intent intent = new Intent(this, TenderDetailAuditActivity.class);
-                intent.putExtra("key", "company_audit");
+                Bundle bundle = new Bundle();
+                intent.putExtra("key", "audit_company");
+                Log.e("sxs", "test: " + data.getB());
+                bundle.putSerializable("value", data.getB());
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case R.id.ll_expert_content:            // 专家审核 -- 查看详情
                 Intent intent1 = new Intent(this, TenderDetailAuditActivity.class);
-                intent1.putExtra("key", "experts_audit");
+                Bundle bundle1 = new Bundle();
+                intent1.putExtra("key", "audit_export");
+                bundle1.putSerializable("value", data.getC());
+                intent1.putExtras(bundle1);
                 startActivity(intent1);
                 break;
             case R.id.ll_record_content:            // 备案   -- 查看详情
-                openActivity(TenderRecordActivity.class);
+                Intent intent2 = new Intent(this, TenderRecordActivity.class);
+                Bundle bundle2 = new Bundle();
+                bundle2.putSerializable("value", data.getD());
+                intent2.putExtras(bundle2);
+                startActivity(intent2);
                 break;
         }
     }
@@ -235,15 +249,15 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
     // 备案
     private String[] forRecords = {"备案"};
     // 挂网
-    private String[] nets = {"挂网", "挂网时间：2019.12.18", "预计开标时间：2019.12.18"};
+    private String[] nets = {"挂网", "挂网时间", "预计开标时间："};
     // 质疑答疑、补漏
     private String[] titles = {"质疑答疑", "补漏"};
     // 开标
     private String[] bidOpens = {"开标", "中标金额"};
     // 公示
-    private String[] publicShow = {"公示", "起止时间：2019.12.19-2019.12.30"};
+    private String[] publicShow = {"公示", "起止时间"};
     // 合同签订
-    private String[] contractInfo = {"合同签订", "3650万", "合同金额", "2019.12.19"};
+    private String[] contractInfo = {"合同签订", "合同金额"};
 
 
     @Override
@@ -399,7 +413,6 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
                     //startEndTime.setText(publicShow[1]);
                     startEndTime.setText(Html.fromHtml("<font color=" + getResources().getColor(R.color.colorLabel) + " font-size=\"14dp\">" + "起止时间：&nbsp;" + "</font>"
                             + "<font color=" + getResources().getColor(R.color.textColor) + " font-size=\"14dp\">" + data.getH().getTimeOneSix() + " - " + data.getH().getTimeTwoSix() + "</font>"));
-                    // 随机有投诉
                     if ("有".equals(data.getH().getComplainSix())) {      // 有投诉
                         hasComplaints.setVisibility(View.VISIBLE);
                     } else {
@@ -408,7 +421,7 @@ public class TenderActivity extends BaseActivity implements View.OnClickListener
                     // 合同签订
                     contractTitle.setText(contractInfo[0]);
                     contractMoney.setText(data.getI().getMoneySix());
-                    contractType.setText(contractInfo[2]);
+                    contractType.setText(contractInfo[1]);
                     contractTime.setText(data.getI().getTimeOneSix());
                     // 合同附件
                     ItemAttachListAdapter attachListAdapter = new ItemAttachListAdapter(TenderActivity.this, data.getI().getIdeaSixFile());

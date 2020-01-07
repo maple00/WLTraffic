@@ -68,11 +68,13 @@ public class QuailtySafeDetailActivity extends BaseActivity implements View.OnCl
                 pageTitle.setText("质量鉴定(检测)意见");
                 contentTitle.setVisibility(View.GONE);
                 content.setText(key.getContent());
-                wordList.setVisibility(View.GONE);
+                imgList.setVisibility(View.GONE);
 
-                ImageAdapter imageAdapter = new ImageAdapter(this, key.getmImgList());
+                ItemAttachListAdapter attachListAdapter = new ItemAttachListAdapter(this, key.getmImgList());
+                wordList.setAdapter(attachListAdapter);
+                /*ImageAdapter imageAdapter = new ImageAdapter(this, key.getmImgList());
                 imgList.setAdapter(imageAdapter);
-                imageAdapter.notifyDataSetChanged();
+                imageAdapter.notifyDataSetChanged();*/
             }
         } else {
             throw new RuntimeException("可能数据传输错误");

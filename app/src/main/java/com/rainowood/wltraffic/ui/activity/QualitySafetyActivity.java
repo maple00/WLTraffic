@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import com.rainowood.wltraffic.domain.AttachBean;
 import com.rainowood.wltraffic.domain.QualityBean;
 import com.rainowood.wltraffic.domain.QualitySafeDetailBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
+import com.rainowood.wltraffic.domain.SubQualityTestBean;
 import com.rainowood.wltraffic.okhttp.HttpResponse;
 import com.rainowood.wltraffic.okhttp.JsonParser;
 import com.rainowood.wltraffic.okhttp.OnHttpListener;
@@ -27,12 +29,12 @@ import com.rainowood.wltraffic.ui.adapter.ImageAdapter;
 import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainowood.wltraffic.ui.adapter.QualitySafeAdapter;
 import com.rainowood.wltraffic.utils.DialogUtils;
+import com.rainowood.wltraffic.utils.ListUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
 import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -67,8 +69,11 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
     private TextView mContentField;
     @ViewById(R.id.tv_query_field)
     private TextView querField;
+    @ViewById(R.id.tv_outer_test_title)
+    private TextView outerTitle;
     @ViewById(R.id.lv_field_test)
     private MeasureListView mFieldTest;
+
 
     @ViewById(R.id.tv_title_quality)
     private TextView qualityTitle;
@@ -80,6 +85,8 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
     private TextView queryQuality;
     @ViewById(R.id.gv_img)
     private MeasureGridView gvImg;
+    @ViewById(R.id.lv_quality_test)
+    private MeasureListView qualityTest;
 
     private DialogUtils dialog;
 
@@ -87,49 +94,11 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
     protected void initView() {
         btnBack.setOnClickListener(this);
         pageTitle.setText("质量安全管理");
-        safeTitle.setText("质量安全检查及整改情况");
 
-        // 外业检测
-        fieldTitle.setText("外业检测");
-        labelField.setText(label.getTitle());
-        mContentField.setText(label.getContent());
-
-        setOnClickAndShowDetail(mContentField, wordContent, querField, fieldTitle.getText().toString().trim());
-
-        ItemAttachListAdapter wordAdapter = new ItemAttachListAdapter(this, mSubItemWordList);
-        mFieldTest.setAdapter(wordAdapter);
-        wordAdapter.notifyDataSetChanged();
-
-        // 质量检查
-        qualityTitle.setText("质量鉴定(检测)意见");
-        contentQuality.setText(labelQuality.getContent());
-        // 查看全文
-        setOnClickAndShowDetail(contentQuality, qualityLabel, queryQuality, qualityTitle.getText().toString().trim());
-
-        ImageAdapter imageAdapter = new ImageAdapter(this, imgsList);
-        gvImg.setAdapter(imageAdapter);
-        imageAdapter.notifyDataSetChanged();
-
-        // 查看大图
-        imageAdapter.setImgClick(new ImageAdapter.ImgOnClickListener() {
-            @Override
-            public void imgClick(int position) {
-                ImageActivity.start(getActivity(), imgsList, position);
-            }
-        });
     }
 
     private List<QualityBean> mSafeList;
-    private SubItemLabelBean label;
-
-    private List<AttachBean> mSubItemWordList;
-    private String[] mBackTitles = {"外业检测报告", "武隆交委计[2016]15号2016.07.20", "外业检测报告"};
-
-    private SubItemLabelBean labelQuality;
-
-    private ArrayList<String> imgsList;
-    private String[] imgPath = {"https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
-            "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png"};
+    private SubQualityTestBean qualityTestBean;
 
     @Override
     protected void initData() {
@@ -144,23 +113,6 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
                 RequestPost.getItemQSManagerData(Contants.ITEM_ID, QualitySafetyActivity.this);
             }
         }).start();
-
-        // 外业检测
-        label = new SubItemLabelBean();
-        label.setTitle("2019.12.17申请");
-        label.setContent("长安华都·华韵苑15号楼工程为长安华都小区二期工程中的一幢，正负零下为地下人防工程，建筑面积1807㎡为住宅楼，地上11+1层建筑面积16437㎡住宅楼。结构为：基础独立柱基，带形基础，剪力墙–薄壁框架，全高40.05m，平面布置为平行三个单元，每层12户，顶上11+1为跃层，其余为平层加局部错层，外形设...");
-        // 文档列表
-        mSubItemWordList = new ArrayList<>();
-        for (int j = 0; j < mBackTitles.length; j++) {
-            AttachBean mSubItemWord = new AttachBean();
-            mSubItemWord.setName(mBackTitles[j]);
-            mSubItemWordList.add(mSubItemWord);
-        }
-        // 质量检测
-        labelQuality = new SubItemLabelBean();
-        labelQuality.setContent("长安华都·华韵苑15号楼工程为长安华都小区二期工程中的一幢，正负零下为地下人防工程，建筑面积1807㎡为住宅楼，地上11+1层建筑面积16437㎡住宅楼。结构为：基础独立柱基，带形基础，剪力墙–薄壁框架，全高40.05m，平面布置为平行三个单元，每层12户，顶上11+1为跃层，其余为平层加局部错层，外形设...");
-        imgsList = new ArrayList<>();
-        imgsList.addAll(Arrays.asList(imgPath));
     }
 
     private void waitDialog() {
@@ -212,14 +164,14 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
                                 qualitySafeDetail = new QualitySafeDetailBean();
                                 qualitySafeDetail.setTitle(labelField.getText().toString().trim());
                                 qualitySafeDetail.setContent(mContentField.getText().toString().trim());
-                                qualitySafeDetail.setmWordList(mSubItemWordList);
+                                qualitySafeDetail.setmWordList(qualityTestBean.getDetectionFile());
                                 bundle.putSerializable("quality", qualitySafeDetail);
                             }
 
                             if ("质量鉴定(检测)意见".equals(title)) {
                                 qualitySafeDetail = new QualitySafeDetailBean();
                                 qualitySafeDetail.setContent(contentQuality.getText().toString().trim());
-                                qualitySafeDetail.setmImgList(imgsList);
+                                qualitySafeDetail.setmImgList(qualityTestBean.getQsOpinionFile());
                                 bundle.putSerializable("quality", qualitySafeDetail);
                             }
                             intent.putExtras(bundle);
@@ -246,7 +198,13 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
             // 质量安全及整改情况
             mSafeList = JsonParser.parseJSONArray(QualityBean.class, data.get("allNews"));
             // 外业检测
-
+            qualityTestBean = JsonParser.parseJSONObject(SubQualityTestBean.class, data.get("manage"));
+            /*imgsList = new ArrayList<>();
+            if (ListUtils.getSize(qualityTestBean.getQsOpinionFile()) > 0){
+                for (AttachBean attachBean : qualityTestBean.getQsOpinionFile()) {
+                    imgsList.add(attachBean.getSrc());
+                }
+            }*/
             dismissDialog();
             Message msg = new Message();
             msg.what = 0x1324;
@@ -258,11 +216,12 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
     }
 
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0x1324:
+                    safeTitle.setText("质量安全检查及整改情况");
                     // 质量安全检查及整改情况
                     QualitySafeAdapter safeAdapter = new QualitySafeAdapter(QualitySafetyActivity.this, mSafeList);
                     qualityContent.setAdapter(safeAdapter);
@@ -275,6 +234,34 @@ public class QualitySafetyActivity extends BaseActivity implements View.OnClickL
                             startActivity(intent);
                         }
                     });
+                    // 外业检测
+                    fieldTitle.setText("外业检测");
+                    labelField.setText(qualityTestBean.getDetectionTime());
+                    outerTitle.setText("外业检测报告");
+                    mContentField.setText(qualityTestBean.getDetectionMatter());
+
+                    setOnClickAndShowDetail(mContentField, wordContent, querField, fieldTitle.getText().toString().trim());
+
+                    ItemAttachListAdapter wordAdapter = new ItemAttachListAdapter(QualitySafetyActivity.this, qualityTestBean.getDetectionFile());
+                    mFieldTest.setAdapter(wordAdapter);
+                    wordAdapter.notifyDataSetChanged();
+
+                    // 质量检查
+                    qualityTitle.setText("质量鉴定(检测)意见");
+                    contentQuality.setText(qualityTestBean.getQsOpinion());
+                    // 查看全文
+                    setOnClickAndShowDetail(contentQuality, qualityLabel, queryQuality, qualityTitle.getText().toString().trim());
+
+                    ItemAttachListAdapter imageAdapter = new ItemAttachListAdapter(QualitySafetyActivity.this, qualityTestBean.getQsOpinionFile());
+                    qualityTest.setAdapter(imageAdapter);
+                    imageAdapter.notifyDataSetChanged();
+                    // 查看大图
+                    /*imageAdapter.setImgClick(new ImageAdapter.ImgOnClickListener() {
+                        @Override
+                        public void imgClick(int position) {
+                            ImageActivity.start(getActivity(), imgsList, position);
+                        }
+                    });*/
                     break;
             }
         }

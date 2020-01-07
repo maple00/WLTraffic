@@ -39,12 +39,6 @@ anim dialog_scale_in
 anim dialog_scale_out
 anim dialog_top_in
 anim dialog_top_out
-anim item_animation_fall_down
-anim item_animation_from_bottom
-anim item_animation_from_right
-anim layout_animation_fall_down
-anim layout_animation_from_bottom
-anim layout_animation_from_right
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -839,8 +833,6 @@ id src_atop
 id src_in
 id src_over
 id start
-id statusbarutil_fake_status_bar_view
-id statusbarutil_translucent_view
 id submenuarrow
 id submit_area
 id tabMode
@@ -868,8 +860,6 @@ id up
 id wrap_content
 integer abc_config_activityDefaultDur
 integer abc_config_activityShortDur
-integer anim_duration_long
-integer anim_duration_medium
 integer cancel_button_image_alpha
 integer config_tooltipAnimTime
 integer status_bar_notification_info_maxnum

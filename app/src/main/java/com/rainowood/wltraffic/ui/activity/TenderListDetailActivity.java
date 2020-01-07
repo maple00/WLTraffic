@@ -1,25 +1,15 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
-import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.domain.SubQuestionBean;
-import com.rainowood.wltraffic.domain.SubQuestionsAndBareBean;
-import com.rainowood.wltraffic.ui.adapter.AttachmentListAdapter;
 import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
-import com.rainwood.tools.toast.ToastUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
-
-import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * @Author: a797s

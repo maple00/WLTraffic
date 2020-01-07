@@ -1,27 +1,36 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.AttachBean;
+import com.rainowood.wltraffic.domain.RectificationBean;
 import com.rainowood.wltraffic.okhttp.HttpResponse;
 import com.rainowood.wltraffic.okhttp.JsonParser;
 import com.rainowood.wltraffic.okhttp.OnHttpListener;
 import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.adapter.ImageAdapter;
+import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
+import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,15 +52,8 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
 
     @ViewById(R.id.tv_rectification_content)
     private TextView rectificationContent;
-    // 整改情况Word
-    @ViewById(R.id.tv_word_title)
-    private TextView wordTitle;
-    @ViewById(R.id.tv_query_rectify)
-    private TextView queryRectify;
-    @ViewById(R.id.ll_download)
-    private LinearLayoutCompat download;
-    @ViewById(R.id.ll_preview)
-    private LinearLayoutCompat preView;
+    @ViewById(R.id.lv_title_describe)
+    private MeasureListView titleDescribe;
 
     /*
      整改情况
@@ -61,95 +63,47 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
     private TextView rectifiedContent;
     @ViewById(R.id.ll_rectified_area)
     private LinearLayout rectifiedArea;     // 整改点击区域
-    @ViewById(R.id.tv_word_title1)
-    private TextView wordTitle1;
-    @ViewById(R.id.ll_download1)
-    private LinearLayoutCompat download1;
-    @ViewById(R.id.ll_preview1)
-    private LinearLayoutCompat preview1;
+    @ViewById(R.id.lv_top_describe)
+    private MeasureListView topDescribe;
 
     // 整改中
     @ViewById(R.id.tv_rectifying_content)
     private TextView rectifyingContent;
-    @ViewById(R.id.tv_query_rectifying)
-    private TextView queryRectifying;
     @ViewById(R.id.ll_rectifying_area)
     private LinearLayout rectifityingArea;      // 整改中点击区域
-    @ViewById(R.id.gv_rectifying_img)
-    private MeasureGridView rectifyingImg;
+    @ViewById(R.id.lv_rectifying_list)
+    private MeasureListView rectifyingList;
 
     // 未整改
     @ViewById(R.id.tv_unrectify_content)
     private TextView unRectifyContent;
-    @ViewById(R.id.tv_query_unrectify)
-    private TextView queryUnRectify;
     @ViewById(R.id.ll_unrectify_area)
-    private LinearLayout unRectifyArea;
-    @ViewById(R.id.gv_unrectify_img)
-    private MeasureGridView unRectifyImg;
+    private LinearLayout unRectifyArea;         // 点击的区域
+    @ViewById(R.id.lv_unrectify_list)
+    private MeasureListView unRectifyList;
 
     private DialogUtils dialog;
+    private RectificationBean rectification;
 
     @Override
     protected void initView() {
         btnBack.setOnClickListener(this);
         pageTitle.setText("质量安全检查及整改情况");
-
-        rectificationContent.setText(pageContent);
-        AttachBean itemWord = new AttachBean();
-        itemWord.setName(wordContent);
-        wordTitle.setText(itemWord.getName());
-        download.setOnClickListener(this);
-        preView.setOnClickListener(this);
-
         // 已整改
-        rectifiedContent.setText(rectifyedContent);
         rectifiedArea.setOnClickListener(this);         // 点击的区域
-        wordTitle1.setText(itemWord.getName());
-        download1.setOnClickListener(this);
-        preview1.setOnClickListener(this);
-        setOnClickAndShowDetail(wordTitle1, rectifiedArea, queryRectify, null);
-
         // 整改中
-        rectifyingContent.setText(rectifyingContentStr);
         rectifityingArea.setOnClickListener(this);
-        setOnClickAndShowDetail(rectifyingContent, rectifityingArea, queryRectifying, null);
-        ImageAdapter rectifityingAdapter = new ImageAdapter(this, imgsList);
-        rectifyingImg.setAdapter(rectifityingAdapter);
-        rectifyingImg.setNumColumns(3);
-        rectifityingAdapter.notifyDataSetChanged();
-
-        // 查看大图
-        rectifityingAdapter.setImgClick(new ImageAdapter.ImgOnClickListener() {
-            @Override
-            public void imgClick(int position) {
-                ImageActivity.start(getActivity(), imgsList, position);
-            }
-        });
-
         // 未整改
-        unRectifyContent.setText(unRectifyContentStr);
         unRectifyArea.setOnClickListener(this);
-        setOnClickAndShowDetail(unRectifyContent, unRectifyArea, queryUnRectify, null);
-        ImageAdapter unRectifyAdapter = new ImageAdapter(this, unRectifyImgsList);
-        unRectifyImg.setAdapter(unRectifyAdapter);
-        unRectifyImg.setNumColumns(3);
-        unRectifyAdapter.notifyDataSetChanged();
-
-        // 查看大图
-        unRectifyAdapter.setImgClick(new ImageAdapter.ImgOnClickListener() {
-            @Override
-            public void imgClick(int position) {
-                ImageActivity.start(getActivity(), imgsList, position);
-            }
-        });
-
     }
 
     @Override
     protected void initData() {
         super.initData();
-
+        // 加载中
+        waitDialog();
+        dialog.showDialog();
+        // 请求数据
         final String id = getIntent().getStringExtra("id");
         new Thread(new Runnable() {
             @Override
@@ -157,15 +111,6 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
                 RequestPost.getItemQSDetailData(id, RectificationActivity.this);
             }
         }).start();
-
-        // 整改中的图片
-        imgsList = new ArrayList<>();
-        imgsList.addAll(Arrays.asList(rectifyingImgPath));
-
-        // 未整改的图片
-        unRectifyImgsList = new ArrayList<>();
-        unRectifyImgsList.addAll(Arrays.asList(unRectifyImgPath));
-
     }
 
     private void waitDialog() {
@@ -185,79 +130,35 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:
+                openActivity(QualitySafetyActivity.class);
                 finish();
                 break;
-            case R.id.ll_download:
-                toast("下载");
+            case R.id.ll_rectified_area:                // 查看详情--已整改
+                Intent intent = new Intent(this, RectificationDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("key", "已整改");
+                bundle.putSerializable("value", rectification);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
-            case R.id.ll_preview:
-                toast("预览");
+            case R.id.ll_rectifying_area:
+                Intent rectifyingIntent = new Intent(this, RectificationDetailActivity.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("key", "整改中");
+                bundle1.putSerializable("value", rectification);
+                rectifyingIntent.putExtras(bundle1);
+                startActivity(rectifyingIntent);
                 break;
-            case R.id.ll_download1:
-                toast("点击了, 已整改, 下载");
-                break;
-            case R.id.ll_preview1:
-                toast("点击了， 已整改，预览");
+            case R.id.ll_unrectify_area:
+                Intent unRectifyIntent = new Intent(this, RectificationDetailActivity.class);
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("key", "未整改");
+                bundle2.putSerializable("value", rectification);
+                unRectifyIntent.putExtras(bundle2);
+                startActivity(unRectifyIntent);
                 break;
         }
     }
-
-    /**
-     * 文档的点击和展示method
-     *
-     * @param text        需要展示的文档
-     * @param clickRegion 可以点击的区域
-     * @param hideRegion  隐藏的区域
-     */
-    private void setOnClickAndShowDetail(final TextView text, final LinearLayout clickRegion, final TextView hideRegion, final String title) {
-        text.post(new Runnable() {
-            @Override
-            public void run() {
-                int lineCount = text.getLineCount();
-                if (lineCount > 5) {
-                    clickRegion.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            toast("点击了");
-                            /*Intent intent = new Intent(QualitySafetyActivity.this, DocumentShowDetailActivity.class);
-                            ParagraphListBean paragraph = new ParagraphListBean();
-                            paragraph.setTitle(title);
-                            paragraph.setContent(text.getText().toString().trim());
-                            intent.putExtra("document", paragraph);
-                            startActivity(intent);*/
-                        }
-                    });
-                } else {
-                    hideRegion.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-
-    /*
-   模拟数据
-    */
-    private String pageContent = "业务操作中，由于经办人员业务知识欠缺风险意识差，未严格执行规章制度，且个别被业务操作中，由于经办人员业务知识欠缺风险意识差，未严格执行规章制度，且个别被业务操作中，由于经办人员业务知识欠缺风险意识差，未严格执行规章制度，且个别被业务操作中，由于经办人员业务知识欠缺风险意识差，未严格执行规章制度。";
-    private String wordContent = "检查情况附件.doc";
-
-    // 整改情况
-    // 已整改
-    private String rectifyedContent = "对检查井内存在的垃圾已经清掏；对检查井内缺少爬梯或爬梯位置不对的已经修补；检查井桶周边抹灰不到位的已经修补，未挂设防坠网的已经补挂。";
-    // 整改中
-    private String rectifyingContentStr = "对检查井内存在的垃圾已经清掏；对检查井内缺少爬梯或爬梯位置不对的已经修补；检查井桶周边抹灰不到位的已经修补，未挂设防坠网的已经补挂，避免产生安全隐患。对检查井内存在的垃圾已经清掏；对检查井内缺少爬梯或爬梯位置不对的已经修补；检查井桶周边抹灰不到位的已经修补，未挂设防坠网的已经补挂，...";
-    private ArrayList<String> imgsList;
-    private String[] rectifyingImgPath = {"https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
-            "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
-            "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png"};
-
-    // 未整改
-    private String unRectifyContentStr = "对检查井内存在的垃圾已经清掏；对检查井内缺少爬梯或爬梯位置不对的已经修补；检查井桶周边抹灰不到位的已经修补，未挂设防坠网的已经补挂，避免产生安全隐患。对检查井内存在的垃圾已经清掏；对检查井内缺少爬梯或爬梯位置不对的已经修补；检查井桶周边抹灰不到位的已经修补，未挂设防坠网的已经补挂，...";
-    private ArrayList<String> unRectifyImgsList;
-    private String[] unRectifyImgPath = {"https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
-            "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
-            "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
-            "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png",
-            "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png", "https://www.baidu.com/img/bd_logo.png"};
 
     @Override
     public void onHttpFailure(HttpResponse result) {
@@ -267,17 +168,46 @@ public class RectificationActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onHttpSucceed(HttpResponse result) {
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
-        if ("1".equals(body.get("code"))){
-            Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
-            String caseDescriptio = data.get("caseDescriptio");             // 情况描述
-            List<AttachBean> attachList = JsonParser.parseJSONArray(AttachBean.class, data.get("caseDescriptioFile"));      // 描述附件
-
-
+        if ("1".equals(body.get("code"))) {
+            Log.e("sxs", "data: " + result.body());
+            rectification = JsonParser.parseJSONObject(RectificationBean.class, body.get("data"));
             dismissDialog();
-
-        }else {
+            Message msg = new Message();
+            msg.what = 0x1048;
+            mHandler.sendMessage(msg);
+        } else {
             dismissDialog();
             toast(body.get("warn"));
         }
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 0x1048:
+                    // 头部描述
+                    rectificationContent.setText(rectification.getCaseDescriptio());
+                    ItemAttachListAdapter titleAdapter = new ItemAttachListAdapter(RectificationActivity.this, rectification.getCaseDescriptioFile());
+                    titleDescribe.setAdapter(titleAdapter);
+                    /*
+                     整改情况
+                     */
+                    // 已整改
+                    rectifiedContent.setText(rectification.getModifyHave());
+                    ItemAttachListAdapter modifyHaveAdapter = new ItemAttachListAdapter(RectificationActivity.this, rectification.getHaveFile());
+                    topDescribe.setAdapter(modifyHaveAdapter);
+                    // 整改中
+                    rectifyingContent.setText(rectification.getModifyIn());
+                    ItemAttachListAdapter modifyInAdapter = new ItemAttachListAdapter(RectificationActivity.this, rectification.getInFile());
+                    rectifyingList.setAdapter(modifyInAdapter);
+                    // 已整改
+                    unRectifyContent.setText(rectification.getModifyNot());
+                    ItemAttachListAdapter modifyNotAdapter = new ItemAttachListAdapter(RectificationActivity.this, rectification.getNotFile());
+                    unRectifyList.setAdapter(modifyNotAdapter);
+                    break;
+            }
+        }
+    };
 }
