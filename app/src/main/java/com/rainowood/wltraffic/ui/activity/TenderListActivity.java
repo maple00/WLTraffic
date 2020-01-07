@@ -21,7 +21,7 @@ import java.util.Arrays;
  * @Date: 2019/12/30 10:36
  * @Desc: 质疑答疑、补漏列表
  */
-public class TenderListActivity extends BaseActivity implements View.OnClickListener {
+public final class TenderListActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

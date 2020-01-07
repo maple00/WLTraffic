@@ -40,7 +40,7 @@ import java.util.Map;
  * @Date: 2019/12/28 11:35
  * @Desc: 招投标
  */
-public class TenderActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
+public final class TenderActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {

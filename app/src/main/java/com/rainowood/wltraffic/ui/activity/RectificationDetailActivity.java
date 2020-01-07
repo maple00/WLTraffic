@@ -17,7 +17,7 @@ import com.rainwood.tools.widget.MeasureListView;
  * @Date: 2020/1/7 11:20
  * @Desc: 整改情况详情
  */
-public class RectificationDetailActivity extends BaseActivity implements View.OnClickListener {
+public final class RectificationDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

@@ -41,7 +41,7 @@ import java.util.Map;
  * @Date: 2019/12/25 16:03
  * @Desc: 支付管理
  */
-public class PayManagerActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
+public final class PayManagerActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {

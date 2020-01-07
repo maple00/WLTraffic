@@ -13,7 +13,7 @@ import com.rainwood.tools.viewinject.ViewById;
  * @Date: 2020/1/2 11:32
  * @Desc: 重置密码
  */
-public class ResetPwdActivity extends BaseActivity implements View.OnClickListener {
+public final class ResetPwdActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

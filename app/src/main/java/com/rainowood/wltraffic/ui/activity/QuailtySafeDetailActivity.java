@@ -18,7 +18,7 @@ import com.rainwood.tools.widget.MeasureListView;
  * @Date: 2019/12/25 15:04
  * @Desc: 外业检测
  */
-public class QuailtySafeDetailActivity extends BaseActivity implements View.OnClickListener {
+public final class QuailtySafeDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

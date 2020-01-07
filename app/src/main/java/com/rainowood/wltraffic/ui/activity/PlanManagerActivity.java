@@ -39,7 +39,7 @@ import java.util.Map;
  * @Date: 2019/12/23 13:08
  * @Desc: 计划管理
  */
-public class PlanManagerActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
+public final class PlanManagerActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {

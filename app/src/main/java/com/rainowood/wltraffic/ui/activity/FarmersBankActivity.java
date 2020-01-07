@@ -33,7 +33,7 @@ import java.util.List;
  * @Date: 2019/12/30 11:34
  * @Desc: 农名工工资管理银行代发制度
  */
-public class FarmersBankActivity extends BaseActivity implements View.OnClickListener {
+public final class FarmersBankActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

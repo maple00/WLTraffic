@@ -25,7 +25,7 @@ import java.util.List;
  * @Date: 2019/12/27 18:19
  * @Desc: 专户制
  */
-public class SpecialAccountActivity extends BaseActivity implements View.OnClickListener {
+public final class SpecialAccountActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override

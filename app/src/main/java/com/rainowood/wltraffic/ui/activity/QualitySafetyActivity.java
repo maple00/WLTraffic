@@ -43,7 +43,7 @@ import java.util.Map;
  * @Date: 2019/12/24 13:35
  * @Desc: 质量安全
  */
-public class QualitySafetyActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
+public final class QualitySafetyActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {

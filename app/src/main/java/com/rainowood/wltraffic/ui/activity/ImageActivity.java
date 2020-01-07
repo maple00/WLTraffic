@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @Date: 2019/12/25 9:56
  * @Desc: 查看图片大图
  */
-public class ImageActivity extends BaseActivity {
+public final class ImageActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {

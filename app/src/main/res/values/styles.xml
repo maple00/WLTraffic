@@ -61,6 +61,13 @@
         <!-- Dialog 全屏显示 -->
         <!--<item name="android:windowFullscreen">true</item>-->
     </style>
+
+    <!-- 解决启动页白屏的问题 -->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <!-- 缩放动画 -->
     <style name="ScaleAnimStyle" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/dialog_scale_in</item>

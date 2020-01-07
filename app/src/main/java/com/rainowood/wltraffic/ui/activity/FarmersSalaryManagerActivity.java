@@ -21,7 +21,7 @@ import java.util.List;
  * @Date: 2019/12/27 11:43
  * @Desc: 农名工工资管理
  */
-public class FarmersSalaryManagerActivity extends BaseActivity implements View.OnClickListener {
+public final class FarmersSalaryManagerActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override

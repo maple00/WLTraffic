@@ -19,7 +19,7 @@ import java.util.List;
  * @Date: 2019/12/27 16:43
  * @Desc: 实名制
  */
-public class RealNameActivity extends BaseActivity implements View.OnClickListener {
+public final class RealNameActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override

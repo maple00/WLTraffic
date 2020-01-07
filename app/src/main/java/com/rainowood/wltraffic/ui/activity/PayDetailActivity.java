@@ -22,7 +22,7 @@ import java.util.List;
  * @Date: 2019/12/31 13:14
  * @Desc: 支付详情
  */
-public class PayDetailActivity extends BaseActivity implements View.OnClickListener {
+public final class PayDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

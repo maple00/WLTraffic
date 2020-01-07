@@ -24,7 +24,7 @@ import okhttp3.Response;
  * @Date: 2019/12/20 13:31
  * @Desc: TBS集成
  */
-public class TbsActivity extends BaseActivity implements TbsReaderView.ReaderCallback {
+public final class TbsActivity extends BaseActivity implements TbsReaderView.ReaderCallback {
 
     @Override
     protected int getLayoutId() {

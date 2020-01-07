@@ -19,7 +19,7 @@ import java.util.List;
  * @Date: 2019/12/27 17:27
  * @Desc: 劳资管理
  */
-public class LaborActivity extends BaseActivity implements View.OnClickListener {
+public final class LaborActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override

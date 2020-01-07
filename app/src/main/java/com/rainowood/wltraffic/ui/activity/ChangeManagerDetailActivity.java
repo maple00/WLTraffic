@@ -25,7 +25,7 @@ import java.util.List;
  * @Date: 2019/12/27 10:44
  * @Desc: 变更管理详情
  */
-public class ChangeManagerDetailActivity extends BaseActivity implements View.OnClickListener {
+public final class ChangeManagerDetailActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override

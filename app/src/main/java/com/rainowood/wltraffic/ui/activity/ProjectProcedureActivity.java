@@ -33,7 +33,7 @@ import java.util.Map;
  * @Date: 2019/12/23 17:37
  * @Desc: 项目建设程序
  */
-public class ProjectProcedureActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
+public final class ProjectProcedureActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {

@@ -21,7 +21,7 @@ import java.util.List;
  * @Date: 2019/12/28 9:50
  * @Desc: 通报
  */
-public class NotifyModuleNoActivity extends BaseActivity implements View.OnClickListener {
+public final class NotifyModuleNoActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override

@@ -34,7 +34,7 @@ import java.util.Map;
  * @Date: 2019/12/27 9:46
  * @Desc: 变更管理
  */
-public class ChangeActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
+public final class ChangeActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {

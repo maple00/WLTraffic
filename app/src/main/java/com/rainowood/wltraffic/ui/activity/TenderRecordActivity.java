@@ -17,7 +17,7 @@ import com.rainwood.tools.widget.MeasureListView;
  * @Date: 2019/12/30 9:38
  * @Desc: 招投标备案详情
  */
-public class TenderRecordActivity extends BaseActivity implements View.OnClickListener {
+public final class TenderRecordActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

@@ -14,7 +14,7 @@ import com.rainwood.tools.viewinject.ViewById;
  * @Date: 2019/12/23 16:42
  * @Desc: 文档详情展示
  */
-public class DocumentShowDetailActivity extends BaseActivity implements View.OnClickListener {
+public final class DocumentShowDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

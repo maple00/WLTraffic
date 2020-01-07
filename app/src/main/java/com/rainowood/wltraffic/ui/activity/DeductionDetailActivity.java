@@ -21,7 +21,7 @@ import java.io.Serializable;
  * @Time: 2019/12/26 20:11
  * @Desc: 扣分项详情
  */
-public class DeductionDetailActivity extends BaseActivity implements View.OnClickListener {
+public final class DeductionDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

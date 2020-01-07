@@ -35,7 +35,7 @@ import java.util.Map;
  * @Date: 2019/12/23 19:03
  * @Desc: 项目进度
  */
-public class ProjectProgressActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
+public final class ProjectProgressActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
 
     @Override

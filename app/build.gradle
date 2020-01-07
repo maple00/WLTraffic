@@ -17,6 +17,14 @@ android {
             abiFilters "armeabi-v7a", "x86", "mips", "armeabi", 'arm64-v8a'
         }
     }
+
+    // 配置jdk1.8
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false

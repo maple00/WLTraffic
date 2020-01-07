@@ -38,7 +38,7 @@ import java.util.Map;
  * @Date: 2019/12/25 9:29
  * @Desc: 质量安全详情
  */
-public class RectificationActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
+public final class RectificationActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {

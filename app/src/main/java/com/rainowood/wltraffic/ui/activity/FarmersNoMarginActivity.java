@@ -18,7 +18,7 @@ import com.rainwood.tools.viewinject.ViewById;
  * @Date: 2019/12/27 13:49
  * @Desc: 农名工保证金缴状态
  */
-public class FarmersNoMarginActivity extends BaseActivity implements View.OnClickListener {
+public final class FarmersNoMarginActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {

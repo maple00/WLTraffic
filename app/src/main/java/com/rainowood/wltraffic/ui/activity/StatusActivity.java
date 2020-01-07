@@ -12,7 +12,7 @@ import com.rainwood.tools.viewinject.ViewById;
  * @Date: 2019/12/27 15:52
  * @Desc: 异常显示页面
  */
-public class StatusActivity extends BaseActivity implements View.OnClickListener {
+public final class StatusActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {
