@@ -2,6 +2,7 @@
     <string name="app_name">武隆交通</string>
 
     <!-- 通用的-->
+    <string name="common_copyright">\u00a9 2019 All Rights Reserved</string>
     <string name="common_code_send">发送验证码</string>
     <string name="common_loading">加载中&#8230;</string>
     <string name="common_login">登录</string>

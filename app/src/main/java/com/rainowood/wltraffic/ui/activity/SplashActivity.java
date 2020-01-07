@@ -1,22 +1,20 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.util.Log;
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
-import android.widget.TextView;
-
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.widget.ImageViewCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.utils.DateTimeUtils;
 import com.rainwood.tools.permission.OnPermission;
 import com.rainwood.tools.permission.Permission;
 import com.rainwood.tools.permission.XXPermissions;
 import com.rainwood.tools.statusbar.StatusBarUtil;
+import com.rainwood.tools.view.SmartTextView;
 import com.rainwood.tools.viewinject.ViewById;
 
 import java.util.List;
@@ -41,10 +39,13 @@ public final class SplashActivity extends BaseActivity implements Animation.Anim
     @ViewById(R.id.iv_splash_icon)
     private View iconLogo;           // 启动logo
     @ViewById(R.id.tv_splash_copyright)
-    private View copyright;        // 版权
+    private SmartTextView copyright;        // 版权
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
+        // 获取当前年
+        copyright.setText("\u00a9" + DateTimeUtils.getNowYear() +"All Rights Reserved");
         // 初始化动画
         AlphaAnimation aa = new AlphaAnimation(0.4f, 1.0f);
         aa.setDuration(ANIM_TIME * 2);
