@@ -59,12 +59,10 @@ public final class ChangeManagerDetailActivity extends BaseActivity implements V
         wordList.setAdapter(wordListAdapter);
 
         // 更新时间
-        updateTime.setText("2019.12.18 13:58:00更新");
+        updateTime.setText(content.getUpdateTime() + " 更新");
     }
 
-    /*
-    模拟数据
-     */
+    SubChangeBean content;
     // 变更数据
     private List<SubItemLabelBean> changeContentList;
     private String[] mTitles = {"变更内容", "变更金额", "变更依据"};
@@ -76,22 +74,22 @@ public final class ChangeManagerDetailActivity extends BaseActivity implements V
     protected void initData() {
         super.initData();
 
-        SubChangeBean content = (SubChangeBean) getIntent().getSerializableExtra("content");
+        content = (SubChangeBean) getIntent().getSerializableExtra("content");
 
         changeContentList = new ArrayList<>();
-        for (int i = 0; i < mTitles.length; i++) {
+        for (String mTitle : mTitles) {
             SubItemLabelBean label = new SubItemLabelBean();
             // 变更内容
-            label.setTitle(mTitles[i]);
+            label.setTitle(mTitle);
             label.setContent(content.getChangeMatter());
             // 变更金额
             if (!TextUtils.isEmpty(content.getChangeMoney())) {
-                label.setTitle(mTitles[i]);
+                label.setTitle(mTitle);
                 label.setContent(content.getChangeMoney());
             }
             // 变更依据
             if (!TextUtils.isEmpty(content.getChangeBasis())) {
-                label.setTitle(mTitles[i]);
+                label.setTitle(mTitle);
                 label.setContent(content.getChangeMoney());
             }
             changeContentList.add(label);
@@ -119,10 +117,8 @@ public final class ChangeManagerDetailActivity extends BaseActivity implements V
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back:
-                finish();
-                break;
+        if (v.getId() == R.id.btn_back) {
+            finish();
         }
     }
 }

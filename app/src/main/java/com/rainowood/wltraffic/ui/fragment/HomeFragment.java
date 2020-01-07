@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -51,7 +50,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private View titleTwo;
     private TextView tvHomeTitleOne;
     private TextView tvHomeTitleTwo;
-
     private DialogUtils dialog;
 
     @Override
@@ -70,7 +68,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         tvHomeTitleOne.setTextSize(20);
         tvHomeTitleOne.setText("在建项目");
         tvHomeTitleTwo.setText("前期项目");
-
         // 默认显示在建项目
         mListView = view.findViewById(R.id.lv_home);
     }
@@ -79,12 +76,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     protected void initData(Context mContext) {
         dialog = new DialogUtils(getActivity(), "加载中");
         // 获取接口数据
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getHomeDate(HomeFragment.this);
-            }
-        }, 100);
+        postDelayed(() -> RequestPost.getHomeDate(HomeFragment.this), 100);
     }
 
     @Override
@@ -101,18 +93,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 // 请求数据
                 HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, leftList);
                 mListView.setAdapter(adapter);
-                adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
-                    @Override
-                    public void ItemOnClick(int position) {
-                        Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        Contants.ITEM_ID = leftList.get(position).getId();
-                        intent.putExtra("stage", leftList.get(position).getStage());
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
+                adapter.setOnClick(position -> {
+                    Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    Contants.ITEM_ID = leftList.get(position).getId();
+                    intent.putExtra("stage", leftList.get(position).getStage());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 });
-
                 break;
             case R.id.ll_home_title_two:        // 前期项目
                 // 设置样式
@@ -125,18 +113,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 // 请求数据
                 HomeBeforeItemAdapter beforeItemAdapter = new HomeBeforeItemAdapter(mContext, rightList);
                 mListView.setAdapter(beforeItemAdapter);
-                beforeItemAdapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
-                    @Override
-                    public void ItemOnClick(int position) {
-                        // 打开详情, 带参访问详情
-                        Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        Contants.ITEM_ID = rightList.get(position).getId();
-                        bundle.putString("stage", rightList.get(position).getStage());
-                        startActivity(intent, bundle);
-                    }
+                beforeItemAdapter.setOnClick(position -> {
+                    // 打开详情, 带参访问详情
+                    Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    Contants.ITEM_ID = rightList.get(position).getId();
+                    bundle.putString("stage", rightList.get(position).getStage());
+                    startActivity(intent, bundle);
                 });
-
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
@@ -145,17 +129,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
     private void showDialog() {
         dialog.showDialog();
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 100);
+        postDelayed(() -> dialog.dismissDialog(), 100);
     }
 
     @Override
     public void onHttpFailure(HttpResponse result) {
-
     }
 
     @Override
@@ -167,12 +145,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             leftList = JsonParser.parseJSONArray(ProjectInfoBean.class, data.get("left"));
             // 前期项目
             rightList = JsonParser.parseJSONArray(ProjectInfoBean.class, data.get("right"));
-
+            dialog.dismissDialog();
             Message msg = new Message();
             msg.what = 0x958;
             mHandler.sendMessage(msg);
-
-            dialog.dismissDialog();
         } else {
             dialog.dismissDialog();
             toast(bodys.get("warn"));
@@ -196,22 +172,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 0x958:
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, leftList);
-                            mListView.setAdapter(adapter);
-                            adapter.setOnClick(new HomeListViewAdapter.ItemOnClick() {
-                                @Override
-                                public void ItemOnClick(int position) {
-                                    // 打开详情
-                                    Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
-                                    Contants.ITEM_ID = leftList.get(position).getId();
-                                    intent.putExtra("stage", leftList.get(position).getStage());
-                                    startActivity(intent);
-                                }
-                            });
-                        }
+                    postDelayed(() -> {
+                        HomeListViewAdapter adapter = new HomeListViewAdapter(mContext, leftList);
+                        mListView.setAdapter(adapter);
+                        adapter.setOnClick(position -> {
+                            // 打开详情
+                            Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
+                            Contants.ITEM_ID = leftList.get(position).getId();
+                            intent.putExtra("stage", leftList.get(position).getStage());
+                            startActivity(intent);
+                        });
                     }, 50);
                     break;
             }

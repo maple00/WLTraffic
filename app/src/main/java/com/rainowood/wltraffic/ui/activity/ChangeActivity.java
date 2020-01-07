@@ -58,8 +58,6 @@ public final class ChangeActivity extends BaseActivity implements View.OnClickLi
     protected void initView() {
         btnBack.setOnClickListener(this);
         pageTitle.setText("变更管理");
-
-
     }
 
     /*
@@ -74,12 +72,7 @@ public final class ChangeActivity extends BaseActivity implements View.OnClickLi
         waitDialog();
         dialog.showDialog();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemChangeManagerData(Contants.ITEM_ID, ChangeActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemChangeManagerData(Contants.ITEM_ID, ChangeActivity.this)).start();
     }
 
     private void waitDialog() {
@@ -87,20 +80,13 @@ public final class ChangeActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back:
-                finish();
-                break;
+        if (v.getId() == R.id.btn_back) {
+            finish();
         }
     }
 
@@ -142,15 +128,12 @@ public final class ChangeActivity extends BaseActivity implements View.OnClickLi
                     ChangeManagerAdapter managerAdapter = new ChangeManagerAdapter(ChangeActivity.this, mList);
                     changeList.setAdapter(managerAdapter);
 
-                    managerAdapter.setClickListener(new ChangeManagerAdapter.OnItemClickListener() {
-                        @Override
-                        public void OnItemClick(int position) {
-                            Intent intent = new Intent(ChangeActivity.this, ChangeManagerDetailActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("content", mList.get(position));
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
+                    managerAdapter.setClickListener(position -> {
+                        Intent intent = new Intent(ChangeActivity.this, ChangeManagerDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("content", mList.get(position));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     });
                     break;
             }

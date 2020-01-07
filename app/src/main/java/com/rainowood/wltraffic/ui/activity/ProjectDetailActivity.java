@@ -83,42 +83,39 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
         subItemGridView.setColumnWidth(5);
         subItemAdapter.notifyDataSetChanged();
 
-        subItemAdapter.setClickListener(new ItemDetailSubItemAdapter.ItemOnClickListener() {
-            @Override
-            public void ItemOnClick(int position) {
-                switch (position) {
-                    case 0:             // 计划管理
-                        openActivity(PlanManagerActivity.class);
-                        break;
-                    case 1:             // 项目建设程序
-                        openActivity(ProjectProcedureActivity.class);
-                        break;
-                    case 2:             // 项目进度
-                        Intent intent = new Intent(ProjectDetailActivity.this, ProjectProgressActivity.class);
-                        intent.putExtra("itemName", mProjectInfo.getItemName());
-                        startActivity(intent);
-                        break;
-                    case 3:             // 支付管理
-                        openActivity(PayManagerActivity.class);
-                        break;
-                    case 4:             // 质量安全
-                        openActivity(QualitySafetyActivity.class);
-                        break;
-                    case 5:             // 变更管理
-                        openActivity(ChangeActivity.class);
-                        break;
-                    case 6:             // 农民工工资
-                        openActivity(FarmersSalaryManagerActivity.class);
-                        break;
-                    case 7:             // 招投标
-                        openActivity(TenderActivity.class);
-                        break;
-                    case 8:             // 考核管理
-                        openActivity(AssessManagerActivity.class);
-                        break;
-                    default:
-                        break;
-                }
+        subItemAdapter.setClickListener(position -> {
+            switch (position) {
+                case 0:             // 计划管理
+                    openActivity(PlanManagerActivity.class);
+                    break;
+                case 1:             // 项目建设程序
+                    openActivity(ProjectProcedureActivity.class);
+                    break;
+                case 2:             // 项目进度
+                    Intent intent = new Intent(ProjectDetailActivity.this, ProjectProgressActivity.class);
+                    intent.putExtra("itemName", mProjectInfo.getItemName());
+                    startActivity(intent);
+                    break;
+                case 3:             // 支付管理
+                    openActivity(PayManagerActivity.class);
+                    break;
+                case 4:             // 质量安全
+                    openActivity(QualitySafetyActivity.class);
+                    break;
+                case 5:             // 变更管理
+                    openActivity(ChangeActivity.class);
+                    break;
+                case 6:             // 农民工工资
+                    openActivity(FarmersSalaryManagerActivity.class);
+                    break;
+                case 7:             // 招投标
+                    openActivity(TenderActivity.class);
+                    break;
+                case 8:             // 考核管理
+                    openActivity(AssessManagerActivity.class);
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -128,12 +125,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     // 项目
@@ -171,12 +163,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
         mProjectInfo = new ProjectInfoBean();
         String stage = getIntent().getStringExtra("stage");         // 项目阶段
         // 请求数据
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemDetailData(Contants.ITEM_ID, ProjectDetailActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemDetailData(Contants.ITEM_ID, ProjectDetailActivity.this)).start();
         /*
         request end
          */
@@ -194,11 +181,9 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back:
-                openActivity(HomeActivity.class);
-                finish();
-                break;
+        if (v.getId() == R.id.btn_back) {
+            openActivity(HomeActivity.class);
+            finish();
         }
     }
 
@@ -249,9 +234,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
             mBackTitleLists.add(planDetails);
             mBackTitleLists.add(taskSource);
 
-
             initDataDetail();
-
             dismissDialog();
         } else {
             dismissDialog();
@@ -320,35 +303,29 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
             switch (msg.what){
                 case 0x1002:
                     // 局部页面刷新
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 初始化数据
-                            itemName.setText(mProjectInfo.getItemName());
-                            itemLabel.setText(mProjectInfo.getStage());
-                            itemTime.setText(year);
-                            // 子项目标签
-                            SubItemLabelAdapter itemLabelAdapter = new SubItemLabelAdapter(ProjectDetailActivity.this, mSubListLabel);
-                            itemContentTitle.setAdapter(itemLabelAdapter);
+                    postDelayed(() -> {
+                        // 初始化数据
+                        itemName.setText(mProjectInfo.getItemName());
+                        itemLabel.setText(mProjectInfo.getStage());
+                        itemTime.setText(year);
+                        // 子项目标签
+                        SubItemLabelAdapter itemLabelAdapter = new SubItemLabelAdapter(ProjectDetailActivity.this, mSubListLabel);
+                        itemContentTitle.setAdapter(itemLabelAdapter);
 
-                            // 文档列表
-                            ItemDetailWordAdapter wordAdapter = new ItemDetailWordAdapter(ProjectDetailActivity.this, mlSubItemList);
-                            itemContent.setAdapter(wordAdapter);
-                            wordAdapter.notifyDataSetChanged();
+                        // 文档列表
+                        ItemDetailWordAdapter wordAdapter = new ItemDetailWordAdapter(ProjectDetailActivity.this, mlSubItemList);
+                        itemContent.setAdapter(wordAdapter);
+                        wordAdapter.notifyDataSetChanged();
 
-                            // 段落列表
-                            ItemDetailParagraghAdapter paragraghAdapter = new ItemDetailParagraghAdapter(ProjectDetailActivity.this, mParagraphList);
-                            paragraghListView.setAdapter(paragraghAdapter);
-                            paragraghAdapter.setContentCilckListener(new ItemDetailParagraghAdapter.ContentCilckListener() {
-                                @Override
-                                public void ContentOnClick(int position) {
-                                    Intent intent = new Intent(ProjectDetailActivity.this, DocumentShowDetailActivity.class);
-                                    intent.putExtra("document", mParagraphList.get(position));
-                                    startActivity(intent);
-                                }
-                            });
-                            paragraghAdapter.notifyDataSetChanged();
-                        }
+                        // 段落列表
+                        ItemDetailParagraghAdapter paragraghAdapter = new ItemDetailParagraghAdapter(ProjectDetailActivity.this, mParagraphList);
+                        paragraghListView.setAdapter(paragraghAdapter);
+                        paragraghAdapter.setContentCilckListener(position -> {
+                            Intent intent = new Intent(ProjectDetailActivity.this, DocumentShowDetailActivity.class);
+                            intent.putExtra("document", mParagraphList.get(position));
+                            startActivity(intent);
+                        });
+                        paragraghAdapter.notifyDataSetChanged();
                     },10);
                     break;
             }

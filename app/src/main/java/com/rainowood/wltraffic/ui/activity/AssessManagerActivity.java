@@ -86,12 +86,7 @@ public final class AssessManagerActivity extends BaseActivity implements View.On
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     // 考核细则
@@ -107,12 +102,7 @@ public final class AssessManagerActivity extends BaseActivity implements View.On
         dialog.showDialog();
 
         // 请求数据
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemAssessData(Contants.ITEM_ID, AssessManagerActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemAssessData(Contants.ITEM_ID, AssessManagerActivity.this)).start();
     }
 
     @SuppressLint("SetTextI18n")
@@ -143,16 +133,13 @@ public final class AssessManagerActivity extends BaseActivity implements View.On
                 // 明细数据列表
                 AssessDeductionAdapter deductionAdapter = new AssessDeductionAdapter(this, deductionLists);
                 assessDeduction.setAdapter(deductionAdapter);
-                deductionAdapter.setItemListener(new AssessDeductionAdapter.OnItemListener() {
-                    @Override
-                    public void OnItemClick(int position) {
-                        //toast("点击了：" + position);
-                        Intent intent = new Intent(AssessManagerActivity.this, DeductionDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("content", deductionLists.get(position));
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
+                deductionAdapter.setItemListener(position -> {
+                    //toast("点击了：" + position);
+                    Intent intent = new Intent(AssessManagerActivity.this, DeductionDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("content", deductionLists.get(position));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 });
 
                 break;
