@@ -7,10 +7,12 @@ import android.widget.TextView;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.AttachBean;
+import com.rainowood.wltraffic.domain.RealNameBean;
 import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,44 +45,22 @@ public final class RealNameDetailActivity extends BaseActivity implements View.O
         btnBack.setOnClickListener(this);
         pageTitle.setText("附件详情");
 
-        detailDes.setText(wordDes);
-        updateTime.setText(updateTimeStr);
+        RealNameBean value = (RealNameBean) getIntent().getSerializableExtra("value");
+        if (value != null){
+            detailDes.setText(value.getText());
+            updateTime.setText(value.getUpdateTime());
 
-        // 附件
-        ItemAttachListAdapter wordListAdapter = new ItemAttachListAdapter(this, mList);
-        attachWord.setAdapter(wordListAdapter);
-
-    }
-
-    /*
-    模拟数据
-     */
-    private String wordDes = "备注描述文字内容备注描述文字备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容备注描述文字内容内容备注描述文字内容备注描述文字内容备注描述文字内容";
-    private String updateTimeStr = "2019.12.28 16:50:00更新";
-    // 合同附件
-    private List<AttachBean> mList;
-    private String[] mTitles = {"合同附件"};
-    private String[] mLabels = {"XXXXXXXX附件.doc"};
-
-    @Override
-    protected void initData() {
-        super.initData();
-        mList = new ArrayList<>();
-        for (int i = 0; i < mTitles.length; i++) {
-            AttachBean word = new AttachBean();
-            word.setName(mTitles[i]);
-
-            mList.add(word);
+            // 附件
+            ItemAttachListAdapter wordListAdapter = new ItemAttachListAdapter(this, value.getFile());
+            attachWord.setAdapter(wordListAdapter);
         }
-
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back:
-                finish();
-                break;
+        if (v.getId() == R.id.btn_back) {
+            openActivity(RealNameActivity.class);
+            finish();
         }
     }
 }

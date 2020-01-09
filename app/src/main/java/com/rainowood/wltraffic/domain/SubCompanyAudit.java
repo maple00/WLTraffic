@@ -16,17 +16,6 @@ public class SubCompanyAudit implements Serializable {
     private String ideaSix;         // 审核内容
     private List<AttachBean> ideaSixFile;       // 附件
 
-    @Override
-    public String toString() {
-        return "SubCompanyAudit{" +
-                "id='" + id + '\'' +
-                ", peopleSix='" + peopleSix + '\'' +
-                ", timeOneSix='" + timeOneSix + '\'' +
-                ", ideaSix='" + ideaSix + '\'' +
-                ", ideaSixFile=" + ideaSixFile +
-                '}';
-    }
-
     public String getId() {
         return id;
     }

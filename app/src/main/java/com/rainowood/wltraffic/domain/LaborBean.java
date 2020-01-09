@@ -9,19 +9,29 @@ import java.io.Serializable;
  */
 public class LaborBean implements Serializable {
 
-    private String name;
-    private String company;
-    private String tel;
-    private String note;
-    private String time;
+    private String id;
+    private String monad;               // 单位
+    private String name;                // 姓名
+    private String duty;                // 职务
+    private String tel;                 // 联系方式
+    private String text;                // 备注
+    private String updateTime;          // 更新时间
     private boolean hasHide;        // 是否收起,默认收起
 
-    public boolean isHasHide() {
-        return hasHide;
+    public String getId() {
+        return id;
     }
 
-    public void setHasHide(boolean hasHide) {
-        this.hasHide = hasHide;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMonad() {
+        return monad;
+    }
+
+    public void setMonad(String monad) {
+        this.monad = monad;
     }
 
     public String getName() {
@@ -32,12 +42,12 @@ public class LaborBean implements Serializable {
         this.name = name;
     }
 
-    public String getCompany() {
-        return company;
+    public String getDuty() {
+        return duty;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setDuty(String duty) {
+        this.duty = duty;
     }
 
     public String getTel() {
@@ -48,19 +58,27 @@ public class LaborBean implements Serializable {
         this.tel = tel;
     }
 
-    public String getNote() {
-        return note;
+    public String getText() {
+        return text;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getTime() {
-        return time;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public boolean isHasHide() {
+        return hasHide;
+    }
+
+    public void setHasHide(boolean hasHide) {
+        this.hasHide = hasHide;
     }
 }

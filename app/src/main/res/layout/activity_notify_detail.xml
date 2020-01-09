@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_action" />
+
+    <TextView
+        android:id="@+id/tv_top_dec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:textColor="@color/colorWord"
+        android:textSize="14sp" />
+
+    <View style="@style/HorizontalLineStyle"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_change_limit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"/>
+
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_attach_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="30dp"
+        android:listSelector="@android:color/transparent"/>
+
+    <View style="@style/HorizontalLineStyle"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/textColor"
+        android:text="整改回复"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorCircle11"
+        android:text="已整改"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_content_changed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/colorWord"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"/>
+
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_attach_changed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:listSelector="@android:color/transparent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlue1"
+        android:text="整改中"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_content_changing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/colorWord"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"/>
+
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_attach_changing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:listSelector="@android:color/transparent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPercentage"
+        android:text="整改中"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_content_unchange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/colorWord"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"/>
+
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_attach_unchange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:listSelector="@android:color/transparent"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>

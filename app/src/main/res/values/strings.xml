@@ -66,5 +66,6 @@
     <string name="tender_question">质疑</string>
     <string name="tender_answer">答复</string>
     <string name="pay_detail_values">支付金额</string>
+    <string name="farmers_contrant">合同附件</string>
 
 </resources>

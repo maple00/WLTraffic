@@ -15,16 +15,6 @@ public class SubPayManagerBean implements Serializable {
     private boolean hasHide;         // 默认收起,
     private List<SubPayContentBean> teamChildArr;        // 金额时间标签
 
-    @Override
-    public String toString() {
-        return "SubPayManagerBean{" +
-                "teamName='" + teamName + '\'' +
-                ", teamChildMoney='" + teamChildMoney + '\'' +
-                ", hasHide=" + hasHide +
-                ", teamChildArr=" + teamChildArr +
-                '}';
-    }
-
     public String getTeamName() {
         return teamName;
     }

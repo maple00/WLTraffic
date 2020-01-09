@@ -15,16 +15,6 @@ public class SubItemListContentBean implements Serializable {
     private String wordTitle;   // 文档标题
     private List<AttachBean> mList;    // 文档
 
-    @Override
-    public String toString() {
-        return "SubItemListContentBean{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", wordTitle='" + wordTitle + '\'' +
-                ", mList=" + mList +
-                '}';
-    }
-
     public String getWordTitle() {
         return wordTitle;
     }

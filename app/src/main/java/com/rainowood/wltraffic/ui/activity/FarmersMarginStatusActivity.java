@@ -1,21 +1,19 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.domain.FarmersMarginBean;
+import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainowood.wltraffic.utils.ImmersionUtil;
-import com.rainwood.tools.common.MeasureUtil;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.viewinject.ViewById;
+import com.rainwood.tools.widget.MeasureListView;
 
 /**
  * @Author: a797s
@@ -37,43 +35,36 @@ public final class FarmersMarginStatusActivity extends BaseActivity implements V
     private FrameLayout title;
     @ViewById(R.id.iv_background)
     private ImageView backgrounds;
-
     // 已缴
     @ViewById(R.id.tv_status)
     private TextView status;
-    @ViewById(R.id.tv_word)
-    private TextView wordName;
-    @ViewById(R.id.ll_download)
-    private LinearLayout download;
-    @ViewById(R.id.ll_preview)
-    private LinearLayout preview;
+    @ViewById(R.id.lv_attach_list)
+    private MeasureListView attachList;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
         // 图片沉浸
         ImmersionUtil.ImageImmers(this, title, backgrounds);
-
+        // 状态栏字体白色
+        StatusBarUtil.setStatusBarFontIconDark(this, getResources().getColor(R.color.white), false);
         ivBack.setOnClickListener(this);
         pageTitle.setText("农民工工资保证金");
-        status.setText("已缴存(免缴)");
-        wordName.setText("工资保证金具体细则.doc");
-        download.setOnClickListener(this);
-        preview.setOnClickListener(this);
+
+        // getIntent
+        FarmersMarginBean value = (FarmersMarginBean) getIntent().getSerializableExtra("value");
+        if (value != null){
+            status.setText(value.getContent().getState() + "(免缴)");
+            ItemAttachListAdapter adapter = new ItemAttachListAdapter(this, value.getFile());
+            attachList.setAdapter(adapter);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
-            case R.id.ll_download:
-                toast("下载");
-                break;
-            case R.id.ll_preview:
-                toast("预览");
-                break;
+        if (v.getId() == R.id.iv_back) {
+            openActivity(FarmersSalaryManagerActivity.class);
+            finish();
         }
     }
 

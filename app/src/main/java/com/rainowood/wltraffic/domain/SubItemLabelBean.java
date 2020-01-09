@@ -14,15 +14,6 @@ public class SubItemLabelBean implements Serializable {
 
     private boolean isVisibility;
 
-    @Override
-    public String toString() {
-        return "SubItemLabelBean{" +
-                "title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", isVisibility=" + isVisibility +
-                '}';
-    }
-
     public String getTitle() {
         return title;
     }

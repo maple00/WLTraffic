@@ -15,15 +15,6 @@ public class ProjectProgressBean implements Serializable {
 
     private List<SubProjectProgressBean> child;     // 子项
 
-    @Override
-    public String toString() {
-        return "ProjectProgressBean{" +
-                "name='" + name + '\'' +
-                ", hasSelected=" + hasSelected +
-                ", child=" + child +
-                '}';
-    }
-
     public List<SubProjectProgressBean> getChild() {
         return child;
     }

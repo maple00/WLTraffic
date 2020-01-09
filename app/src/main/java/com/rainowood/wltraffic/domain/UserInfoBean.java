@@ -12,6 +12,8 @@ public class UserInfoBean implements Serializable {
     private String adid;                // 用户ID
     private String type;                // 用户类型
     private String adName;              // 姓名
+    private String account;             // 用户名
+    private String password;            // 密码
     private String sex;                 // 性别
     private String departmentName;       // 职位
     private String address;             // 公司地址
@@ -19,6 +21,21 @@ public class UserInfoBean implements Serializable {
     private String touxiang;             // logo地址
     private String companyName;         // 公司
 
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getAdid() {
         return adid;
@@ -92,18 +109,4 @@ public class UserInfoBean implements Serializable {
         this.companyName = companyName;
     }
 
-    @Override
-    public String toString() {
-        return "UserInfoBean{" +
-                "adid='" + adid + '\'' +
-                ", type='" + type + '\'' +
-                ", adName='" + adName + '\'' +
-                ", sex='" + sex + '\'' +
-                ", departmentName='" + departmentName + '\'' +
-                ", address='" + address + '\'' +
-                ", adtel='" + adtel + '\'' +
-                ", touxiang='" + touxiang + '\'' +
-                ", companyName='" + companyName + '\'' +
-                '}';
-    }
 }

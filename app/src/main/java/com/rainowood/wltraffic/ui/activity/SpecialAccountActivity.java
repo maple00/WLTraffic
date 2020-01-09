@@ -4,21 +4,17 @@ import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.SpecialAccountBean;
+import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainowood.wltraffic.ui.adapter.SpecialAccountAdapter;
 import com.rainowood.wltraffic.utils.ImmersionUtil;
+import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author: a797s
@@ -44,12 +40,12 @@ public final class SpecialAccountActivity extends BaseActivity implements View.O
     @ViewById(R.id.tv_status)
     private TextView status;
 
-    @ViewById(R.id.tv_word_title)
-    private TextView word;
-    @ViewById(R.id.ll_notify_download)
-    private LinearLayout download;
-    @ViewById(R.id.ll_preview)
-    private LinearLayout preview;
+    // 附件
+    @ViewById(R.id.lv_attach)
+    private MeasureListView attachList;
+    @ViewById(R.id.tv_name)
+    private TextView pageLabel;
+    // 具体内容
     @ViewById(R.id.lv_list)
     private MeasureListView list;
 
@@ -58,46 +54,37 @@ public final class SpecialAccountActivity extends BaseActivity implements View.O
     protected void initView() {
         // 图片沉浸
         ImmersionUtil.ImageImmers(this, title, background);
+        // 设置状态栏字体颜色
+        StatusBarUtil.setStatusBarFontIconDark(this, getResources().getColor(R.color.white), false);
 
         ivBack.setOnClickListener(this);
-        download.setOnClickListener(this);
-        preview.setOnClickListener(this);
         pageTitle.setText("专户制度");
-        status.setText("已签订三方协议");
-        word.setText("三方协议具体细则.doc");
-
-        SpecialAccountAdapter accountAdapter = new SpecialAccountAdapter(this, mList);
+        pageLabel.setText("转入专户资金情况");
+        // 状态
+        status.setText(specialAccount.getTop().getState() + "三方协议");
+        // 附件列表
+        ItemAttachListAdapter attachListAdapter = new ItemAttachListAdapter(this, specialAccount.getTop().getFile());
+        attachList.setAdapter(attachListAdapter);
+        // 内容列表
+        SpecialAccountAdapter accountAdapter = new SpecialAccountAdapter(this, specialAccount.getList());
         list.setAdapter(accountAdapter);
-
     }
 
-    /*
-    模拟数据
-     */
-    private List<SpecialAccountBean> mList;
+    private SpecialAccountBean specialAccount;
 
     @Override
     protected void initData() {
         super.initData();
-        mList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            SpecialAccountBean specialAccount = new SpecialAccountBean();
-            specialAccount.setMoney("￥ 560.00");
-            specialAccount.setTime("2019.12.18 17:19:00");
-            specialAccount.setNote("这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注");
-            mList.add(specialAccount);
-        }
+        // getIntent
+        specialAccount = (SpecialAccountBean) getIntent().getSerializableExtra("specialAccount");
+
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
-            case R.id.ll_preview:
-                toast("预览");
-                break;
+        if (v.getId() == R.id.iv_back) {
+            openActivity(FarmersSalaryManagerActivity.class);
+            finish();
         }
     }
 }

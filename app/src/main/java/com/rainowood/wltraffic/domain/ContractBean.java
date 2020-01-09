@@ -14,15 +14,6 @@ public class ContractBean implements Serializable {
     private String timeOneSix;      // 合同时间
     private List<AttachBean> ideaSixFile;       // 合同附件
 
-    @Override
-    public String toString() {
-        return "ContractBean{" +
-                "moneySix='" + moneySix + '\'' +
-                ", timeOneSix='" + timeOneSix + '\'' +
-                ", ideaSixFile=" + ideaSixFile +
-                '}';
-    }
-
     public String getMoneySix() {
         return moneySix;
     }

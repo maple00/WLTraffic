@@ -13,15 +13,6 @@ public class SubOpenBidBean implements Serializable {
     private String moneySix;        // 中标金额
     private String timeOneSix;      // 开标时间
 
-    @Override
-    public String toString() {
-        return "SubOpenBidBean{" +
-                "nameSix='" + nameSix + '\'' +
-                ", moneySix='" + moneySix + '\'' +
-                ", timeOneSix='" + timeOneSix + '\'' +
-                '}';
-    }
-
     public String getNameSix() {
         return nameSix;
     }

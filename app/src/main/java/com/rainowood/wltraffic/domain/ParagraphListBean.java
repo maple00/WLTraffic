@@ -13,15 +13,6 @@ public class ParagraphListBean implements Serializable {
     private String title;
     private String content;
 
-    @Override
-    public String toString() {
-        return "ParagraphListBean{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                '}';
-    }
-
     public String getId() {
         return id;
     }

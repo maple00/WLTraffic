@@ -20,20 +20,6 @@ public class SubChangeBean implements Serializable {
     private List<AttachBean> terraceFile;   // 附件--交通局会议纪要
     private String updateTime;              // 更新时间
 
-    @Override
-    public String toString() {
-        return "SubChangeBean{" +
-                "id='" + id + '\'' +
-                ", itemId='" + itemId + '\'' +
-                ", changeMatter='" + changeMatter + '\'' +
-                ", changeMoney='" + changeMoney + '\'' +
-                ", changeBasis='" + changeBasis + '\'' +
-                ", sceneFile=" + sceneFile +
-                ", ownerFile=" + ownerFile +
-                ", terraceFile=" + terraceFile +
-                ", updateTime='" + updateTime + '\'' +
-                '}';
-    }
 
     public String getId() {
         return id;

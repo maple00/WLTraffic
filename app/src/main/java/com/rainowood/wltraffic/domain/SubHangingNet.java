@@ -12,13 +12,6 @@ public class SubHangingNet implements Serializable {
     private String timeOneSix;              // 挂网时间
     private String timeTwoSix;              // 预计开标时间
 
-    @Override
-    public String toString() {
-        return "SubHangingNet{" +
-                "timeOneSix='" + timeOneSix + '\'' +
-                ", timeTwoSix='" + timeTwoSix + '\'' +
-                '}';
-    }
 
     public String getTimeOneSix() {
         return timeOneSix;

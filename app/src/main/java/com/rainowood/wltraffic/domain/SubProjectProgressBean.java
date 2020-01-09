@@ -13,15 +13,6 @@ public class SubProjectProgressBean implements Serializable {
     private String time;                // 进度完成时间
     private boolean imgState;         // 是否完成
 
-    @Override
-    public String toString() {
-        return "SubProjectProgressBean{" +
-                "name='" + name + '\'' +
-                ", time='" + time + '\'' +
-                ", imgState=" + imgState +
-                '}';
-    }
-
     public String getName() {
         return name;
     }

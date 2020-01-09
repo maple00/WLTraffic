@@ -17,18 +17,6 @@ public class SubQuestionBean implements Serializable {
     private List<AttachBean> problemFile;       //质疑附件
     private List<AttachBean> answerFile;        // 答复附件
 
-    @Override
-    public String toString() {
-        return "SubQuestionBean{" +
-                "id='" + id + '\'' +
-                ", problem='" + problem + '\'' +
-                ", answer='" + answer + '\'' +
-                ", text='" + text + '\'' +
-                ", problemFile=" + problemFile +
-                ", answerFile=" + answerFile +
-                '}';
-    }
-
     public String getId() {
         return id;
     }

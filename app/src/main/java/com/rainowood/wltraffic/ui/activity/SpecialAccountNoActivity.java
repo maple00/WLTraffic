@@ -13,6 +13,7 @@ import com.rainowood.wltraffic.utils.ImmersionUtil;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public final class SpecialAccountNoActivity extends BaseActivity implements View
     private FrameLayout title;
     @ViewById(R.id.iv_background)
     private ImageView background;
-    @ViewById(R.id.tv_status)
+    @ViewById(R.id.tv_no_status)
     private TextView status;
 
     @ViewById(R.id.tv_name)
@@ -55,34 +56,25 @@ public final class SpecialAccountNoActivity extends BaseActivity implements View
         status.setText("未签订三方协议");
         name.setText("转入专户资金情况");
 
-        SpecialAccountAdapter accountAdapter = new SpecialAccountAdapter(this, mList);
+        SpecialAccountAdapter accountAdapter = new SpecialAccountAdapter(this, specialAccount.getList());
         list.setAdapter(accountAdapter);
     }
 
-    /*
-    模拟数据
-     */
-    private List<SpecialAccountBean> mList;
+    private SpecialAccountBean specialAccount;
 
     @Override
     protected void initData() {
         super.initData();
-        mList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            SpecialAccountBean specialAccount = new SpecialAccountBean();
-            specialAccount.setMoney("￥ 560.00");
-            specialAccount.setTime("2019.12.18 17:19:00");
-            specialAccount.setNote("这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注这里的内容是备注");
-            mList.add(specialAccount);
-        }
+
+        // getIntent
+        specialAccount = (SpecialAccountBean) getIntent().getSerializableExtra("specialAccount");
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
+        if (v.getId() == R.id.iv_back) {
+            openActivity(FarmersSalaryManagerActivity.class);
+            finish();
         }
     }
 }

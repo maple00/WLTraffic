@@ -9,7 +9,6 @@ import android.os.SystemClock;
 
 import androidx.annotation.Nullable;
 
-import com.rainowood.wltraffic.helper.SQLiteHelper;
 import com.rainowood.wltraffic.okhttp.HttpResponse;
 import com.rainowood.wltraffic.okhttp.OnHttpListener;
 
@@ -47,7 +46,6 @@ public class ApiAutoUpdateService extends Service implements OnHttpListener {
      */
     private void updatePersonal(){
         // 创建数据
-        SQLiteHelper sqLiteHelper = SQLiteHelper.with(this, 1);
 
     }
 

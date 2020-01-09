@@ -20,19 +20,6 @@ public class SubPayContentBean implements Serializable {
     // 如果有附件，则是业主的支付管理
     private List<AttachBean> fileTypeFile;      // 附件
 
-    @Override
-    public String toString() {
-        return "SubPayContentBean{" +
-                "id='" + id + '\'' +
-                ", payMoney='" + payMoney + '\'' +
-                ", planMoney='" + planMoney + '\'' +
-                ", plChangeMoney='" + plChangeMoney + '\'' +
-                ", chsumMoney='" + chsumMoney + '\'' +
-                ", payTime='" + payTime + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                '}';
-    }
-
     public List<AttachBean> getFileTypeFile() {
         return fileTypeFile;
     }

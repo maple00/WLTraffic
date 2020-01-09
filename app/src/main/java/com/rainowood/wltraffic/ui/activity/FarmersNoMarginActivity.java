@@ -10,8 +10,12 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.domain.FarmersMarginBean;
 import com.rainowood.wltraffic.utils.ImmersionUtil;
+import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.viewinject.ViewById;
+
+import java.io.Serializable;
 
 /**
  * @Author: a797s
@@ -36,7 +40,7 @@ public final class FarmersNoMarginActivity extends BaseActivity implements View.
 
     @ViewById(R.id.tv_no_margin)
     private TextView noMarginTv;
-    @ViewById(R.id.tv_status)
+    @ViewById(R.id.tv_no_status)
     private TextView status;
 
 
@@ -45,29 +49,26 @@ public final class FarmersNoMarginActivity extends BaseActivity implements View.
     protected void initView() {
         // 图片状态栏沉浸
         ImmersionUtil.ImageImmers(this, title, background);
-
+        // 状态栏字体白色
+        StatusBarUtil.setStatusBarFontIconDark(this, getResources().getColor(R.color.white), false);
         ivBack.setOnClickListener(this);
         pageTitle.setText("农民工工资保证金");
 
-        status.setText("未缴存");
-
-        background.setBackgroundResource(R.drawable.img_background_no_3x);
-        noMarginTv.setText("此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述此处是文字描述");
-
-
+        // getIntent
+        FarmersMarginBean value = (FarmersMarginBean) getIntent().getSerializableExtra("value");
+        if (value != null){
+            status.setText(value.getContent().getState());
+            background.setBackgroundResource(R.drawable.img_background_no_3x);
+            noMarginTv.setText(value.getContent().getText());
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
+                openActivity(FarmersSalaryManagerActivity.class);
                 finish();
-                break;
-            case R.id.ll_download:
-                toast("下载");
-                break;
-            case R.id.ll_preview:
-                toast("预览");
                 break;
         }
     }

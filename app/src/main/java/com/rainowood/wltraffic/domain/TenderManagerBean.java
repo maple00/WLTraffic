@@ -19,21 +19,6 @@ public class TenderManagerBean implements Serializable {
     private SubPublicityBean h;               // 公示
     private ContractBean i;               // 合同签订
 
-    @Override
-    public String toString() {
-        return "TenderManagerBean{" +
-                "a=" + a +
-                ", b=" + b +
-                ", c=" + c +
-                ", d=" + d +
-                ", e=" + e +
-                ", f=" + f +
-                ", g=" + g +
-                ", h=" + h +
-                ", i=" + i +
-                '}';
-    }
-
     public SubTenderA getA() {
         return a;
     }

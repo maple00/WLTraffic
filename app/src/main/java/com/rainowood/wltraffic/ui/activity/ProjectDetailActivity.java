@@ -142,7 +142,7 @@ public final class ProjectDetailActivity extends BaseActivity implements View.On
             R.drawable.ic_icon_project_pay, R.drawable.ic_icon_project_safe, R.drawable.ic_icon_project_change,
             R.drawable.ic_icon_project_worker, R.drawable.ic_icon_project_bidding, R.drawable.ic_icon_project_examine};
     private String[] mLabels = {"计划管理", "项目建设程序", "项目进度", "支付管理", "质量安全",
-            "变更管理", "农名工工资", "招投标", "考核管理"};
+            "变更管理", "农民工工资", "招投标", "考核管理"};
 
     // 项目详情中文档的列表
     private List<SubItemListContentBean> mlSubItemList;

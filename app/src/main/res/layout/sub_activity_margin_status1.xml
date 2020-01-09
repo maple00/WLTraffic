@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/img_background_ok_3x"
     android:orientation="vertical">
 
     <ImageView
@@ -49,6 +48,7 @@
         android:layout_marginRight="30dp">
 
         <ImageView
+            android:id="@+id/iv_pre_logo"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:background="@drawable/ic_icon_success_fff" />
@@ -63,68 +63,16 @@
             android:layout_marginStart="7dp"/>
     </LinearLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.rainwood.tools.widget.MeasureListView
+        android:id="@+id/lv_attach"
         android:layout_below="@+id/ll_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_word_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:id="@+id/ll_notify_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:background="@drawable/ic_icon_download_green" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/project_word_download"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:layout_marginStart="5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginStart="18dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="13dp"
-                android:layout_height="14dp"
-                android:background="@drawable/ic_icon_see_green" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/project_word_preview"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:layout_marginStart="5dp"/>
-
-        </LinearLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+        android:layout_marginTop="20dp"
+        android:listSelector="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:divider="@android:color/transparent"/>
 
 </RelativeLayout>

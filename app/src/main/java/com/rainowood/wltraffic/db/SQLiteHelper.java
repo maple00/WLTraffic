@@ -1,4 +1,4 @@
-package com.rainowood.wltraffic.helper;
+package com.rainowood.wltraffic.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -572,6 +572,34 @@ public class SQLiteHelper implements OnSQLiteOpenHelperListener {
         }
         db.endTransaction();
     }
+
+    /**
+     * 判断是数据库表是否存在
+     * @param tableName 表名
+     * @return
+     */
+    public boolean tabbleIsExist(String tableName) {
+        boolean result = false;
+        if (tableName == null) {
+            return false;
+        }
+        Cursor cursor = null;
+        try {
+            String sql = "select count(*) as c from Sqlite_master  where type ='table' and name ='" + tableName.trim() + "' ";
+            cursor = db.rawQuery(sql, null);
+            if (cursor.moveToNext()) {
+                int count = cursor.getInt(0);
+                if (count > 0) {
+                    result = true;
+                }
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return result;
+    }
+
 
     /**
      * 删除数据库

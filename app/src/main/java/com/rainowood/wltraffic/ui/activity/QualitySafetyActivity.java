@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,25 +15,20 @@ import androidx.annotation.NonNull;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.common.Contants;
-import com.rainowood.wltraffic.domain.AttachBean;
 import com.rainowood.wltraffic.domain.QualityBean;
 import com.rainowood.wltraffic.domain.QualitySafeDetailBean;
-import com.rainowood.wltraffic.domain.SubItemLabelBean;
 import com.rainowood.wltraffic.domain.SubQualityTestBean;
 import com.rainowood.wltraffic.okhttp.HttpResponse;
 import com.rainowood.wltraffic.okhttp.JsonParser;
 import com.rainowood.wltraffic.okhttp.OnHttpListener;
 import com.rainowood.wltraffic.request.RequestPost;
-import com.rainowood.wltraffic.ui.adapter.ImageAdapter;
 import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainowood.wltraffic.ui.adapter.QualitySafeAdapter;
 import com.rainowood.wltraffic.utils.DialogUtils;
-import com.rainowood.wltraffic.utils.ListUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureGridView;
 import com.rainwood.tools.widget.MeasureListView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -107,12 +101,7 @@ public final class QualitySafetyActivity extends BaseActivity implements View.On
         waitDialog();
         dialog.showDialog();
         // 请求数据
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemQSManagerData(Contants.ITEM_ID, QualitySafetyActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemQSManagerData(Contants.ITEM_ID, QualitySafetyActivity.this)).start();
     }
 
     private void waitDialog() {
@@ -120,23 +109,14 @@ public final class QualitySafetyActivity extends BaseActivity implements View.On
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back:
-                openActivity(ProjectDetailActivity.class);
-                break;
-            default:
-                break;
-
+        if (v.getId() == R.id.btn_back) {
+            openActivity(ProjectDetailActivity.class);
+            finish();
         }
     }
 
@@ -148,39 +128,33 @@ public final class QualitySafetyActivity extends BaseActivity implements View.On
      * @param hideRegion  隐藏的区域
      */
     private void setOnClickAndShowDetail(final TextView text, final LinearLayout clickRegion, final TextView hideRegion, final String title) {
-        text.post(new Runnable() {
-            @Override
-            public void run() {
-                int lineCount = text.getLineCount();
-                if (lineCount > 5) {
-                    clickRegion.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //toast("点击了");
-                            Intent intent = new Intent(QualitySafetyActivity.this, QuailtySafeDetailActivity.class);
-                            Bundle bundle = new Bundle();
-                            QualitySafeDetailBean qualitySafeDetail;
-                            if ("外业检测".equals(title)) {
-                                qualitySafeDetail = new QualitySafeDetailBean();
-                                qualitySafeDetail.setTitle(labelField.getText().toString().trim());
-                                qualitySafeDetail.setContent(mContentField.getText().toString().trim());
-                                qualitySafeDetail.setmWordList(qualityTestBean.getDetectionFile());
-                                bundle.putSerializable("quality", qualitySafeDetail);
-                            }
+        text.post(() -> {
+            int lineCount = text.getLineCount();
+            if (lineCount > 5) {
+                clickRegion.setOnClickListener(v -> {
+                    //toast("点击了");
+                    Intent intent = new Intent(QualitySafetyActivity.this, QuailtySafeDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    QualitySafeDetailBean qualitySafeDetail;
+                    if ("外业检测".equals(title)) {
+                        qualitySafeDetail = new QualitySafeDetailBean();
+                        qualitySafeDetail.setTitle(labelField.getText().toString().trim());
+                        qualitySafeDetail.setContent(mContentField.getText().toString().trim());
+                        qualitySafeDetail.setmWordList(qualityTestBean.getDetectionFile());
+                        bundle.putSerializable("quality", qualitySafeDetail);
+                    }
 
-                            if ("质量鉴定(检测)意见".equals(title)) {
-                                qualitySafeDetail = new QualitySafeDetailBean();
-                                qualitySafeDetail.setContent(contentQuality.getText().toString().trim());
-                                qualitySafeDetail.setmImgList(qualityTestBean.getQsOpinionFile());
-                                bundle.putSerializable("quality", qualitySafeDetail);
-                            }
-                            intent.putExtras(bundle);
-                            startActivity(intent, bundle);
-                        }
-                    });
-                } else {
-                    hideRegion.setVisibility(View.GONE);
-                }
+                    if ("质量鉴定(检测)意见".equals(title)) {
+                        qualitySafeDetail = new QualitySafeDetailBean();
+                        qualitySafeDetail.setContent(contentQuality.getText().toString().trim());
+                        qualitySafeDetail.setmImgList(qualityTestBean.getQsOpinionFile());
+                        bundle.putSerializable("quality", qualitySafeDetail);
+                    }
+                    intent.putExtras(bundle);
+                    startActivity(intent, bundle);
+                });
+            } else {
+                hideRegion.setVisibility(View.GONE);
             }
         });
     }
@@ -225,14 +199,11 @@ public final class QualitySafetyActivity extends BaseActivity implements View.On
                     // 质量安全检查及整改情况
                     QualitySafeAdapter safeAdapter = new QualitySafeAdapter(QualitySafetyActivity.this, mSafeList);
                     qualityContent.setAdapter(safeAdapter);
-                    safeAdapter.setContentOnClick(new QualitySafeAdapter.IContentOnClick() {
-                        @Override
-                        public void contentClick(int position) {
-                            //质量安全及整改情况
-                            Intent intent = new Intent(QualitySafetyActivity.this, RectificationActivity.class);
-                            intent.putExtra("id", mSafeList.get(position).getId());
-                            startActivity(intent);
-                        }
+                    safeAdapter.setContentOnClick(position -> {
+                        //质量安全及整改情况
+                        Intent intent = new Intent(QualitySafetyActivity.this, RectificationActivity.class);
+                        intent.putExtra("id", mSafeList.get(position).getId());
+                        startActivity(intent);
                     });
                     // 外业检测
                     fieldTitle.setText("外业检测");

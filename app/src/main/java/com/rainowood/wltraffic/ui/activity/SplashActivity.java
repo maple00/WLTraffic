@@ -1,6 +1,10 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -9,7 +13,11 @@ import android.view.animation.ScaleAnimation;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.db.SQLiteHelper;
+import com.rainowood.wltraffic.domain.UserInfoBean;
+import com.rainowood.wltraffic.ui.fragment.PersonalFragment;
 import com.rainowood.wltraffic.utils.DateTimeUtils;
+import com.rainowood.wltraffic.utils.ListUtils;
 import com.rainwood.tools.permission.OnPermission;
 import com.rainwood.tools.permission.Permission;
 import com.rainwood.tools.permission.XXPermissions;
@@ -45,7 +53,7 @@ public final class SplashActivity extends BaseActivity implements Animation.Anim
     @Override
     protected void initView() {
         // 获取当前年
-        copyright.setText("\u00a9" + DateTimeUtils.getNowYear() +"All Rights Reserved");
+        copyright.setText("\u00a9" + DateTimeUtils.getNowYear() + "All Rights Reserved");
         // 初始化动画
         AlphaAnimation aa = new AlphaAnimation(0.4f, 1.0f);
         aa.setDuration(ANIM_TIME * 2);
@@ -64,9 +72,33 @@ public final class SplashActivity extends BaseActivity implements Animation.Anim
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
 
+    /**
+     * 数据库操作
+     *
+     * @param granted 请求成功的权限组
+     * @param isAll   是否全部授予了
+     */
     @Override
     public void hasPermission(List<String> granted, boolean isAll) {
-        openActivity(LoginActivity.class);
+        // 打开登录页或者HomeActivity
+        SQLiteHelper liteHelper = SQLiteHelper.with(this, "traffic.db", 1);
+        // 先判断表是否存在
+        if (liteHelper.tabbleIsExist(UserInfoBean.class.getSimpleName())){
+            List<UserInfoBean> list = liteHelper.query(UserInfoBean.class, "select * from " + UserInfoBean.class.getSimpleName());
+            Log.e("sxs", "exits" + list.size());
+            if (ListUtils.getSize(list) > 0){               // 登录过
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userInfo", list.get(0));
+                PersonalFragment.newInstance(bundle);
+                openActivity(HomeActivity.class);
+                // postDelayed(() -> openActivity(HomeActivity.class), 500);
+            }else {
+                postDelayed(() -> openActivity(LoginActivity.class), 500);
+            }
+        }else {
+            Log.e("sxs", "not exits");
+            postDelayed(() -> openActivity(LoginActivity.class), 500);
+        }
     }
 
     @Override
@@ -116,4 +148,5 @@ public final class SplashActivity extends BaseActivity implements Animation.Anim
     public void onAnimationRepeat(Animation animation) {
 
     }
+
 }

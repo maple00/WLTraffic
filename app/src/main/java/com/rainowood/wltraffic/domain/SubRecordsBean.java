@@ -16,17 +16,6 @@ public class SubRecordsBean implements Serializable {
     private String ideaSix;             // 备案内容
     private List<AttachBean> ideaSixFile;   // 备案附件
 
-    @Override
-    public String toString() {
-        return "SubRecordsBean{" +
-                "id='" + id + '\'' +
-                ", timeOneSix='" + timeOneSix + '\'' +
-                ", timeTwoSix='" + timeTwoSix + '\'' +
-                ", ideaSix='" + ideaSix + '\'' +
-                ", ideaSixFile=" + ideaSixFile +
-                '}';
-    }
-
     public String getId() {
         return id;
     }

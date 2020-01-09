@@ -1,47 +1,52 @@
 package com.rainowood.wltraffic.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseFragment;
-import com.rainowood.wltraffic.domain.ProjectInfoBean;
+import com.rainowood.wltraffic.domain.MessageBean;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.activity.MessageDetailActivity;
-import com.rainowood.wltraffic.ui.adapter.HomeBeforeItemAdapter;
+import com.rainowood.wltraffic.ui.adapter.MessageAdapter;
+import com.rainowood.wltraffic.utils.DialogUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/21 17:43
  * @Desc: 消息
  */
-public class MessageFrgment extends BaseFragment implements View.OnClickListener {
+public class MessageFrgment extends BaseFragment implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int initLayout() {
         return R.layout.fragment_message;
     }
 
-    // 模拟数据 ---代办事项和通知公告
-    String[] mTitles = {"随着公司各类园林绿化景观工程项目的逐步增加随着公司各类园林绿化景观工程项目的逐步增加...",
-            "随着公司各类园林绿化景观工程项目的逐步增加", "随着公司各类园林绿化景观工程项目的逐步增加",
-            "随着公司各类园林绿化景观工程项目的逐步增加随着公司各类园林绿化景观工程项目的逐步增加..."};
-    String[] mLabels = {"2019.12.18 15:30:25", "2019.12.18 15:30:25", "2019.12.18 15:30:25", "2019.12.18 15:30:25"};
-
-    // 消息数据
-    private List<ProjectInfoBean> mList;
     // 消息列表
     private ListView mListView;
     private View titleOne;
     private View titleTwo;
     private TextView tvHomeTitleOne;
     private TextView tvHomeTitleTwo;
+
+    private DialogUtils dialog;
+    private MessageBean data;
 
     @Override
     protected void initView(View view) {
@@ -59,32 +64,25 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
         tvHomeTitleOne.setTextSize(20);
         tvHomeTitleOne.setText("待办事项");
         tvHomeTitleTwo.setText("通知公告");
-
-
         mListView = view.findViewById(R.id.lv_message);
-        HomeBeforeItemAdapter adapter = new HomeBeforeItemAdapter(mContext, mList);
-        mListView.setAdapter(adapter);
-        adapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
-            @Override
-            public void ItemOnClick(int position) {
-                // toast("点击了：" + mList.get(position));
-                // 展示详情
-                startActivity(MessageDetailActivity.class);
-            }
-        });
-
     }
 
     @Override
     protected void initData(Context mContext) {
-        // 初始化列表数据       -- 此数据需要从后台获取
-        mList = new ArrayList<>();
-        for (int i = 0; i < mTitles.length; i++) {
-            ProjectInfoBean homeList = new ProjectInfoBean();
-            homeList.setItemName(mTitles[i]);
-            homeList.setStage(mLabels[i]);
-            mList.add(homeList);
-        }
+        // 加载中
+        waitDialog();
+        dialog.showDialog();
+        // 请求数据
+        new Thread(() -> RequestPost.getMsgData(MessageFrgment.this)).start();
+    }
+
+
+    private void waitDialog() {
+        dialog = new DialogUtils(getActivity(), "加载中");
+    }
+
+    private void dismissDialog() {
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     @Override
@@ -96,21 +94,7 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
                 titleTwo.setVisibility(View.INVISIBLE);
                 tvHomeTitleOne.setTextSize(20);
                 tvHomeTitleTwo.setTextSize(15);
-                // 加载中
-                showDialog();
-                // 请求数据
-//                initData();
-                HomeBeforeItemAdapter adapter = new HomeBeforeItemAdapter(mContext, mList);
-                mListView.setAdapter(adapter);
-                adapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
-                    @Override
-                    public void ItemOnClick(int position) {
-                        //toast("点击了：" + mList.get(position).getTitle());
-                        // 展示详情
-                        startActivity(MessageDetailActivity.class);
-                    }
-                });
-
+                showBacklog();
                 break;
             case R.id.ll_home_title_two:        // 前期项目
                 // 设置样式
@@ -118,27 +102,71 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
                 titleTwo.setVisibility(View.VISIBLE);
                 tvHomeTitleOne.setTextSize(15);
                 tvHomeTitleTwo.setTextSize(20);
-                // 加载中
-                showDialog();
-//                // 请求数据
-//                initBeforeData();
-                HomeBeforeItemAdapter beforeItemAdapter = new HomeBeforeItemAdapter(mContext, mList);
-                mListView.setAdapter(beforeItemAdapter);
-                beforeItemAdapter.setOnClick(new HomeBeforeItemAdapter.ItemOnClick() {
-                    @Override
-                    public void ItemOnClick(int position) {
-                        //toast("点击了：" + mList.get(position).getLabel());
-                        // 展示详情
-                        startActivity(MessageDetailActivity.class);
-                    }
-                });
-
+                showNotice();
                 break;
         }
     }
 
 
-    private void showDialog() {
+    @Override
+    public void onHttpFailure(HttpResponse result) {
 
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if (body != null) {
+            if ("1".equals(body.get("code"))) {
+                data = JsonParser.parseJSONObject(MessageBean.class, body.get("data"));
+                dismissDialog();
+                Message msg = new Message();
+                msg.what = 0xA11;
+                mHandler.sendMessage(msg);
+            } else {
+                dismissDialog();
+                toast(body.get("warn"));
+            }
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what == 0xA11) {// 默认展示待办事项
+                showBacklog();
+            }
+        }
+    };
+
+    /**
+     * show 待办事项
+     */
+    private void showBacklog() {
+        MessageAdapter adapter = new MessageAdapter(getActivity(), data.getBacklog());
+        mListView.setAdapter(adapter);
+        adapter.setOnClick(position -> {
+            Intent intent = new Intent(getActivity(), MessageDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("message", data.getBacklog().get(position));
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
+    }
+
+    /**
+     * show 通知公告
+     */
+    private void showNotice() {
+        MessageAdapter adapter = new MessageAdapter(getActivity(), data.getMessage());
+        mListView.setAdapter(adapter);
+        adapter.setOnClick(position -> {
+            Intent intent = new Intent(getActivity(), MessageDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("message", data.getMessage().get(position));
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
     }
 }

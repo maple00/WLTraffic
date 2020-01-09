@@ -16,18 +16,6 @@ public class AssessDeductionBean implements Serializable {
     private String updateTime;          // 更新时间
     private String time;                // 时间
 
-    @Override
-    public String toString() {
-        return "AssessDeductionBean{" +
-                "department='" + department + '\'' +
-                ", pointMx='" + pointMx + '\'' +
-                ", point='" + point + '\'' +
-                ", text='" + text + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                ", time='" + time + '\'' +
-                '}';
-    }
-
     public String getDepartment() {
         return department;
     }

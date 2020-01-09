@@ -1,16 +1,12 @@
-package com.rainowood.wltraffic.helper;
+package com.rainowood.wltraffic.db;
 
 import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Created by Relin
- * on 2018-09-14.<br/>
- * 数据库打开监听，支持数据库的第一次
- * 打开或者创建监听、数据的升级监听。<br/>
- * Database open listening, support the first open
- * database or create listening, data escalation listening.
+ * on 2018-11-21.
  */
-public interface OnSQLiteOpenHelperListener {
+public interface OnSQLiteHelperListener {
 
     /**
      * 数据库第一次创建的时候调用
@@ -29,4 +25,5 @@ public interface OnSQLiteOpenHelperListener {
      * @param newVersion 数据库升级版本
      */
     void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
+
 }

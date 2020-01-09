@@ -45,32 +45,26 @@ public final class TenderListActivity extends BaseActivity implements View.OnCli
             pageTitle.setText("质疑答疑");
             listAdapter = new TenderListAdapter(this, question.getOne());
             list.setAdapter(listAdapter);
-            listAdapter.setClickListener(new TenderListAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    Intent intent = new Intent(TenderListActivity.this, TenderListDetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    intent.putExtra("key", "question");
-                    bundle.putSerializable("question", question.getOne().get(position));
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
+            listAdapter.setClickListener(position -> {
+                Intent intent = new Intent(TenderListActivity.this, TenderListDetailActivity.class);
+                Bundle bundle = new Bundle();
+                intent.putExtra("key", "question");
+                bundle.putSerializable("question", question.getOne().get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
             });
         }
         if ("bare".equals(key)){
             pageTitle.setText("补漏");
             listAdapter = new TenderListAdapter(this, question.getTwo());
             list.setAdapter(listAdapter);
-            listAdapter.setClickListener(new TenderListAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    Intent intent = new Intent(TenderListActivity.this, TenderListDetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    intent.putExtra("key", "bare");
-                    bundle.putSerializable("question", question.getTwo().get(position));
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
+            listAdapter.setClickListener(position -> {
+                Intent intent = new Intent(TenderListActivity.this, TenderListDetailActivity.class);
+                Bundle bundle = new Bundle();
+                intent.putExtra("key", "bare");
+                bundle.putSerializable("question", question.getTwo().get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
             });
         }
     }

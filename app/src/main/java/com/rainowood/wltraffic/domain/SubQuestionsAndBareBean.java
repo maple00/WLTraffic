@@ -14,15 +14,6 @@ public class SubQuestionsAndBareBean implements Serializable {
     private List<SubQuestionBean> one;             // 质疑答疑
     private List<SubQuestionBean> two;             // 补漏
 
-    @Override
-    public String toString() {
-        return "SubQuestionsAndBareBean{" +
-                "title='" + title + '\'' +
-                ", one=" + one +
-                ", two=" + two +
-                '}';
-    }
-
     public String getTitle() {
         return title;
     }

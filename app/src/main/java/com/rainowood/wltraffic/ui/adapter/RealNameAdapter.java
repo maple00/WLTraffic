@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
+import com.rainowood.wltraffic.domain.RealNameBean;
 import com.rainowood.wltraffic.domain.SubItemLabelBean;
 
 import java.util.List;
@@ -21,9 +22,9 @@ import java.util.List;
 public class RealNameAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<SubItemLabelBean> mList;
+    private List<RealNameBean> mList;
 
-    public RealNameAdapter(Context mContext, List<SubItemLabelBean> mList) {
+    public RealNameAdapter(Context mContext, List<RealNameBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -34,7 +35,7 @@ public class RealNameAdapter extends BaseAdapter {
     }
 
     @Override
-    public SubItemLabelBean getItem(int position) {
+    public RealNameBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -58,8 +59,8 @@ public class RealNameAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_title.setText(getItem(position).getTitle());
-        holder.tv_label.setText(getItem(position).getContent());
+        holder.tv_title.setText(getItem(position).getText());
+        holder.tv_label.setText(getItem(position).getUpdateTime());
 
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override

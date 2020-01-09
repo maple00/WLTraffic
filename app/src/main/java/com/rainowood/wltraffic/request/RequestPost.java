@@ -1,7 +1,5 @@
 package com.rainowood.wltraffic.request;
 
-import android.util.Log;
-
 import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.okhttp.OkHttp;
 import com.rainowood.wltraffic.okhttp.OnHttpListener;
@@ -21,14 +19,13 @@ public final class RequestPost {
         RequestParams params = new RequestParams();
         params.add("userName", account);
         params.add("password", password);
-//      params.add(RequestParams.REQUEST_CONTENT_TYPE, RequestParams.REQUEST_CONTENT_JSON);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=login", params, listener);
     }
 
     /**
      * 手机号请求验证码
      */
-    public static void getVerfy(String tel, OnHttpListener listener){
+    public static void getVerfy(String tel, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("tel", tel);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=getCaptcha", params, listener);
@@ -37,15 +34,34 @@ public final class RequestPost {
     /**
      * 请求首页数据
      */
-    public static void getHomeDate(OnHttpListener listener){
+    public static void getHomeDate(OnHttpListener listener) {
         RequestParams params = new RequestParams();
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=item", params, listener);
     }
 
     /**
+     * 请求消息数据
+     */
+    public static void getMsgData(OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=backlog", params, listener);
+    }
+
+    /**
+     * 推送id，访问消息详情
+     * @param id 消息id
+     */
+    public static void getMsgDetailData(String id, OnHttpListener listener){
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=backlogMx", params, listener);
+    }
+
+
+    /**
      * 请求项目详情数据
      */
-    public static void getItemDetailData(String id, OnHttpListener listener){
+    public static void getItemDetailData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=itemMx", params, listener);
@@ -54,7 +70,7 @@ public final class RequestPost {
     /**
      * 项目详情--计划管理
      */
-    public static void getItemPlanManagerData(String id, OnHttpListener listener){
+    public static void getItemPlanManagerData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=planManage", params, listener);
@@ -63,7 +79,7 @@ public final class RequestPost {
     /**
      * 项目建设程序
      */
-    public static void getItemConstructionData(String id, OnHttpListener listener){
+    public static void getItemConstructionData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=procedure", params, listener);
@@ -72,7 +88,7 @@ public final class RequestPost {
     /**
      * 项目进度管理
      */
-    public static void getItemProgressData(String id, OnHttpListener listener){
+    public static void getItemProgressData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=itemProcess", params, listener);
@@ -81,7 +97,7 @@ public final class RequestPost {
     /**
      * 支付管理
      */
-    public static void getItemPayManagerData(String id, OnHttpListener listener){
+    public static void getItemPayManagerData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=terracePay", params, listener);
@@ -90,7 +106,7 @@ public final class RequestPost {
     /**
      * 质量安全
      */
-    public static void getItemQSManagerData(String id, OnHttpListener listener){
+    public static void getItemQSManagerData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=inspectManager", params, listener);
@@ -99,7 +115,7 @@ public final class RequestPost {
     /**
      * 质量安全详情
      */
-    public static void getItemQSDetailData(String id, OnHttpListener listener){
+    public static void getItemQSDetailData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=allNewsMx", params, listener);
@@ -108,7 +124,7 @@ public final class RequestPost {
     /**
      * 变更管理
      */
-    public static void getItemChangeManagerData(String id, OnHttpListener listener){
+    public static void getItemChangeManagerData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=changeManager", params, listener);
@@ -117,7 +133,7 @@ public final class RequestPost {
     /**
      * 招投标
      */
-    public static void getItemTenderData(String id, OnHttpListener listener){
+    public static void getItemTenderData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=tendering", params, listener);
@@ -126,9 +142,64 @@ public final class RequestPost {
     /**
      * 考核管理
      */
-    public static void getItemAssessData(String id, OnHttpListener listener){
+    public static void getItemAssessData(String id, OnHttpListener listener) {
         RequestParams params = new RequestParams();
         params.add("id", id);
         OkHttp.post(Contants.BASE_URI + "library/mData.php?type=testRule", params, listener);
     }
+
+    /**
+     * 农民工工资管理
+     */
+    // 工资保证金
+    public static void getItemFarmerOneData(String id, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=nonWorkersState", params, listener);
+    }
+
+    // 实名制
+    public static void getItemFarmerTwoData(String id, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=nonWorkersState1", params, listener);
+    }
+
+    // 专户制
+    public static void getItemFarmerThreeData(String id, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=nonWorkersState2", params, listener);
+    }
+
+    // 银行代发制度
+    public static void getItemFarmerFourData(String id, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=nonWorkersState3", params, listener);
+    }
+
+    // 银行代发制-某年数据
+    public static void getItemFarmerYearData(String id, String year, String nowList, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        params.add("year", year);
+        params.add("nowList", nowList);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=yearsData", params, listener);
+    }
+
+    // 劳资
+    public static void getItemFarmerFiveData(String id, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=nonWorkersState4", params, listener);
+    }
+
+    // 通报
+    public static void getItemFarmerSixData(String id, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=nonWorkersState5", params, listener);
+    }
+
 }

@@ -13,15 +13,6 @@ public class SubPublicityBean implements Serializable {
     private String timeTwoSix;          // 结束时间
     private String complainSix;         // 是否有投诉
 
-    @Override
-    public String toString() {
-        return "SubPublicityBean{" +
-                "timeOneSix='" + timeOneSix + '\'' +
-                ", timeTwoSix='" + timeTwoSix + '\'' +
-                ", complainSix='" + complainSix + '\'' +
-                '}';
-    }
-
     public String getTimeOneSix() {
         return timeOneSix;
     }

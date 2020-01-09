@@ -4,21 +4,13 @@ import java.io.Serializable;
 
 /**
  * @Author: a797s
- * @Date: 2019/12/31 16:53
- * @Desc: 单个标签
+ * @Date: 2020/1/8 11:45
+ * @Desc: 银行代发---年份
  */
-public class LabelBean implements Serializable {
+public class SubBankInfoYear implements Serializable {
 
-    private String data;
+    private String years;           //年份
     private boolean hasSelected;
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
 
     public boolean isHasSelected() {
         return hasSelected;
@@ -26,5 +18,13 @@ public class LabelBean implements Serializable {
 
     public void setHasSelected(boolean hasSelected) {
         this.hasSelected = hasSelected;
+    }
+
+    public String getYears() {
+        return years;
+    }
+
+    public void setYears(String years) {
+        this.years = years;
     }
 }

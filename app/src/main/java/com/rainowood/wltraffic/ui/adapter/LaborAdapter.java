@@ -61,10 +61,10 @@ public class LaborAdapter extends BaseAdapter {
         }
 
         holder.tv_name.setText(getItem(position).getName());
-        holder.tv_company.setText(getItem(position).getCompany());
+        holder.tv_company.setText(getItem(position).getMonad());
         holder.tv_tel.setText(getItem(position).getTel());
-        holder.tv_note.setText(getItem(position).getNote());
-        holder.tv_last_time.setText(getItem(position).getTime());
+        holder.tv_note.setText(getItem(position).getText());
+        holder.tv_last_time.setText(getItem(position).getUpdateTime());
 
         // 默认收起
         if (getItem(position).isHasHide()) {     // 收起了

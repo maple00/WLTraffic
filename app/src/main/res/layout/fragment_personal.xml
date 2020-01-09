@@ -35,7 +35,7 @@
         android:id="@+id/iv_show_image"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:background="@drawable/ic_icon_company_address"
+        android:background="@drawable/img_logo"
         android:layout_marginTop="100dp"
         android:adjustViewBounds="true"
         android:layout_centerHorizontal="true"/>

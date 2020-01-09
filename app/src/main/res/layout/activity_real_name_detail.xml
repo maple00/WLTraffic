@@ -7,10 +7,20 @@
 
     <include layout="@layout/activity_action"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/farmers_contrant"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/textColor"
+        android:textSize="15sp"/>
+
     <com.rainwood.tools.widget.MeasureListView
         android:id="@+id/lv_atttach_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"/>
 

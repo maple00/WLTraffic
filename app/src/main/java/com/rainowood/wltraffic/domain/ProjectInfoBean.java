@@ -14,16 +14,6 @@ public class ProjectInfoBean implements Serializable {
     private String proportion;      // 项目进度
     private String stage;           // 项目阶段
 
-    @Override
-    public String toString() {
-        return "ProjectInfoBean{" +
-                "id='" + id + '\'' +
-                ", itemName='" + itemName + '\'' +
-                ", proportion='" + proportion + '\'' +
-                ", stage='" + stage + '\'' +
-                '}';
-    }
-
     public String getId() {
         return id;
     }

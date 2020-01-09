@@ -13,15 +13,6 @@ public class SubTenderA implements Serializable {
     private String moneySix;        //  代理费用
     private String timeOneSix;      // 确认时间
 
-    @Override
-    public String toString() {
-        return "SubTenderA{" +
-                "nameSix='" + nameSix + '\'' +
-                ", moneySix='" + moneySix + '\'' +
-                ", timeOneSix='" + timeOneSix + '\'' +
-                '}';
-    }
-
     public String getNameSix() {
         return nameSix;
     }

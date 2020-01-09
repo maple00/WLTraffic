@@ -172,17 +172,14 @@ public final class TenderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initTextView(final TextView textView, final TextView showText) {
-        textView.post(new Runnable() {
-            @Override
-            public void run() {
-                int lineCount = textView.getLineCount();
-                textView.setLineSpacing(12, 1);
-                if (lineCount > 5) { // 隐藏
-                    textView.setMaxLines(2);
-                    textView.setEllipsize(TextUtils.TruncateAt.END);
-                } else {         // 显示
-                    showText.setVisibility(View.GONE);
-                }
+        textView.post(() -> {
+            int lineCount = textView.getLineCount();
+            textView.setLineSpacing(12, 1);
+            if (lineCount > 5) { // 隐藏
+                textView.setMaxLines(2);
+                textView.setEllipsize(TextUtils.TruncateAt.END);
+            } else {         // 显示
+                showText.setVisibility(View.GONE);
             }
         });
     }
@@ -192,12 +189,7 @@ public final class TenderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     @Override

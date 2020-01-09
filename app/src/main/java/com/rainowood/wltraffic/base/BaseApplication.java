@@ -6,12 +6,13 @@ import android.widget.Toast;
 
 import com.rainowood.wltraffic.common.ActivityStackManager;
 import com.rainowood.wltraffic.ui.activity.CrashActivity;
-import com.rainowood.wltraffic.ui.activity.HomeActivity;
+import com.rainowood.wltraffic.ui.activity.SplashActivity;
 import com.rainwood.tools.toast.ToastInterceptor;
 import com.rainwood.tools.toast.ToastUtils;
 import com.tencent.smtt.sdk.QbSdk;
 
 import cat.ereza.customactivityoncrash.config.CaocConfig;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * @Author: shearson
@@ -49,11 +50,11 @@ public class BaseApplication extends Application {
     /**
      * 创建Application 对象
      */
-    public static BaseApplication getInstance(){
+    public static BaseApplication getInstance() {
         return Instance.INSTANCE;
     }
 
-    private static class Instance{
+    private static class Instance {
         static BaseApplication INSTANCE = new BaseApplication();
     }
 
@@ -62,21 +63,25 @@ public class BaseApplication extends Application {
      * 初始化一些三方框架
      */
     private void initSDK() {
-        // 本地异常捕捉
+        /*
+        本地异常捕捉
+         */
         CaocConfig.Builder.create()
                 .backgroundMode(CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM)
                 .enabled(true)
                 .trackActivities(true)
                 .minTimeBetweenCrashesMs(2000)
                 // 重启的 Activity
-                .restartActivity(HomeActivity.class)
+                .restartActivity(SplashActivity.class)
                 // 错误的 Activity
                 .errorActivity(CrashActivity.class)
                 // 设置监听器
                 //.eventListener(new YourCustomEventListener())
                 .apply();
 
-        // TBS 文件预览
+        /*
+         TBS 文件预览
+         */
         //初始化X5内核
         QbSdk.PreInitCallback callback = new QbSdk.PreInitCallback() {
             @Override
@@ -94,12 +99,18 @@ public class BaseApplication extends Application {
         QbSdk.setDownloadWithoutWifi(true);
         QbSdk.initX5Environment(this, callback);
 
+        /*
+        极光推送
+         */
+        JPushInterface.setDebugMode(false);
+        JPushInterface.init(this);       // 初始化sdk，广播
+
     }
 
     /**
      * 初始化工具类
      */
-    private void initTools(){
+    private void initTools() {
         // 设置 Toast 拦截器
         ToastUtils.setToastInterceptor(new ToastInterceptor() {
             @Override

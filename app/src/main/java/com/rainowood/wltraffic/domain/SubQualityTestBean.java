@@ -17,18 +17,6 @@ public class SubQualityTestBean implements Serializable {
     private String qsOpinion;                   // 质量鉴定意见
     private List<AttachBean> qsOpinionFile;     // 鉴定附件
 
-    @Override
-    public String toString() {
-        return "SubQualityTestBean{" +
-                "id='" + id + '\'' +
-                ", detectionTime='" + detectionTime + '\'' +
-                ", detectionMatter='" + detectionMatter + '\'' +
-                ", detectionFile=" + detectionFile +
-                ", qsOpinion='" + qsOpinion + '\'' +
-                ", qsOpinionFile=" + qsOpinionFile +
-                '}';
-    }
-
     public String getId() {
         return id;
     }

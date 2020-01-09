@@ -1,7 +1,7 @@
 package com.rainowood.wltraffic.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.domain.BankRestBean;
+import com.rainowood.wltraffic.domain.SubBankInfoYearInfo;
 import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.ArrayList;
@@ -27,14 +27,13 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.Vertic
 
     private static final String TAG = VerticalAdapter.class.getSimpleName();
     private Context mContext;
-    private List<BankRestBean> mList = new ArrayList<>();
+    private List<SubBankInfoYearInfo> mList = new ArrayList<>();
 
     public VerticalAdapter(Context context) {
         mContext = context;
     }
 
-    public void setVerticalDataList(List<BankRestBean> list) {
-        Log.d(TAG, "setVerticalDataList: " + list.size());
+    public void setVerticalDataList(List<SubBankInfoYearInfo> list) {
         mList = list;
         notifyDataSetChanged();
     }
@@ -46,13 +45,15 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.Vertic
         return new VerticalViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VerticalViewHolder holder, int position) {
-        holder.tv_money.setText(mList.get(position).getMoney());
-        holder.tv_month.setText(mList.get(position).getTime());
+        holder.tv_money.setText("￥ " + mList.get(position).getMoney());
+        holder.tv_month.setText(mList.get(position).getMonth() + "月");
 
         // 文件附件列表
-
+        ItemAttachListAdapter attachListAdapter = new ItemAttachListAdapter(mContext, mList.get(position).getFile());
+        holder.lv_word_list.setAdapter(attachListAdapter);
     }
 
     @Override

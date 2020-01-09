@@ -1,20 +1,39 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.domain.SubMsgBean;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
+import com.rainowood.wltraffic.ui.fragment.MessageFrgment;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.view.SmartTextView;
 import com.rainwood.tools.viewinject.ViewById;
+
+import java.util.Map;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * @Author: shearson
  * @Time: 2019/12/21 21:13
  * @Desc: 消息详情页
  */
-public final class MessageDetailActivity extends BaseActivity  implements View.OnClickListener {
+public final class MessageDetailActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {
@@ -28,31 +47,83 @@ public final class MessageDetailActivity extends BaseActivity  implements View.O
     @ViewById(R.id.stv_message)
     private SmartTextView messageTv;
 
+    private DialogUtils dialog;
 
     @Override
     protected void initView() {
         btnBack.setOnClickListener(this);
         titleTv.setText("消息详情");
-    }
 
-    // 模拟数据
-    String msg = "\n" +
-            "随着公司各类园林绿化景观工程项目的逐步增加、且总多面广、战线拉长，管理层  和管理方式也都发生了变化。为严格项目管理和规范项目资金拨付使用，确保工程项目和资金安全，依照《中华人民共和国建筑法》、《中华人民共和国合同法》等法律法规，结合公司相关规章制度和工作实际，对进一步加强和完善工程项目管理作出具体规定，现通知如下：\n" +
-            "一、工程项目管理是指公司承接的各类园林绿化景观建设和管养工程、材料采购管理、工程质量和安全生产管理、工程款催收和内部拨付管理等的总称。公司各部门要按照部门职能责任分工，进一步细化管理内容，规范管理流程，完善管理程序，明确办事时限，并做到系统化、书面化和表格化管理。\n" +
-            " ";
+        // 从推送过来
+        String extra = getIntent().getStringExtra(JPushInterface.EXTRA_EXTRA);
+        if (extra != null) {    // 有通知的时候，添加桌面红点
+            Map<String, String> json = JsonParser.parseJSONObject(extra);
+            String id = json.get("id");
+            new Thread(() -> RequestPost.getMsgDetailData(id, MessageDetailActivity.this)).start();
+        } else {                 // 从fragment点击进来
+            SubMsgBean message = (SubMsgBean) getIntent().getSerializableExtra("message");
+            if (message != null) {
+                messageTv.setText(Html.fromHtml(message.getText()));
+            }
+            dismissDialog();
+        }
+    }
 
     @Override
     protected void initData() {
         super.initData();
-        messageTv.setText(msg);
+        // 加载中
+        waitDialog();
+        dialog.showDialog();
+    }
+
+    private void waitDialog() {
+        dialog = new DialogUtils(this, "加载中");
+    }
+
+    private void dismissDialog() {
+        postDelayed(() -> dialog.dismissDialog(), 200);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_back:
-                finish();
-                break;
+        if (v.getId() == R.id.btn_back) {
+            //openActivity(MessageFrgment.class);
+            //Intent intent = new Intent(this, MessageFrgment.class);
+            //startActivity(intent);
+            finish();
         }
     }
+
+    @Override
+    public void onHttpFailure(HttpResponse result) {
+
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if ("1".equals(body.get("code"))) {
+            SubMsgBean data = JsonParser.parseJSONObject(SubMsgBean.class, body.get("data"));
+            dismissDialog();
+            Message msg = new Message();
+            msg.what = 0xA12;
+            msg.obj = data;
+            mHandler.sendMessage(msg);
+        } else {
+            dismissDialog();
+            toast(body.get("warn"));
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what == 0xA12) {
+                SubMsgBean subMsg = (SubMsgBean) msg.obj;
+                messageTv.setText(Html.fromHtml(subMsg.getText()));
+            }
+        }
+    };
 }

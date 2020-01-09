@@ -2,7 +2,6 @@ package com.rainowood.wltraffic.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.domain.LabelBean;
+import com.rainowood.wltraffic.domain.SubBankInfoYear;
 import com.rainowood.wltraffic.utils.DateTimeUtils;
 
 import java.util.ArrayList;
@@ -27,18 +26,13 @@ import java.util.List;
 
 public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.HorizontalViewHolder> {
 
-    private static final String TAG = HorizontalAdapter.class.getSimpleName();
-
     private Context mContext;
-
-    private List<LabelBean> mList = new ArrayList<>();
-
+    private List<SubBankInfoYear> mList = new ArrayList<>();
     public HorizontalAdapter(Context context) {
         mContext = context;
     }
 
-    public void setHorizontalDataList(List<LabelBean> list) {
-        Log.d(TAG, "setHorizontalDataList: " + list.size());
+    public void setHorizontalDataList(List<SubBankInfoYear> list) {
         mList = list;
         notifyDataSetChanged();
     }
@@ -58,26 +52,26 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Ho
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull HorizontalViewHolder holder, final int position) {
-        if (String.valueOf(DateTimeUtils.getNowYear()).equals(mList.get(position).getData())) {
+        if (String.valueOf(DateTimeUtils.getNowYear()).equals(mList.get(position).getYears())) {
             holder.tvContent.setText("今年");
-        } else if (String.valueOf(DateTimeUtils.getNowYear() - 1).equals(mList.get(position).getData())) {
+            // 默认选中当前年
+            mList.get(position).setHasSelected(true);
+        } else if (String.valueOf(DateTimeUtils.getNowYear() - 1).equals(mList.get(position).getYears())) {
             holder.tvContent.setText("去年");
         } else {
-            holder.tvContent.setText(mList.get(position).getData() + "年");
+            holder.tvContent.setText(mList.get(position).getYears() + "年");
         }
 
-        if (mList.get(position).isHasSelected()){
+        if (mList.get(position).isHasSelected()) {
+            // 设置被选中的不可再被点击, 此时会有加载的效果，但是实际上没有加载
+            holder.ll_item.setClickable(false);
             holder.v_line.setVisibility(View.VISIBLE);
-        }else {
+        } else {
+            holder.ll_item.setClickable(true);
             holder.v_line.setVisibility(View.GONE);
         }
 
-        holder.ll_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(position);
-            }
-        });
+        holder.ll_item.setOnClickListener(v -> listener.onItemClick(position));
     }
 
     public interface OnItenmClickListener {

@@ -28,7 +28,7 @@ import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.common.ActivityStackManager;
 import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.common.StatusManager;
-import com.rainowood.wltraffic.utils.DialogUtils;
+import com.rainowood.wltraffic.db.SQLiteHelper;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.toast.ToastUtils;
 import com.rainwood.tools.viewinject.ViewBind;
@@ -326,5 +326,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }

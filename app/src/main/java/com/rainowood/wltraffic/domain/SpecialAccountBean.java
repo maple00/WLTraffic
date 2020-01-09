@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Author: a797s
@@ -9,31 +10,22 @@ import java.io.Serializable;
  */
 public class SpecialAccountBean implements Serializable {
 
-    private String money;
-    private String time;
-    private String note;
+   private SubSpecialAccountBean top;
+   private List<SubSpecialAccountListBean> list;
 
-    public String getMoney() {
-        return money;
+    public SubSpecialAccountBean getTop() {
+        return top;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setTop(SubSpecialAccountBean top) {
+        this.top = top;
     }
 
-    public String getTime() {
-        return time;
+    public List<SubSpecialAccountListBean> getList() {
+        return list;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
+    public void setList(List<SubSpecialAccountListBean> list) {
+        this.list = list;
     }
 }

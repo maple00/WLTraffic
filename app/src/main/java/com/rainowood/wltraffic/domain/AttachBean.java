@@ -14,16 +14,6 @@ public class AttachBean implements Serializable {
     private String src;         // 附件的地址
     private String time;            // 附件的时间
 
-    @Override
-    public String toString() {
-        return "AttachBean{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", src='" + src + '\'' +
-                ", time='" + time + '\'' +
-                '}';
-    }
-
     public String getName() {
         return name;
     }
