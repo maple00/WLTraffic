@@ -2,19 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include layout="@layout/activity_action"/>
+    <include layout="@layout/activity_action" />
 
-    <com.rainwood.tools.widget.MeasureListView
-        android:id="@+id/lv_procedure_list"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="1dp"
-        android:listSelector="@android:color/transparent"/>
+        android:layout_marginRight="15dp">
+
+        <com.rainwood.tools.widget.MeasureListView
+            android:id="@+id/lv_procedure_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:listSelector="@android:color/transparent" />
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

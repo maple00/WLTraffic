@@ -1,6 +1,5 @@
 package com.rainowood.wltraffic.base;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +17,6 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
 import com.rainowood.wltraffic.R;
-import com.rainowood.wltraffic.ui.fragment.HomeFragment;
-import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.statusbar.StatusBarUtil;
 import com.rainwood.tools.toast.ToastUtils;
 

@@ -87,12 +87,18 @@ public class BaseApplication extends Application {
             @Override
             public void onCoreInitFinished() {
                 //x5内核初始化完成回调接口，此接口回调并表示已经加载起来了x5，有可能特殊情况下x5内核加载失败，切换到系统内核。
+                Log.e("rainwood", "TBS加载成功");
             }
 
             @Override
             public void onViewInitFinished(boolean b) {
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
                 Log.e("sxs", "加载内核是否成功:" + b);
+                // 如果加载失败，多次回调
+                if (!b && initialSize < 3){
+                    initialSize++;
+                    QbSdk.initX5Environment(getInstance().getApplicationContext(), null);
+                }
             }
         };
         // 允许使用流量下载
@@ -104,8 +110,9 @@ public class BaseApplication extends Application {
          */
         JPushInterface.setDebugMode(false);
         JPushInterface.init(this);       // 初始化sdk，广播
-
     }
+
+    private static int initialSize = -1;
 
     /**
      * 初始化工具类

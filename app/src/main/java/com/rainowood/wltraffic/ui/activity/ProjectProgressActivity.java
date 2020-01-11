@@ -76,12 +76,7 @@ public final class ProjectProgressActivity extends BaseActivity implements View.
         waitDialog();
         dialog.showDialog();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemProgressData(Contants.ITEM_ID, ProjectProgressActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemProgressData(Contants.ITEM_ID, ProjectProgressActivity.this)).start();
 
     }
 
@@ -90,12 +85,7 @@ public final class ProjectProgressActivity extends BaseActivity implements View.
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     @Override
@@ -115,7 +105,7 @@ public final class ProjectProgressActivity extends BaseActivity implements View.
     @Override
     public void onHttpSucceed(HttpResponse result) {
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
-        Log.e("sxs", "body: " + body);
+        Log.e("sxs", "body: " + JsonParser.parseJSONArray(body.get("data")));
         if ("1".equals(body.get("code"))) {
             mList = JsonParser.parseJSONArray(ProjectProgressBean.class, body.get("data"));
 

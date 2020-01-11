@@ -63,8 +63,9 @@ public class SubProjectProgressAdapter extends BaseAdapter {
         holder.tv_time.setText(getItem(position).getTime());
 
         // 是否完成
-        if (getItem(position).isImgState()) {        // 如果完成了，则标记
+        if ("是".equals(getItem(position).getImgState())) {        // 如果完成了，则标记
             holder.iv_finished.setVisibility(View.VISIBLE);
+            holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.colorBlue1));
         } else {
             // 完成标志隐藏
             holder.iv_finished.setVisibility(View.GONE);

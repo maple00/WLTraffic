@@ -72,6 +72,7 @@
         android:dividerHeight="20dp"
         android:fadingEdge="none"
         android:footerDividersEnabled="false"
-        android:headerDividersEnabled="true" />
+        android:headerDividersEnabled="true"
+        android:scrollbars="none"/>
 
 </LinearLayout>

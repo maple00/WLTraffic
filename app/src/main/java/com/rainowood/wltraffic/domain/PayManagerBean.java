@@ -12,6 +12,14 @@ public class PayManagerBean implements Serializable {
     private String totalMoneyInt;      // 累计的总单位    --- 整数部分
     private String totalMoneyFloat;      // 累计的总单位  -- 小数部分
 
+    @Override
+    public String toString() {
+        return "PayManagerBean{" +
+                "totalMoneyInt='" + totalMoneyInt + '\'' +
+                ", totalMoneyFloat='" + totalMoneyFloat + '\'' +
+                '}';
+    }
+
     public String getTotalMoneyInt() {
         return totalMoneyInt;
     }

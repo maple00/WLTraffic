@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,17 +52,19 @@ public class ProjectProgressAdapter extends RecyclerView.Adapter<ProjectProgress
 
         // 判断里面是否有未完成的项目  iv_mark
         int flagCount = 0;      // mark 完成的
-        for (int i = 0; i < ListUtils.getSize(mList.get(position).getChild()); i++) {
-            boolean finished = mList.get(position).getChild().get(i).isImgState();
-            if (!finished) {
-                flagCount++;
-                break;
+        for (int i = 0; i < ListUtils.getSize(mList.get(position).getChild()); ++i) {
+            String imgState = mList.get(position).getChild().get(i).getImgState();
+            if ("是".equals(imgState)) {
+                ++flagCount;
             }
         }
         if (flagCount > 0) {
             holder.iv_mark.setVisibility(View.VISIBLE);
+            if (flagCount == ListUtils.getSize(mList.get(position).getChild())){        // 全部完成则隐藏
+                holder.iv_mark.setVisibility(View.GONE);
+            }
         } else {
-            holder.iv_mark.setVisibility(View.GONE);
+            holder.iv_mark.setVisibility(View.VISIBLE);
         }
 
         // 查询每个目录下的子目录
@@ -70,21 +73,18 @@ public class ProjectProgressAdapter extends RecyclerView.Adapter<ProjectProgress
         subProgressAdapter.notifyDataSetChanged();
 
         // 点击
-        holder.ll_content.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int value = mList.get(position).getHasSelected() % 2;
-                if (value == 0) {               // 点击了，默认为false
-                    // 更换图标
-                    holder.iv_next_content.setImageResource(R.drawable.ic_icon_up);
-                    mList.get(position).setHasSelected(++value);
-                    holder.lv_content.setVisibility(View.VISIBLE);
+        holder.ll_content.setOnClickListener(v -> {
+            int value = mList.get(position).getHasSelected() % 2;
+            if (value == 0) {               // 点击了，默认为false
+                // 更换图标
+                holder.iv_next_content.setImageResource(R.drawable.ic_icon_up);
+                mList.get(position).setHasSelected(++value);
+                holder.lv_content.setVisibility(View.VISIBLE);
 
-                } else {
-                    holder.iv_next_content.setImageResource(R.drawable.ic_icon_down);
-                    mList.get(position).setHasSelected(++value);
-                    holder.lv_content.setVisibility(View.GONE);
-                }
+            } else {
+                holder.iv_next_content.setImageResource(R.drawable.ic_icon_down);
+                mList.get(position).setHasSelected(++value);
+                holder.lv_content.setVisibility(View.GONE);
             }
         });
     }

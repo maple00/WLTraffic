@@ -32,6 +32,24 @@ public final class RequestPost {
     }
 
     /**
+     * 验证码登录 captchaLogin
+     */
+    public static void checkCodeLogin(String captcha, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("captcha", captcha);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=captchaLogin", params, listener);
+    }
+
+    /**
+     * 修改密码
+     */
+    public static void resetPwd(String password, OnHttpListener listener) {
+        RequestParams params = new RequestParams();
+        params.add("password", password);
+        OkHttp.post(Contants.BASE_URI + "library/mData.php?type=passwordReset", params, listener);
+    }
+
+    /**
      * 请求首页数据
      */
     public static void getHomeDate(OnHttpListener listener) {

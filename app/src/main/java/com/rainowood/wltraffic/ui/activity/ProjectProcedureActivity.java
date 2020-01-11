@@ -61,12 +61,7 @@ public final class ProjectProcedureActivity extends BaseActivity implements View
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     private List<ProjectProcedureBean> mList;
@@ -78,12 +73,7 @@ public final class ProjectProcedureActivity extends BaseActivity implements View
         waitDialog();
         dialog.showDialog();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemConstructionData(Contants.ITEM_ID, ProjectProcedureActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemConstructionData(Contants.ITEM_ID, ProjectProcedureActivity.this)).start();
 
     }
 
@@ -107,7 +97,6 @@ public final class ProjectProcedureActivity extends BaseActivity implements View
             Message msg = new Message();
             msg.what = 0x1557;
             mHandler.sendMessage(msg);
-
             dismissDialog();
         }else {
             dismissDialog();

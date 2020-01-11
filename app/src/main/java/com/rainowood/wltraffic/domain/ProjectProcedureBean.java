@@ -15,6 +15,15 @@ public class ProjectProcedureBean implements Serializable {
     private List<AttachBean> fileSevenFile;         // 附件
     private String stateSeven;        // 是否合格
 
+    @Override
+    public String toString() {
+        return "ProjectProcedureBean{" +
+                "processName='" + processName + '\'' +
+                ", timeSeven='" + timeSeven + '\'' +
+                ", fileSevenFile=" + fileSevenFile +
+                ", stateSeven='" + stateSeven + '\'' +
+                '}';
+    }
 
     public String getProcessName() {
         return processName;

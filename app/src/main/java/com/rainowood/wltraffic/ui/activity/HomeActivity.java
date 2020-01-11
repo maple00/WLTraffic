@@ -13,8 +13,6 @@ import com.rainowood.wltraffic.ui.fragment.PersonalFragment;
 import com.rainwood.tools.viewinject.ViewById;
 
 public final class HomeActivity extends BaseActivity {
-
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_home;
@@ -31,7 +29,6 @@ public final class HomeActivity extends BaseActivity {
         mFragmentSparseArray.append(R.id.home_tab, new HomeFragment());
         mFragmentSparseArray.append(R.id.message_tab, new MessageFrgment());
         mFragmentSparseArray.append(R.id.personal_tab, new PersonalFragment());
-
         mTabRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             // 具体的fragment切换逻辑可以根据应用调整，例如使用show()/hide()
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -40,7 +37,5 @@ public final class HomeActivity extends BaseActivity {
         // 默认显示第一个
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                 mFragmentSparseArray.get(R.id.home_tab)).commit();
-
     }
-
 }

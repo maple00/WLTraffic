@@ -259,12 +259,7 @@ public final class TenderActivity extends BaseActivity implements View.OnClickLi
         waitDialog();
         dialog.showDialog();
         //
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemTenderData(Contants.ITEM_ID, TenderActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemTenderData(Contants.ITEM_ID, TenderActivity.this)).start();
 
     }
 
@@ -361,35 +356,40 @@ public final class TenderActivity extends BaseActivity implements View.OnClickLi
                     }
                     TenderAdapter tenderAdapter = new TenderAdapter(TenderActivity.this, tenderList);
                     mList.setAdapter(tenderAdapter);
-                    tenderAdapter.setItemClickListener(new TenderSubAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(int position) {
-                            toast("点击了：" + position);
+                    tenderAdapter.setItemClickListener((parentPosition, position) -> {                 // 页面详情
+                        Intent intent = new Intent(TenderActivity.this, TenderListDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        if (parentPosition == 0){
+                            bundle.putSerializable("value", tenderList.get(parentPosition).getOne().get(position));
+                            bundle.putString("key", "question");
                         }
+                        if (parentPosition == 1){
+                            bundle.putSerializable("value", tenderList.get(parentPosition).getTwo().get(position));
+                            bundle.putString("key", "bare");
+                        }
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     });
                     // 查看全部
-                    tenderAdapter.setListener(new TenderAdapter.OnClickViewListener() {
-                        @Override
-                        public void onItemClick(int position) {
-                            // 查看详情
-                            switch (position) {
-                                case 0:         // 质疑答疑
-                                    Intent questionIntent = new Intent(TenderActivity.this, TenderListActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    questionIntent.putExtra("key", "question");
-                                    bundle.putSerializable("question", data.getF());
-                                    questionIntent.putExtras(bundle);
-                                    startActivity(questionIntent);
-                                    break;
-                                case 1:         // 补漏
-                                    Intent bareIntent = new Intent(TenderActivity.this, TenderListActivity.class);
-                                    Bundle bundle1 = new Bundle();
-                                    bundle1.putSerializable("question", data.getF());
-                                    bareIntent.putExtra("key", "bare");
-                                    bareIntent.putExtras(bundle1);
-                                    startActivity(bareIntent);
-                                    break;
-                            }
+                    tenderAdapter.setListener(position -> {
+                        // 查看详情
+                        switch (position) {
+                            case 0:         // 质疑答疑
+                                Intent questionIntent = new Intent(TenderActivity.this, TenderListActivity.class);
+                                Bundle bundle = new Bundle();
+                                questionIntent.putExtra("key", "question");
+                                bundle.putSerializable("question", data.getF());
+                                questionIntent.putExtras(bundle);
+                                startActivity(questionIntent);
+                                break;
+                            case 1:         // 补漏
+                                Intent bareIntent = new Intent(TenderActivity.this, TenderListActivity.class);
+                                Bundle bundle1 = new Bundle();
+                                bundle1.putSerializable("question", data.getF());
+                                bareIntent.putExtra("key", "bare");
+                                bareIntent.putExtras(bundle1);
+                                startActivity(bareIntent);
+                                break;
                         }
                     });
                     // 开标

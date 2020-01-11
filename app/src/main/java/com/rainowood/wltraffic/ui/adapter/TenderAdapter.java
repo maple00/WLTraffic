@@ -62,29 +62,19 @@ public class TenderAdapter extends BaseAdapter {
 
         // 质疑答疑
         if (position == 0){
-            TenderSubAdapter subAdapter = new TenderSubAdapter(mContext, mList.get(position).getOne());
+            TenderSubAdapter subAdapter = new TenderSubAdapter(mContext, position,mList.get(position).getOne());
             holder.lv_list.setAdapter(subAdapter);
             subAdapter.setClickListener(itemClickListener);
             // 查看全部
-            holder.tv_label.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(position);
-                }
-            });
+            holder.tv_label.setOnClickListener(v -> listener.onItemClick(position));
         }
         // 补漏
         else{
-            TenderSubAdapter subAdapter = new TenderSubAdapter(mContext, mList.get(position).getTwo());
+            TenderSubAdapter subAdapter = new TenderSubAdapter(mContext, position, mList.get(position).getTwo());
             holder.lv_list.setAdapter(subAdapter);
             subAdapter.setClickListener(itemClickListener);
             // 查看全部
-            holder.tv_label.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(position);
-                }
-            });
+            holder.tv_label.setOnClickListener(v -> listener.onItemClick(position));
         }
 
         return convertView;

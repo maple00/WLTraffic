@@ -11,7 +11,7 @@ public class SubProjectProgressBean implements Serializable {
 
     private String name;               // 进度标题
     private String time;                // 进度完成时间
-    private boolean imgState;         // 是否完成
+    private String imgState;         // 是否完成
 
     public String getName() {
         return name;
@@ -29,11 +29,11 @@ public class SubProjectProgressBean implements Serializable {
         this.time = time;
     }
 
-    public boolean isImgState() {
+    public String getImgState() {
         return imgState;
     }
 
-    public void setImgState(boolean imgState) {
+    public void setImgState(String imgState) {
         this.imgState = imgState;
     }
 }

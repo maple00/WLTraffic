@@ -1,5 +1,6 @@
 package com.rainowood.wltraffic.ui.activity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -7,9 +8,12 @@ import android.widget.TextView;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.SubQuestionBean;
+import com.rainowood.wltraffic.domain.SubQuestionsAndBareBean;
 import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
+
+import java.io.Serializable;
 
 /**
  * @Author: a797s
@@ -41,32 +45,55 @@ public final class TenderListDetailActivity extends BaseActivity implements View
     protected void initView() {
         btnBack.setOnClickListener(this);
 
-        String key = (String) getIntent().getCharSequenceExtra("key");
-        // 数据详情
-        SubQuestionBean question = (SubQuestionBean) getIntent().getSerializableExtra("question");
-
-        if ("question".equals(key)){        // 质疑答疑
-            pageTitle.setText("质疑答疑详情");
-            title.setText(question.getProblem());
-            content.setText(question.getText());
-            // 质疑
-            ItemAttachListAdapter adapterQ = new ItemAttachListAdapter(this, question.getProblemFile());
-            this.question.setAdapter(adapterQ);
-
-            ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, question.getAnswerFile());
-            answer.setAdapter(adapterA);
-        }
-
-        if ("bare".equals(key)){            // 补漏列表
-            pageTitle.setText("补遗详情");
-            title.setText(question.getProblem());
-            content.setText(question.getText());
-            // 质疑
-            ItemAttachListAdapter adapterQ = new ItemAttachListAdapter(this, question.getProblemFile());
-            this.question.setAdapter(adapterQ);
-            // 答复
-            ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, question.getAnswerFile());
-            answer.setAdapter(adapterA);
+        SubQuestionBean value = (SubQuestionBean) getIntent().getSerializableExtra("value");
+        if (value != null){                 // 从招投标管理过来
+            String key = (String) getIntent().getCharSequenceExtra("key");
+            if ("question".equals(key)){        // 质疑答疑
+                pageTitle.setText("质疑答疑详情");
+                title.setText(value.getProblem());
+                content.setText(value.getText());
+                // 质疑
+                ItemAttachListAdapter adapterQ = new ItemAttachListAdapter(this, value.getProblemFile());
+                this.question.setAdapter(adapterQ);
+                ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, value.getAnswerFile());
+                answer.setAdapter(adapterA);
+            }
+            if ("bare".equals(key)){            // 补漏列表
+                pageTitle.setText("补遗详情");
+                title.setText(value.getProblem());
+                content.setText(value.getText());
+                // 质疑
+                ItemAttachListAdapter adapterQ = new ItemAttachListAdapter(this, value.getProblemFile());
+                this.question.setAdapter(adapterQ);
+                // 答复
+                ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, value.getAnswerFile());
+                answer.setAdapter(adapterA);
+            }
+        }else {                         // 从列表过来
+            String key = (String) getIntent().getCharSequenceExtra("key");
+            // 数据详情
+            SubQuestionBean question = (SubQuestionBean) getIntent().getSerializableExtra("question");
+            if ("question".equals(key)){        // 质疑答疑
+                pageTitle.setText("质疑答疑详情");
+                title.setText(question.getProblem());
+                content.setText(question.getText());
+                // 质疑
+                ItemAttachListAdapter adapterQ = new ItemAttachListAdapter(this, question.getProblemFile());
+                this.question.setAdapter(adapterQ);
+                ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, question.getAnswerFile());
+                answer.setAdapter(adapterA);
+            }
+            if ("bare".equals(key)){            // 补漏列表
+                pageTitle.setText("补遗详情");
+                title.setText(question.getProblem());
+                content.setText(question.getText());
+                // 质疑
+                ItemAttachListAdapter adapterQ = new ItemAttachListAdapter(this, question.getProblemFile());
+                this.question.setAdapter(adapterQ);
+                // 答复
+                ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, question.getAnswerFile());
+                answer.setAdapter(adapterA);
+            }
         }
     }
 

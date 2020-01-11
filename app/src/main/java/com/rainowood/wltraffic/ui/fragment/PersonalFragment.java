@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseFragment;
 import com.rainowood.wltraffic.common.Contants;
+import com.rainowood.wltraffic.db.SQLiteHelper;
 import com.rainowood.wltraffic.domain.UserInfoBean;
 import com.rainowood.wltraffic.ui.activity.CheckPhoneActivity;
 import com.rainowood.wltraffic.ui.activity.LoginActivity;
@@ -135,12 +136,14 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 tvLogout.setVisibility(View.GONE);
                 dialog = new DialogUtils(getActivity(), "登出中");
                 dialog.showDialog();
-                postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(PersonalFragment.this.getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                    }
+                postDelayed(() -> {
+                    // 清空数据库
+                    SQLiteHelper liteHelper = SQLiteHelper.with(getActivity(), "traffic.db", 1);
+                    liteHelper.deleteTable(UserInfoBean.class);
+
+                    Intent intent = new Intent(PersonalFragment.this.getActivity(), LoginActivity.class);
+                    intent.putExtra("type", userInfo.getType());
+                    startActivity(intent);
                 }, 1000);
                 break;
             case R.id.tv_change_tel:        // 修改电话

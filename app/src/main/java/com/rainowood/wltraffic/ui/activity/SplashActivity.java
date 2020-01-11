@@ -85,7 +85,6 @@ public final class SplashActivity extends BaseActivity implements Animation.Anim
         // 先判断表是否存在
         if (liteHelper.tabbleIsExist(UserInfoBean.class.getSimpleName())){
             List<UserInfoBean> list = liteHelper.query(UserInfoBean.class, "select * from " + UserInfoBean.class.getSimpleName());
-            Log.e("sxs", "exits" + list.size());
             if (ListUtils.getSize(list) > 0){               // 登录过
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("userInfo", list.get(0));
@@ -96,7 +95,6 @@ public final class SplashActivity extends BaseActivity implements Animation.Anim
                 postDelayed(() -> openActivity(LoginActivity.class), 500);
             }
         }else {
-            Log.e("sxs", "not exits");
             postDelayed(() -> openActivity(LoginActivity.class), 500);
         }
     }

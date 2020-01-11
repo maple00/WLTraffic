@@ -3,6 +3,9 @@ package com.rainowood.wltraffic.ui.activity;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,8 +16,6 @@ import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.AssessDeductionBean;
 import com.rainwood.tools.viewinject.ViewById;
-
-import java.io.Serializable;
 
 /**
  * @Author: shearson
@@ -70,14 +71,17 @@ public final class DeductionDetailActivity extends BaseActivity implements View.
     }
 
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0x1040:
                     AssessDeductionBean content = (AssessDeductionBean) msg.obj;
+                    SpannableString spanStr = new SpannableString(String.format("%s", Integer.parseInt(content.getPoint())) + " 分");
+                    spanStr.setSpan(new RelativeSizeSpan(0.375f), spanStr.length() - 2, spanStr.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
                     name.setText(content.getDepartment());
-                    scoreTV.setText(content.getPoint());
+                    scoreTV.setText(spanStr);
                     titleContent.setText(content.getPointMx());
                     labelContent.setText(content.getText());
                     timeContent.setText(content.getUpdateTime());

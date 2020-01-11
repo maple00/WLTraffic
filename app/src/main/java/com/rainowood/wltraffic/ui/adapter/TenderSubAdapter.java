@@ -23,9 +23,10 @@ public class TenderSubAdapter extends BaseAdapter {
     private Context mContext;
     private List<SubQuestionBean> mList;
 
-    public TenderSubAdapter(Context mContext, List<SubQuestionBean> mList) {
+    public TenderSubAdapter(Context mContext, int parentPosition, List<SubQuestionBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
+        this.parentPosition = parentPosition;
     }
 
     @Override
@@ -57,23 +58,18 @@ public class TenderSubAdapter extends BaseAdapter {
         }
 
         holder.tv_label.setText(getItem(position).getProblem());
-        holder.ll_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(position);
-            }
-        });
+        holder.ll_item.setOnClickListener(v -> clickListener.onItemClick(parentPosition, position));
 
         return convertView;
     }
 
     public interface OnItemClickListener{
-        void onItemClick(int position);
+        void onItemClick(int parentPosition, int position);
     }
 
+    private int parentPosition;
     private OnItemClickListener clickListener;
-
-    public void setClickListener(OnItemClickListener clickListener) {
+    public void setClickListener( OnItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 

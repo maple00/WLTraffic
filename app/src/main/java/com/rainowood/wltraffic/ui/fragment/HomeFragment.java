@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,7 +35,6 @@ import java.util.Map;
  * @Desc: 首页
  */
 public class HomeFragment extends BaseFragment implements View.OnClickListener, OnHttpListener {
-
     @Override
     protected int initLayout() {
         return R.layout.fragment_home;

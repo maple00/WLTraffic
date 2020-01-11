@@ -63,7 +63,6 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
     private Button loginCommit;
 
     DialogUtils dialog;
-    // SQLite
 
     @Override
     protected void initView() {
@@ -73,6 +72,17 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
         account.setText("");
         password.setText("");
 
+        //从个人中心退出登录---- 判断用的类型
+        String type = getIntent().getStringExtra("type");
+        if (type != null){                  // 从个人中心跳转
+            if ("平台".equals(type)){
+                forgetPwd.setVisibility(View.VISIBLE);
+            }else {
+                forgetPwd.setVisibility(View.GONE);
+            }
+        }else {                 // 从启动页跳转
+            forgetPwd.setVisibility(View.GONE);
+        }
         /**
          * 请求必要的权限, 在启动页或者登录页面获取权限
          */
@@ -154,6 +164,7 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
                         if (ListUtils.getSize(userList) > 0){
                            liteHelper.deleteTable(UserInfoBean.class);
                         }
+                        Log.e("sxs", "user:" + userInfo.toString());
                         ContentValues values = new ContentValues();
                         values.put("account", userInfo.getAccount());
                         values.put("password", userInfo.getPassword());

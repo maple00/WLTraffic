@@ -56,15 +56,14 @@
                 android:layout_gravity="end"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="展开"
                 android:textColor="@color/colorLabel"
                 android:textSize="12sp" />
 
             <ImageView
+                android:id="@+id/iv_up_down"
                 android:layout_width="9dp"
                 android:layout_height="5dp"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/ic_icon_down" />
+                android:layout_marginStart="5dp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -13,22 +13,24 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
-        android:gravity="center_vertical">
+        android:gravity="center"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:id="@+id/tv_user_funds"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/white"
             android:background="@drawable/shap_radio_blue2white"
             android:text="@string/salary_manager_user_funds"
             android:paddingBottom="11dp"
-            android:paddingTop="11dp"
-            android:paddingRight="22dp"
-            android:paddingLeft="22dp"/>
+            android:paddingTop="11dp"/>
 
         <TextView
             android:id="@+id/tv_output_statement"
@@ -37,13 +39,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/colorBlue1"
             android:background="@drawable/shap_radio_white2blue1"
             android:text="@string/salary_manager_output_statement"
             android:paddingBottom="11dp"
-            android:paddingTop="11dp"
-            android:paddingRight="22dp"
-            android:paddingLeft="22dp"/>
+            android:paddingTop="11dp"/>
 
         <TextView
             android:id="@+id/tv_salary_schedule"
@@ -52,13 +54,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/colorBlue1"
             android:background="@drawable/shap_radio_white2blue2"
             android:text="@string/salary_manager_salary_schedule"
             android:paddingBottom="11dp"
-            android:paddingTop="11dp"
-            android:paddingRight="22dp"
-            android:paddingLeft="22dp"/>
+            android:paddingTop="11dp" />
     </LinearLayout>
 
     <com.rainwood.tools.widget.MeasureListView

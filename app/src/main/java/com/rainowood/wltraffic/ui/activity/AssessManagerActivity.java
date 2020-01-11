@@ -166,16 +166,6 @@ public final class AssessManagerActivity extends BaseActivity implements View.On
         }
     }
 
-    private static class getNowTime {
-        private static int getYear() {
-            return DateTimeUtils.getNowYear();
-        }
-
-        private static int getMonth() {
-            return DateTimeUtils.getNowMonth();
-        }
-    }
-
     @Override
     public void onHttpFailure(HttpResponse result) {
 

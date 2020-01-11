@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -55,6 +56,8 @@ public class LaborAdapter extends BaseAdapter {
             holder.tv_note = convertView.findViewById(R.id.tv_note);
             holder.tv_last_time = convertView.findViewById(R.id.tv_last_time);
             holder.ll_show_or_hide = convertView.findViewById(R.id.ll_show_or_hide);
+            holder.tv_show_or_hide = convertView.findViewById(R.id.tv_show_or_hide);
+            holder.iv_up_down = convertView.findViewById(R.id.iv_up_down);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -70,26 +73,26 @@ public class LaborAdapter extends BaseAdapter {
         if (getItem(position).isHasHide()) {     // 收起了
             holder.tv_note.setVisibility(View.GONE);
             holder.tv_last_time.setVisibility(View.GONE);
-
+            holder.tv_show_or_hide.setText("展开");
+            holder.iv_up_down.setImageResource(R.drawable.ic_icon_down);
         } else {
             holder.tv_note.setVisibility(View.VISIBLE);
             holder.tv_last_time.setVisibility(View.VISIBLE);
+            holder.tv_show_or_hide.setText("收起");
+            holder.iv_up_down.setImageResource(R.drawable.ic_icon_up);
         }
 
-        holder.ll_show_or_hide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getItem(position).setHasHide(!getItem(position).isHasHide());
-                notifyDataSetChanged();
-            }
+        holder.ll_show_or_hide.setOnClickListener(v -> {
+            getItem(position).setHasHide(!getItem(position).isHasHide());
+            notifyDataSetChanged();
         });
 
         return convertView;
     }
 
     private class ViewHolder {
-        private TextView tv_name, tv_company, tv_tel, tv_note, tv_last_time;
+        private TextView tv_name, tv_company, tv_tel, tv_note, tv_last_time, tv_show_or_hide;
+        private ImageView iv_up_down;
         private LinearLayout ll_show_or_hide;
-
     }
 }

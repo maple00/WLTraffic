@@ -16,7 +16,7 @@ public interface IToastStrategy {
     /**
      * 长吐司显示的时长
      */
-    int LONG_DURATION_TIMEOUT = 3500;
+    int LONG_DURATION_TIMEOUT = 4000;
 
     /**
      * 绑定 Toast 对象

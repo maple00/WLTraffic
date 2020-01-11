@@ -90,12 +90,7 @@ public final class PayManagerActivity extends BaseActivity implements View.OnCli
         waitDialog();
         dialog.showDialog();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemPayManagerData(Contants.ITEM_ID, PayManagerActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemPayManagerData(Contants.ITEM_ID, PayManagerActivity.this)).start();
     }
 
     private void waitDialog() {
@@ -103,12 +98,7 @@ public final class PayManagerActivity extends BaseActivity implements View.OnCli
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     /*
@@ -198,28 +188,21 @@ public final class PayManagerActivity extends BaseActivity implements View.OnCli
         /**
          * 子项的点击事件
          */
-        adapter.setClickListener(new PayManagerContentAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(final int parenPosition, final int position) {
-                // 判断焦点在哪
-                transport.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        toast("parent: " + parenPosition + ", position: " + position);
-                        Intent intent = new Intent(PayManagerActivity.this, PayDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        if (transport.isFocusable()) {   // 交通局
-                            intent.putExtra("key", "transport");
-                            bundle.putSerializable("value", mLeftList.get(parenPosition).getTeamChildArr().get(position));
-                        } else {                 // 业主单位
-                            intent.putExtra("key", "ou");
-                            bundle.putSerializable("value", mRightList.get(parenPosition).getTeamChildArr().get(position));
-                        }
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
-                });
-            }
+        adapter.setClickListener((parenPosition, position) -> {
+            // 判断焦点在哪
+            transport.post(() -> {
+                Intent intent = new Intent(PayManagerActivity.this, PayDetailActivity.class);
+                Bundle bundle = new Bundle();
+                if (transport.isFocusable()) {   // 交通局
+                    intent.putExtra("key", "transport");
+                    bundle.putSerializable("value", mLeftList.get(parenPosition).getTeamChildArr().get(position));
+                } else {                 // 业主单位
+                    intent.putExtra("key", "ou");
+                    bundle.putSerializable("value", mRightList.get(parenPosition).getTeamChildArr().get(position));
+                }
+                intent.putExtras(bundle);
+                startActivity(intent);
+            });
         });
 
     }
@@ -229,24 +212,29 @@ public final class PayManagerActivity extends BaseActivity implements View.OnCli
 
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onHttpSucceed(HttpResponse result) {
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
         if ("1".equals(body.get("code"))) {
             Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
             // 交通局
-            float leftMoney = Float.parseFloat(data.get("leftMoney"));
+            String leftMoney = data.get("leftMoney");
+            String[] leftTotal = leftMoney.split("\\.");
             payLeftBean = new PayManagerBean();
-            payLeftBean.setTotalMoneyInt((int) leftMoney + "");
-            payLeftBean.setTotalMoneyFloat(String.valueOf(leftMoney % 1));
+            payLeftBean.setTotalMoneyInt(leftTotal[0]);
+            payLeftBean.setTotalMoneyFloat("." + leftTotal[1]);
             mLeftList = JsonParser.parseJSONArray(SubPayManagerBean.class, data.get("leftArr"));
 
             // 业主单位
-            float rightMoney = Float.parseFloat(data.get("rightMoney"));
+            String money = data.get("rightMoney");
+            String[] split = money.split("\\.");
             payRightBean = new PayManagerBean();
-            payRightBean.setTotalMoneyInt((int) rightMoney + "");
-            payRightBean.setTotalMoneyFloat(String.valueOf(rightMoney % 1));
+            payRightBean.setTotalMoneyInt(split[0]);
+            payRightBean.setTotalMoneyFloat("." + split[1]);
             mRightList = JsonParser.parseJSONArray(SubPayManagerBean.class, data.get("rightArr"));
+
+            Log.e("sxs", "data: " + payLeftBean.toString() + ", right: " + payRightBean.toString());
 
             dismissDialog();
             Message msg = new Message();

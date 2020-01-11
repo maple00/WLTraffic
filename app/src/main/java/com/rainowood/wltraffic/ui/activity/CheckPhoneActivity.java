@@ -14,10 +14,14 @@ import com.rainowood.wltraffic.okhttp.OnHttpListener;
 import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.utils.CountDownTimerUtils;
 import com.rainowood.wltraffic.utils.DialogUtils;
+import com.rainwood.tools.permission.OnPermission;
+import com.rainwood.tools.permission.Permission;
+import com.rainwood.tools.permission.XXPermissions;
 import com.rainwood.tools.view.ClearEditText;
 import com.rainwood.tools.view.InputTextHelper;
 import com.rainwood.tools.viewinject.ViewById;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,12 +60,7 @@ public final class CheckPhoneActivity extends BaseActivity implements OnClickLis
         InputTextHelper.with(this)
                 .addView(checkPhone)
                 .setMain(getCode)
-                .setListener(new InputTextHelper.OnInputTextListener() {
-                    @Override
-                    public boolean onInputChange(InputTextHelper helper) {
-                        return checkPhone.getText().toString().length() == 11;
-                    }
-                }).build();
+                .setListener(helper -> checkPhone.getText().toString().length() == 11).build();
 
         /*
         判断是发送验证码手机号还是修改手机号
@@ -106,12 +105,37 @@ public final class CheckPhoneActivity extends BaseActivity implements OnClickLis
                 }
                 break;
             case R.id.btn_get_code:
-                dialog = new DialogUtils(this, "加载中");
-                dialog.showDialog();
-                // 请求验证码
-                RequestPost.getVerfy(checkPhone.getText().toString().trim(), this);
-                // 记录最新填写的手机号
-                Contants.PhoneCheckVerify = checkPhone.getText().toString().trim();
+                // 动态的判断短信的读取权限
+                XXPermissions.with(getActivity())
+                        // 可设置被拒绝后继续申请，直到用户授权或者永久拒绝
+                        .constantRequest()
+                        .permission(Permission.RECEIVE_SMS, Permission.READ_SMS)    // 短信的读取权限
+                        .request(new OnPermission() {
+                            @Override
+                            public void hasPermission(List<String> granted, boolean isAll) {
+                                if (isAll){
+                                    dialog = new DialogUtils(CheckPhoneActivity.this, "加载中");
+                                    dialog.showDialog();
+                                    // 请求验证码
+                                    RequestPost.getVerfy(checkPhone.getText().toString().trim(), CheckPhoneActivity.this);
+                                    // 记录最新填写的手机号
+                                    Contants.PhoneCheckVerify = checkPhone.getText().toString().trim();
+                                }else {
+                                    toast("权限不足，请开启");
+                                }
+                            }
+
+                            @Override
+                            public void noPermission(List<String> denied, boolean quick) {
+                                if (quick) {
+                                    toast("被永久拒绝授权，请手动授予权限");
+                                    //如果是被永久拒绝就跳转到应用权限系统设置页面
+                                    XXPermissions.gotoPermissionSettings(getActivity());
+                                } else {
+                                    toast("获取权限失败");
+                                }
+                            }
+                        });
                 break;
         }
     }
@@ -125,6 +149,7 @@ public final class CheckPhoneActivity extends BaseActivity implements OnClickLis
     public void onHttpSucceed(HttpResponse result) {
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
         if ("1".equals(body.get("code"))){      // 请求成功
+            dialog.dismissDialog();
             openActivity(CodeVerifyActivity.class);
         }else {
             dialog.dismissDialog();

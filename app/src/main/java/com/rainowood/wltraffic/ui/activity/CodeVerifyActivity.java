@@ -12,16 +12,23 @@ import android.widget.TextView;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.common.Contants;
+import com.rainowood.wltraffic.okhttp.HttpResponse;
+import com.rainowood.wltraffic.okhttp.JsonParser;
+import com.rainowood.wltraffic.okhttp.OnHttpListener;
+import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.fragment.PersonalFragment;
 import com.rainowood.wltraffic.utils.CountDownTimerUtils;
+import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.viewinject.ViewById;
+
+import java.util.Map;
 
 /**
  * @Author: a797s
  * @Date: 2019/12/21 11:50
  * @Desc: 输入验证码界面
  */
-public final class CodeVerifyActivity extends BaseActivity implements View.OnClickListener {
+public final class CodeVerifyActivity extends BaseActivity implements View.OnClickListener, OnHttpListener {
 
     @Override
     protected int getLayoutId() {
@@ -95,16 +102,34 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
 
                 break;
             case R.id.btn_confirm:                              // 需要判断是修改手机号还是修改密码
-                if (0 == Contants.CHANGEFLAG){          // 修改密码
-                    openActivity(ResetPwdActivity.class);
+                waitDialog();
+                String checkCode = editText1.getText().toString().trim() + editText2.getText().toString().trim() +
+                        editText3.getText().toString().trim() + editText4.getText().toString().trim()
+                        + editText5.getText().toString().trim() + editText6.getText().toString().trim();
+                dialog.showDialog();
+                if (0 == Contants.CHANGEFLAG){          // 修改密码---及登录
+                    new Thread(() -> RequestPost.checkCodeLogin(checkCode, CodeVerifyActivity.this)).start();
                 }
 
                 if (1 == Contants.CHANGEFLAG){          // 修改手机号
-                    Intent intent = new Intent(this, PersonalFragment.class);
-                    startActivity(intent);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RequestPost.checkCodeLogin(checkCode, CodeVerifyActivity.this);
+                        }
+                    }).start();
                 }
                 break;
         }
+    }
+
+    private DialogUtils dialog;
+    private void waitDialog() {
+        dialog = new DialogUtils(this, "加载中");
+    }
+
+    private void dismissDialog() {
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     int index = 1;
@@ -158,9 +183,10 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
                 && !TextUtils.isEmpty(editText5.getText().toString().trim()) && !TextUtils.isEmpty(editText6.getText().toString().trim())) {
 
             // 获取输入的验证码
-            toast("输入的验证码: " + editText1.getText().toString().trim() + editText2.getText().toString().trim() +
+           /* toast("输入的验证码: " + editText1.getText().toString().trim() + editText2.getText().toString().trim() +
                     editText3.getText().toString().trim() + editText4.getText().toString().trim()
-                    + editText5.getText().toString().trim() + editText6.getText().toString().trim());
+                    + editText5.getText().toString().trim() + editText6.getText().toString().trim());*/
+
             index++;
             if (index % 2 == 0) {
                 for (EditText editText : mArray) {
@@ -170,6 +196,31 @@ public final class CodeVerifyActivity extends BaseActivity implements View.OnCli
                 editText1.setFocusableInTouchMode(true);
                 editText1.requestFocus();
             }
+        }
+    }
+
+    @Override
+    public void onHttpFailure(HttpResponse result) {
+
+    }
+
+    @Override
+    public void onHttpSucceed(HttpResponse result) {
+        Map<String, String> body = JsonParser.parseJSONObject(result.body());
+        if ("1".equals(body.get("code"))){
+            dismissDialog();
+            toast(body.get("warn"));
+            if (Contants.CHANGEFLAG == 0){
+                openActivity(ResetPwdActivity.class);
+            }
+
+            if (Contants.CHANGEFLAG == 1){
+                Intent intent = new Intent(this, PersonalFragment.class);
+                startActivity(intent);
+            }
+        }else {
+            dismissDialog();
+            toast(body.get("warn"));
         }
     }
 }

@@ -63,12 +63,7 @@ public class AssessDeductionAdapter extends BaseAdapter {
         holder.tv_score.setText(getItem(position).getPoint());          // 分数
         holder.tv_label.setText(getItem(position).getPointMx());          // 扣分项
 
-        holder.ll_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemListener.OnItemClick(position);
-            }
-        });
+        holder.ll_item.setOnClickListener(v -> itemListener.OnItemClick(position));
 
         return convertView;
     }

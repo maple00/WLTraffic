@@ -21,6 +21,23 @@ public class UserInfoBean implements Serializable {
     private String touxiang;             // logo地址
     private String companyName;         // 公司
 
+    @Override
+    public String toString() {
+        return "UserInfoBean{" +
+                "adid='" + adid + '\'' +
+                ", type='" + type + '\'' +
+                ", adName='" + adName + '\'' +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", sex='" + sex + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", address='" + address + '\'' +
+                ", adtel='" + adtel + '\'' +
+                ", touxiang='" + touxiang + '\'' +
+                ", companyName='" + companyName + '\'' +
+                '}';
+    }
+
     public String getAccount() {
         return account;
     }

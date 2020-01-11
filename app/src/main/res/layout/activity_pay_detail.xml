@@ -2,71 +2,87 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include layout="@layout/activity_action"/>
+    <include layout="@layout/activity_action" />
 
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:text="@string/pay_detail_values"
-        android:textSize="15sp"
-        android:textColor="@color/textColor"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_pay_money"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/textColor"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="30dp">
 
-    <View android:layout_marginTop="50dp"
-        style="@style/HorizontalLineStyle"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:gravity="center_horizontal"
+                android:text="@string/pay_detail_values"
+                android:textColor="@color/textColor"
+                android:textSize="15sp" />
 
-    <com.rainwood.tools.widget.MeasureListView
-        android:id="@+id/lv_money_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="25dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="25dp"
-        android:listSelector="@android:color/transparent"/>
+            <TextView
+                android:id="@+id/tv_pay_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/textColor"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-    <View android:layout_marginTop="25dp"
-        style="@style/HorizontalLineStyle"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"/>
+            <View
+                style="@style/HorizontalLineStyle"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="30dp" />
 
-    <TextView
-        android:id="@+id/tv_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="合同附件"
-        android:textSize="15sp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/textColor"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"/>
+            <com.rainwood.tools.widget.MeasureListView
+                android:id="@+id/lv_money_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="30dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="25dp"
+                android:listSelector="@android:color/transparent" />
 
-    <com.rainwood.tools.widget.MeasureListView
-        android:id="@+id/lv_pay_attach"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:dividerHeight="30dp"
-        android:divider="@android:color/transparent"
-        android:listSelector="@android:color/transparent"/>
+            <View
+                style="@style/HorizontalLineStyle"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="30dp" />
+
+            <TextView
+                android:id="@+id/tv_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:text="合同附件"
+                android:textColor="@color/textColor"
+                android:textSize="15sp" />
+
+            <com.rainwood.tools.widget.MeasureListView
+                android:id="@+id/lv_pay_attach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="30dp"
+                android:listSelector="@android:color/transparent" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

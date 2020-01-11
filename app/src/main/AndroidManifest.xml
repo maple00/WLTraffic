@@ -19,6 +19,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 安装包的权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 接收短信权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!-- 读取短信权限 -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+
 
     <!-- Required -->
     <permission android:name="${applicationId}.permission.JPUSH_MESSAGE"
@@ -324,7 +329,15 @@
             android:name=".service.ApiAutoUpdateService"
             android:enabled="true"
             android:exported="true" />
+
+        <!-- 短信广播的接收者，设置为最高接收级别 1000-->
+        <receiver android:name=".service.SMSReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
         <!-- service  end-->
+
 
         <!-- 极光推送-->
         <!-- Rich push 核心功能 since 2.0.6-->
