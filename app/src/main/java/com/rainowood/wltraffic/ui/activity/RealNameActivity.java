@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -117,7 +118,6 @@ public final class RealNameActivity extends BaseActivity implements View.OnClick
                     RealNameAdapter nameAdapter = new RealNameAdapter(RealNameActivity.this, data);
                     realList.setAdapter(nameAdapter);
                     nameAdapter.setClickListener(position -> {
-                        //toast("点击了：" + position);
                         Intent intent = new Intent(RealNameActivity.this, RealNameDetailActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("value", data.get(position));

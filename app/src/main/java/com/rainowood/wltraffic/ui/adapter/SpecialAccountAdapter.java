@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.domain.SubSpecialAccountListBean;
+import com.rainwood.tools.widget.MeasureListView;
 
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class SpecialAccountAdapter extends BaseAdapter {
             holder.tv_money = convertView.findViewById(R.id.tv_money);
             holder.tv_time = convertView.findViewById(R.id.tv_time);
             holder.tv_note = convertView.findViewById(R.id.tv_note);
+            holder.lv_attach_list = convertView.findViewById(R.id.lv_attach_list);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -62,10 +64,14 @@ public class SpecialAccountAdapter extends BaseAdapter {
         holder.tv_money.setText("￥ " + getItem(position).getMoney());              // 支付金额
         holder.tv_note.setText(getItem(position).getText());                // 备注
 
+        ItemAttachListAdapter attachListAdapter = new ItemAttachListAdapter(mContext, getItem(position).getFile());
+        holder.lv_attach_list.setAdapter(attachListAdapter);
+
         return convertView;
     }
 
     private class ViewHolder {
         private TextView tv_money, tv_time, tv_note;
+        private MeasureListView lv_attach_list;
     }
 }

@@ -60,7 +60,7 @@ public class SubProjectProgressAdapter extends BaseAdapter {
         }
 
         holder.tv_title.setText(getItem(position).getName());
-        holder.tv_time.setText(getItem(position).getTime());
+        holder.tv_time.setText(getItem(position).getStatusTime());
 
         // 是否完成
         if ("是".equals(getItem(position).getImgState())) {        // 如果完成了，则标记

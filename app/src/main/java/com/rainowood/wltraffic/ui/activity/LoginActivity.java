@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -116,6 +117,22 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    private long mExitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {         // 回到Home页
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                toast("再按一次退出");
+                mExitTime = System.currentTimeMillis();
+                return false;
+            } else {
+                App.backHome(this);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -185,43 +202,6 @@ public final class LoginActivity extends BaseActivity implements View.OnClickLis
                 toast(body.get("warn"));
             }
         }
-    }
-
-    /**
-     *  获取必要的权限，没用获取完，则不让登录
-     */
-    private void getMustPermission() {
-        XXPermissions.with(this)
-                .constantRequest()
-                .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE)            // 文件的读取权限
-                .request(new OnPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
-                        if (isAll) {
-                            //toast("获取权限成功");
-                            //openActivity(TbsActivity.class);
-                        } else {
-                            toast("权限未授予成功！该应用将不能完整运行");
-                            // 退出App , 如果当前App在前台运行
-                            if (App.isRunningForeground(LoginActivity.this, "com.rainowood.wltraffic")){
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.addCategory(Intent.CATEGORY_HOME);
-                                startActivity(intent);
-                            }
-                        }
-                    }
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-                        if (quick) {
-                            toast("被永久拒绝授权，请手动授予权限");
-                            //如果是被永久拒绝就跳转到应用权限系统设置页面
-                            XXPermissions.gotoPermissionSettings(getActivity());
-                        } else {
-                            toast("获取权限失败");
-                        }
-                    }
-                });
     }
 
     @SuppressLint("HandlerLeak")

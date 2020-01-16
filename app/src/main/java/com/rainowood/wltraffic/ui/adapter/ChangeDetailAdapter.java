@@ -2,6 +2,7 @@ package com.rainowood.wltraffic.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public class ChangeDetailAdapter extends BaseAdapter {
 
+    private static final String TAG = "ChangeDetailAdapter";
     private Context mContext;
     private List<SubItemLabelBean> mList;
 

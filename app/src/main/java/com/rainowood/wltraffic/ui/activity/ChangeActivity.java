@@ -100,6 +100,8 @@ public final class ChangeActivity extends BaseActivity implements View.OnClickLi
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
         if ("1".equals(body.get("code"))) {
             Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
+            Log.d(TAG, "sxsData: " + body.get("data"));
+
             String changeMoney = data.get("changeMoney");                       // 累计变更金额
             String aboutMoney = data.get("aboutMoney");                         // 超概金额
             moneyChange.add(changeMoney);

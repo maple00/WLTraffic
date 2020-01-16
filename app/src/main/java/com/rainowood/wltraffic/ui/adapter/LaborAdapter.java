@@ -27,6 +27,7 @@ public class LaborAdapter extends BaseAdapter {
     public LaborAdapter(Context mContext, List<LaborBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
+
     }
 
     @Override

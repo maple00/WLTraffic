@@ -1,5 +1,6 @@
 package com.rainowood.wltraffic.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class PayDetailAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -55,7 +57,12 @@ public class PayDetailAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_plan_money.setText(getItem(position).getTitle());
-        holder.tv_plan_money_values.setText(getItem(position).getContent());
+
+        if (position < 3){
+            holder.tv_plan_money_values.setText("￥" + getItem(position).getContent());
+        }else {
+            holder.tv_plan_money_values.setText(getItem(position).getContent());
+        }
         return convertView;
     }
 

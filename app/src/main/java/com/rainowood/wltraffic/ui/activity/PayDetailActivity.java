@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -76,14 +77,9 @@ public final class PayDetailActivity extends BaseActivity implements View.OnClic
             ItemAttachListAdapter attachmentListAdapter = new ItemAttachListAdapter(this, content.getFileTypeFile());
             payAttach.setAdapter(attachmentListAdapter);
         }
-
-        payMoney.setText(content.getPayMoney());
-
+        payMoney.setText("￥" + content.getPayMoney());
     }
 
-    /*
-     模拟数据
-    */
     private List<SubItemLabelBean> mList;
     private String[] transportLabels = {"计划金额", "计划变更金额", "变更后累计金额", "支付时间", "更新时间"};
     private String[] ouLabels = {"合同金额", "合同变更金额", "变更后累计金额", "支付时间", "更新时间"};

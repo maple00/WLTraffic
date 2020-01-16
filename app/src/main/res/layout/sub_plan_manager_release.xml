@@ -12,11 +12,19 @@
         android:textColor="@color/textColor"
         android:textSize="20sp" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_plan_arrived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp" />
+
     <com.rainwood.tools.widget.MeasureListView
         android:id="@+id/lv_item_word_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="40dp"
         android:listSelector="@android:color/transparent" />

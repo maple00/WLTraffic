@@ -49,7 +49,6 @@ public final class RealNameDetailActivity extends BaseActivity implements View.O
         if (value != null){
             detailDes.setText(value.getText());
             updateTime.setText(value.getUpdateTime());
-
             // 附件
             ItemAttachListAdapter wordListAdapter = new ItemAttachListAdapter(this, value.getFile());
             attachWord.setAdapter(wordListAdapter);

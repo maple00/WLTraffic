@@ -26,7 +26,6 @@ import com.rainowood.wltraffic.okhttp.OnHttpListener;
 import com.rainowood.wltraffic.request.RequestPost;
 import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainowood.wltraffic.ui.adapter.TenderAdapter;
-import com.rainowood.wltraffic.ui.adapter.TenderSubAdapter;
 import com.rainowood.wltraffic.utils.DialogUtils;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
@@ -229,10 +228,6 @@ public final class TenderActivity extends BaseActivity implements View.OnClickLi
 
     // 请求的数据
     TenderManagerBean data;
-
-    /*
-       模拟数据
-        */
     // 代理公司
     private String[] agentCompany = {"代理公司", "代理费"};
     // 公司审核,专家审核
@@ -243,7 +238,7 @@ public final class TenderActivity extends BaseActivity implements View.OnClickLi
     // 挂网
     private String[] nets = {"挂网", "挂网时间", "预计开标时间："};
     // 质疑答疑、补漏
-    private String[] titles = {"质疑答疑", "补漏"};
+    private String[] titles = {"质疑答疑", "补遗"};
     // 开标
     private String[] bidOpens = {"开标", "中标金额"};
     // 公示
@@ -260,7 +255,6 @@ public final class TenderActivity extends BaseActivity implements View.OnClickLi
         dialog.showDialog();
         //
         new Thread(() -> RequestPost.getItemTenderData(Contants.ITEM_ID, TenderActivity.this)).start();
-
     }
 
     @Override
@@ -359,11 +353,11 @@ public final class TenderActivity extends BaseActivity implements View.OnClickLi
                     tenderAdapter.setItemClickListener((parentPosition, position) -> {                 // 页面详情
                         Intent intent = new Intent(TenderActivity.this, TenderListDetailActivity.class);
                         Bundle bundle = new Bundle();
-                        if (parentPosition == 0){
+                        if (parentPosition == 0) {
                             bundle.putSerializable("value", tenderList.get(parentPosition).getOne().get(position));
                             bundle.putString("key", "question");
                         }
-                        if (parentPosition == 1){
+                        if (parentPosition == 1) {
                             bundle.putSerializable("value", tenderList.get(parentPosition).getTwo().get(position));
                             bundle.putString("key", "bare");
                         }

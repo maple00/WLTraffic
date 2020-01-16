@@ -77,20 +77,22 @@ public final class ChangeManagerDetailActivity extends BaseActivity implements V
         content = (SubChangeBean) getIntent().getSerializableExtra("content");
 
         changeContentList = new ArrayList<>();
-        for (String mTitle : mTitles) {
+        for (int i = 0; i < mTitles.length; i++) {
             SubItemLabelBean label = new SubItemLabelBean();
             // 变更内容
-            label.setTitle(mTitle);
-            label.setContent(content.getChangeMatter());
+            if (!TextUtils.isEmpty(content.getChangeMatter()) && i == 0){
+                label.setTitle(mTitles[i]);
+                label.setContent(content.getChangeMatter());
+            }
             // 变更金额
-            if (!TextUtils.isEmpty(content.getChangeMoney())) {
-                label.setTitle(mTitle);
+            if (!TextUtils.isEmpty(content.getChangeMoney()) && i == 1) {
+                label.setTitle(mTitles[i]);
                 label.setContent(content.getChangeMoney());
             }
             // 变更依据
-            if (!TextUtils.isEmpty(content.getChangeBasis())) {
-                label.setTitle(mTitle);
-                label.setContent(content.getChangeMoney());
+            if (!TextUtils.isEmpty(content.getChangeBasis()) && i == 2) {
+                label.setTitle(mTitles[i]);
+                label.setContent(content.getChangeBasis());
             }
             changeContentList.add(label);
         }

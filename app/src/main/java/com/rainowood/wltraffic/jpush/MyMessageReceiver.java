@@ -55,7 +55,8 @@ public class MyMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onNotifyMessageArrived(Context context, NotificationMessage message) {
         // 有通知送达的时候，添加桌面红点
-        Badge.add(context);
+        Log.d(TAG, "JPush is arrived");
+        Badge.setNumber(context, 1);
     }
 
     @Override

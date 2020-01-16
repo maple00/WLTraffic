@@ -64,6 +64,7 @@ public final class NotifyModuleActivity extends BaseActivity implements View.OnC
         NotifyBean notify = (NotifyBean) getIntent().getSerializableExtra("notify");
 
         postDelayed(() -> {
+
             status.setText(notify.getTop().getState() + "维权公示牌");
             NotifyAdapter safeAdapter = new NotifyAdapter(NotifyModuleActivity.this, notify.getList());
             notifyContent.setAdapter(safeAdapter);

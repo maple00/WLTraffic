@@ -152,8 +152,7 @@ public final class FarmersSalaryManagerActivity extends BaseActivity implements 
                 dismissDialog();
                 msg.what = 0xA1;
             }
-            if (result.url().contains("library/mData.php?type=nonWorkersState5")) {
-                Log.e("sxs", "body: " + body.get("data"));
+            if (result.url().contains("library/mData.php?type=nonWorkersState5")) {         // 通报
                 notify = JsonParser.parseJSONObject(NotifyBean.class, body.get("data"));
                 dismissDialog();
                 msg.what = 0xA2;
@@ -192,7 +191,7 @@ public final class FarmersSalaryManagerActivity extends BaseActivity implements 
                         }
                     }
                     break;
-                case 0xA1:
+                case 0xA1:                      // 专户制
                     if ("已签订".equals(specialAccount.getTop().getState())) {
                         Intent intent = new Intent(FarmersSalaryManagerActivity.this, SpecialAccountActivity.class);
                         Bundle bundle = new Bundle();
@@ -212,7 +211,7 @@ public final class FarmersSalaryManagerActivity extends BaseActivity implements 
                         startActivity(intent);
                     }
                     break;
-                case 0xA2:
+                case 0xA2:                  // 通报
                     if ("已设置".equals(notify.getTop().getState())) {                 // 已设置
                         Intent intent = new Intent(FarmersSalaryManagerActivity.this, NotifyModuleActivity.class);
                         Bundle bundle = new Bundle();

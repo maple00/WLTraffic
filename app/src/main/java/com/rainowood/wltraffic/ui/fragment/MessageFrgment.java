@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +34,8 @@ import java.util.Map;
  * @Desc: 消息
  */
 public class MessageFrgment extends BaseFragment implements View.OnClickListener, OnHttpListener {
+
+    private static final String TAG = "MessageFrgment";
 
     @Override
     protected int initLayout() {
@@ -65,6 +69,32 @@ public class MessageFrgment extends BaseFragment implements View.OnClickListener
         tvHomeTitleOne.setText("待办事项");
         tvHomeTitleTwo.setText("通知公告");
         mListView = view.findViewById(R.id.lv_message);
+
+        // 滑动监听
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            boolean isLastRow = false;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (isLastRow && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    isLastRow = false;
+                }
+            }
+
+            /**
+             * @param view
+             * @param firstVisibleItem 当前能看见的第一个列表项ID
+             * @param visibleItemCount  当前能看见的列表项的个数（小半个也算）
+             * @param totalItemCount    列表项共数
+             */
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //判断是否滚到最后一行
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+                    toast("我是有底线的");
+                    isLastRow = true;
+                }
+            }
+        });
     }
 
     @Override

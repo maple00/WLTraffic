@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.common.ActivityStackManager;
+import com.rainowood.wltraffic.common.App;
 import com.rainowood.wltraffic.common.Contants;
 import com.rainowood.wltraffic.common.StatusManager;
 import com.rainowood.wltraffic.db.SQLiteHelper;
@@ -306,24 +307,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private static int rebackFlag = -1;
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {         // 回到Home页
-            if (rebackFlag < 0) {
-                toast("再按一次退出到桌面");
-                rebackFlag++;
-                return false;
-            } else {
-                rebackFlag = -1;
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addCategory(Intent.CATEGORY_HOME);
-                startActivity(intent);
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

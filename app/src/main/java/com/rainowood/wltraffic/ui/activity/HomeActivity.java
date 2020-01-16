@@ -1,12 +1,14 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
+import com.rainowood.wltraffic.common.App;
 import com.rainowood.wltraffic.ui.fragment.HomeFragment;
 import com.rainowood.wltraffic.ui.fragment.MessageFrgment;
 import com.rainowood.wltraffic.ui.fragment.PersonalFragment;
@@ -37,5 +39,22 @@ public final class HomeActivity extends BaseActivity {
         // 默认显示第一个
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                 mFragmentSparseArray.get(R.id.home_tab)).commit();
+    }
+
+
+    private long mExitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {         // 回到Home页
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                toast("再按一次退出");
+                mExitTime = System.currentTimeMillis();
+                return false;
+            } else {
+                App.backHome(this);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

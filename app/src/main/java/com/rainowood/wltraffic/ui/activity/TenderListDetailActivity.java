@@ -1,6 +1,5 @@
 package com.rainowood.wltraffic.ui.activity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -8,12 +7,9 @@ import android.widget.TextView;
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
 import com.rainowood.wltraffic.domain.SubQuestionBean;
-import com.rainowood.wltraffic.domain.SubQuestionsAndBareBean;
 import com.rainowood.wltraffic.ui.adapter.ItemAttachListAdapter;
 import com.rainwood.tools.viewinject.ViewById;
 import com.rainwood.tools.widget.MeasureListView;
-
-import java.io.Serializable;
 
 /**
  * @Author: a797s
@@ -46,9 +42,9 @@ public final class TenderListDetailActivity extends BaseActivity implements View
         btnBack.setOnClickListener(this);
 
         SubQuestionBean value = (SubQuestionBean) getIntent().getSerializableExtra("value");
-        if (value != null){                 // 从招投标管理过来
+        if (value != null) {                 // 从招投标管理过来
             String key = (String) getIntent().getCharSequenceExtra("key");
-            if ("question".equals(key)){        // 质疑答疑
+            if ("question".equals(key)) {        // 质疑答疑
                 pageTitle.setText("质疑答疑详情");
                 title.setText(value.getProblem());
                 content.setText(value.getText());
@@ -58,7 +54,7 @@ public final class TenderListDetailActivity extends BaseActivity implements View
                 ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, value.getAnswerFile());
                 answer.setAdapter(adapterA);
             }
-            if ("bare".equals(key)){            // 补漏列表
+            if ("bare".equals(key)) {            // 补漏列表
                 pageTitle.setText("补遗详情");
                 title.setText(value.getProblem());
                 content.setText(value.getText());
@@ -69,11 +65,11 @@ public final class TenderListDetailActivity extends BaseActivity implements View
                 ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, value.getAnswerFile());
                 answer.setAdapter(adapterA);
             }
-        }else {                         // 从列表过来
+        } else {                         // 从列表过来
             String key = (String) getIntent().getCharSequenceExtra("key");
             // 数据详情
             SubQuestionBean question = (SubQuestionBean) getIntent().getSerializableExtra("question");
-            if ("question".equals(key)){        // 质疑答疑
+            if ("question".equals(key)) {        // 质疑答疑
                 pageTitle.setText("质疑答疑详情");
                 title.setText(question.getProblem());
                 content.setText(question.getText());
@@ -83,7 +79,7 @@ public final class TenderListDetailActivity extends BaseActivity implements View
                 ItemAttachListAdapter adapterA = new ItemAttachListAdapter(this, question.getAnswerFile());
                 answer.setAdapter(adapterA);
             }
-            if ("bare".equals(key)){            // 补漏列表
+            if ("bare".equals(key)) {            // 补漏列表
                 pageTitle.setText("补遗详情");
                 title.setText(question.getProblem());
                 content.setText(question.getText());
@@ -99,7 +95,7 @@ public final class TenderListDetailActivity extends BaseActivity implements View
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_back:
                 finish();
                 break;

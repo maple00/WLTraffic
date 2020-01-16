@@ -12,6 +12,15 @@ public class SubItemLabelBean implements Serializable {
     private String title;       // 标题
     private String content;     // 内容
 
+    @Override
+    public String toString() {
+        return "SubItemLabelBean{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", isVisibility=" + isVisibility +
+                '}';
+    }
+
     private boolean isVisibility;
 
     public String getTitle() {

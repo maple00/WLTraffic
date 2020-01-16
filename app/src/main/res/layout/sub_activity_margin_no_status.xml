@@ -49,7 +49,7 @@
         <ImageView
             android:layout_width="23dp"
             android:layout_height="23dp"
-            android:background="@drawable/ic_icon_success_fff"/>
+            android:background="@drawable/ic_icon_no_finish_white"/>
 
         <TextView
             android:id="@+id/tv_no_status"

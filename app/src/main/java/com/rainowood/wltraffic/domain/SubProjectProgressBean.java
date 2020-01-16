@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class SubProjectProgressBean implements Serializable {
 
     private String name;               // 进度标题
-    private String time;                // 进度完成时间
+    private String statusTime;                // 进度完成时间
     private String imgState;         // 是否完成
 
     public String getName() {
@@ -21,12 +21,12 @@ public class SubProjectProgressBean implements Serializable {
         this.name = name;
     }
 
-    public String getTime() {
-        return time;
+    public String getStatusTime() {
+        return statusTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setStatusTime(String statusTime) {
+        this.statusTime = statusTime;
     }
 
     public String getImgState() {

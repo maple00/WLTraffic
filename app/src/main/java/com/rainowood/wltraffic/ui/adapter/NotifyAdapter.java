@@ -2,6 +2,7 @@ package com.rainowood.wltraffic.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,14 @@ import java.util.List;
  */
 public class NotifyAdapter extends BaseAdapter {
 
+    private static final String TAG = "NotifyAdapter";
     private Context mContext;
     private List<NotifyContentBean> mList;
 
     public NotifyAdapter(Context mContext, List<NotifyContentBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -62,32 +65,6 @@ public class NotifyAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         //
-        /*String content = getItem(position).getCaseDescriptio();
-        String beforeStr = content.substring(0, 3);         // 截取之前的字符
-        String afterStr = content.substring(3);             // 截取之后的字符
-        Spanned html = null;
-        if ("未整改".equals(beforeStr)) {
-            html = Html.fromHtml("<font color=\"" + mContext.getResources().getColor(R.color.colorPercentage) + "\" font-size=\"12sp\">"
-                    + beforeStr + "\t" + "</font>" + afterStr);
-        }
-
-        if ("整改中".equals(beforeStr)) {
-            html = Html.fromHtml("<font color=\"" + mContext.getResources().getColor(R.color.colorBlue1) + "\" font-size=\"12sp\">"
-                    + beforeStr + "\t" + "</font>" + afterStr);
-        }
-
-        if ("已整改".equals(beforeStr)) {
-            html = Html.fromHtml("<font color=\"" + mContext.getResources().getColor(R.color.colorSuccess) + "\" font-size=\"12sp\">"
-                    + beforeStr + "\t" + "</font>" + afterStr);
-        }
-
-        if ("待处理".equals(beforeStr)) {
-            html = Html.fromHtml("<font color=\"" + mContext.getResources().getColor(R.color.colorRed1) + "\" font-size=\"12sp\">"
-                    + beforeStr + "\t" + "</font>" + afterStr);
-        }
-        holder.tv_content.setText(html);
-        */
-
         String state = mList.get(position).getChangeState();
         if("待处理".equals(state)){
             holder.tv_state.setBackgroundResource(R.color.colorCancel);
@@ -98,12 +75,12 @@ public class NotifyAdapter extends BaseAdapter {
         }else {
             holder.tv_state.setBackgroundResource(R.color.colorSuccess);
         }
+        // 状态
         holder.tv_state.setText(mList.get(position).getChangeState());
+        // 主要内容
         holder.tv_content.setText(mList.get(position).getMatter());
 
-        notifyDataSetChanged();
         holder.ll_content.setOnClickListener(v -> contentOnClick.contentClick(position));
-
         return convertView;
     }
 

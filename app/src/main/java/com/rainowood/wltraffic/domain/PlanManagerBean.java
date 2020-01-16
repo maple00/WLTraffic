@@ -21,6 +21,7 @@ public class PlanManagerBean implements Serializable {
     /*
     计划下达
      */
+    private String planNo;                      // 计划下达title
     private List<AttachBean>  planWordList;        // 计划文档书
     private String constructionContent;     // 建设内容
     private String investmentScale;         // 投资规模
@@ -34,6 +35,14 @@ public class PlanManagerBean implements Serializable {
     private String striveInvesment;         // 已争取的投资
     private String simulationSriveInvesment;    // 拟争取投资
 
+
+    public String getPlanNo() {
+        return planNo;
+    }
+
+    public void setPlanNo(String planNo) {
+        this.planNo = planNo;
+    }
 
     public String getItemName() {
         return itemName;

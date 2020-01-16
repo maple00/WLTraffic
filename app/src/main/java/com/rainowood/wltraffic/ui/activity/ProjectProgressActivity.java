@@ -105,14 +105,11 @@ public final class ProjectProgressActivity extends BaseActivity implements View.
     @Override
     public void onHttpSucceed(HttpResponse result) {
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
-        Log.e("sxs", "body: " + JsonParser.parseJSONArray(body.get("data")));
         if ("1".equals(body.get("code"))) {
             mList = JsonParser.parseJSONArray(ProjectProgressBean.class, body.get("data"));
-
             Message msg = new Message();
             msg.what = 0x1633;
             mHandler.sendMessage(msg);
-
             dismissDialog();
         } else {
             dismissDialog();
@@ -131,7 +128,7 @@ public final class ProjectProgressActivity extends BaseActivity implements View.
                     managerVertical.setOrientation(LinearLayoutManager.VERTICAL);       // 纵向
                     // 设置Item之间的间距
                     HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
-                    stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, MeasureUtil.dip2px(ProjectProgressActivity.this, 30)); // 下间距
+                    stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, MeasureUtil.dip2px(ProjectProgressActivity.this, 20)); // 下间距
                     rclContentList.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
                     rclContentList.setLayoutManager(managerVertical);
                     rclContentList.setHasFixedSize(true);

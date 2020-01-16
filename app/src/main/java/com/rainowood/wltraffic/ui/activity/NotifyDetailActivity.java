@@ -1,6 +1,7 @@
 package com.rainowood.wltraffic.ui.activity;
 
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,6 +35,8 @@ public class NotifyDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView changeLimit;
     @ViewById(R.id.tv_tel)
     private TextView tel;
+    @ViewById(R.id.tv_comment)
+    private TextView comment;
     @ViewById(R.id.lv_attach_list)
     private MeasureListView topAttachList;
 
@@ -67,6 +70,12 @@ public class NotifyDetailActivity extends BaseActivity implements View.OnClickLi
             tel.setText(Html.fromHtml("<font color=\"" + getResources().getColor(R.color.colorLabel) + "\" font-size=\"12sp\">"
                     + "联系电话 " + "\t" + "</font>" + "<font color=\"" + getResources().getColor(R.color.colorWord) + "\" font-size=\"12sp\">"
                     + content.getTel() + "\t" + "</font>"));
+            // 备注
+            if (TextUtils.isEmpty(content.getText())){
+                comment.setText("暂无备注");
+            }else {
+                comment.setText(content.getText());
+            }
             // 交通局附件
             ItemAttachListAdapter listAdapter = new ItemAttachListAdapter(NotifyDetailActivity.this, content.getTongFile());
             topAttachList.setAdapter(listAdapter);
@@ -80,7 +89,7 @@ public class NotifyDetailActivity extends BaseActivity implements View.OnClickLi
             ItemAttachListAdapter changingAdapter = new ItemAttachListAdapter(NotifyDetailActivity.this, content.getChangeIngFile());
             attachChanging.setAdapter(changingAdapter);
             // 未整改
-            contentUnChange.setText(content.getChangeIng());
+            contentUnChange.setText(content.getChangeNot());
             ItemAttachListAdapter unUhangedAdapter = new ItemAttachListAdapter(NotifyDetailActivity.this, content.getChangeNotFile());
             attachUnChange.setAdapter(unUhangedAdapter);
 

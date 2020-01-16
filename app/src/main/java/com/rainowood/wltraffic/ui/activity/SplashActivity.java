@@ -39,7 +39,6 @@ public final class SplashActivity extends BaseActivity implements Animation.Anim
         return R.layout.activity_splash;
     }
 
-    private int splashMethod = -1;          // 启动方式
     private static final int ANIM_TIME = 1000;      // 动画时长
 
     @ViewById(R.id.iv_splash_bg)

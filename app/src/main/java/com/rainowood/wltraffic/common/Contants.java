@@ -8,7 +8,7 @@ package com.rainowood.wltraffic.common;
 public final class Contants {
 
     /*** 后台访问*/
-    // 根URI
+    // BaseURI
     public static final String BASE_URI = "https://www.yumukeji.cn/project/wljtj/";
     // 测试接口
     public static final String PRE_URI = "library/mData.php?type=test";

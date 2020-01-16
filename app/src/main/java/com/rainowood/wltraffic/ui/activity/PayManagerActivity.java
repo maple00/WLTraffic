@@ -101,9 +101,6 @@ public final class PayManagerActivity extends BaseActivity implements View.OnCli
         postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
-    /*
-    模拟数据
-    */
     PayManagerBean payLeftBean;                 // title
     PayManagerBean payRightBean;                 // title
     private List<SubPayManagerBean> mLeftList;  // 左边支付列表

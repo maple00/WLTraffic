@@ -16,7 +16,7 @@ public class LaborBean implements Serializable {
     private String tel;                 // 联系方式
     private String text;                // 备注
     private String updateTime;          // 更新时间
-    private boolean hasHide;        // 是否收起,默认收起
+    private boolean hasHide = true;        // 是否收起,默认收起
 
     public String getId() {
         return id;

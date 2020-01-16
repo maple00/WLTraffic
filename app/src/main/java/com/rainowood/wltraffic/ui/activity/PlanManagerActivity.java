@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.rainowood.wltraffic.R;
 import com.rainowood.wltraffic.base.BaseActivity;
@@ -68,6 +69,8 @@ public final class PlanManagerActivity extends BaseActivity implements View.OnCl
     private TextView tvQueryNnotify;
 
     // 计划下达
+    @ViewById(R.id.tv_plan_arrived)
+    private AppCompatTextView planArrived;
     @ViewById(R.id.lv_item_word_content)
     private MeasureListView wordContent;
     @ViewById(R.id.tv_construction_content)
@@ -118,12 +121,7 @@ public final class PlanManagerActivity extends BaseActivity implements View.OnCl
         waitDialog();
         dialog.showDialog();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RequestPost.getItemPlanManagerData(Contants.ITEM_ID, PlanManagerActivity.this);
-            }
-        }).start();
+        new Thread(() -> RequestPost.getItemPlanManagerData(Contants.ITEM_ID, PlanManagerActivity.this)).start();
     }
 
     private void waitDialog() {
@@ -131,12 +129,7 @@ public final class PlanManagerActivity extends BaseActivity implements View.OnCl
     }
 
     private void dismissDialog() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismissDialog();
-            }
-        }, 500);
+        postDelayed(() -> dialog.dismissDialog(), 500);
     }
 
     @Override
@@ -156,25 +149,19 @@ public final class PlanManagerActivity extends BaseActivity implements View.OnCl
      * @param hideRegion  隐藏的区域
      */
     private void setOnClickAndShowDetail(final TextView text, final LinearLayout clickRegion, final TextView hideRegion, final String title) {
-        text.post(new Runnable() {
-            @Override
-            public void run() {
-                int lineCount = text.getLineCount();
-                if (lineCount > 5) {
-                    clickRegion.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(PlanManagerActivity.this, DocumentShowDetailActivity.class);
-                            ParagraphListBean paragraph = new ParagraphListBean();
-                            paragraph.setTitle(title);
-                            paragraph.setContent(text.getText().toString().trim());
-                            intent.putExtra("document", paragraph);
-                            startActivity(intent);
-                        }
-                    });
-                } else {
-                    hideRegion.setVisibility(View.GONE);
-                }
+        text.post(() -> {
+            int lineCount = text.getLineCount();
+            if (lineCount > 5) {
+                clickRegion.setOnClickListener(v -> {
+                    Intent intent = new Intent(PlanManagerActivity.this, DocumentShowDetailActivity.class);
+                    ParagraphListBean paragraph = new ParagraphListBean();
+                    paragraph.setTitle(title);
+                    paragraph.setContent(text.getText().toString().trim());
+                    intent.putExtra("document", paragraph);
+                    startActivity(intent);
+                });
+            } else {
+                hideRegion.setVisibility(View.GONE);
             }
         });
     }
@@ -189,7 +176,7 @@ public final class PlanManagerActivity extends BaseActivity implements View.OnCl
         Map<String, String> body = JsonParser.parseJSONObject(result.body());
         if ("1".equals(body.get("code"))) {
             Map<String, String> data = JsonParser.parseJSONObject(body.get("data"));
-
+            Log.d(TAG, "sxs---- " + body.get("data"));
             String itemName = data.get("itemName");         // 项目名称
             String ranges = data.get("ranges");             // 起始地址
             String rangesEnd = data.get("rangesEnd");       // 终止地址
@@ -208,6 +195,7 @@ public final class PlanManagerActivity extends BaseActivity implements View.OnCl
             planManager.setEndAdr("止：" + rangesEnd);
             planManager.setConstructionScale(buildSize);
             // 任务下达
+            planManager.setPlanNo(data.get("planNo"));
             planManager.setConstructionContent(itemMatter);
             planManager.setInvestmentScale(investScalc);
             // 资金来源
@@ -269,20 +257,17 @@ public final class PlanManagerActivity extends BaseActivity implements View.OnCl
                     constructionScale.setText(planManager.getConstructionScale());
                     // 文档展示
                     setOnClickAndShowDetail(constructionScale, llConstructionScale, tvQueryNnotify, "建设规模");
-
                     // 计划下达---附件
-                    Log.e("sxs", "pathBean: " + mSubItemWordList.toString());
+                    planArrived.setText(planManager.getPlanNo());
                     ItemAttachListAdapter wordAdapter = new ItemAttachListAdapter(PlanManagerActivity.this, mSubItemWordList);
                     wordContent.setAdapter(wordAdapter);
                     wordAdapter.notifyDataSetChanged();
-
                     constructionContent.setText(planManager.getConstructionContent());
                     // 文档展示
                     setOnClickAndShowDetail(constructionContent, ConstructionScaleContent, queryRelease, "建设内容");
                     investmentScale.setText(planManager.getInvestmentScale());
                     // 文档展示
                     setOnClickAndShowDetail(investmentScale, llInvestmentScale, queryRelease2, "投资规模");
-
                     // 资金来源
                     totalInvesment.setText(planManager.getTotalInvestment());
                     jiananInvestment.setText(planManager.getJianAnInvestment());
